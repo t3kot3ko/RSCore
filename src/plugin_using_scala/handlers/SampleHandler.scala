@@ -49,6 +49,9 @@ import org.eclipse.ltk.core.refactoring.participants.ProcessorBasedRefactoring
 import org.eclipse.jdt.internal.corext.refactoring.RefactoringAvailabilityTester
 import core.sandbox.PullUp
 import org.eclipse.jdt.internal.corext.refactoring.structure.PushDownRefactoringProcessor
+import org.eclipse.ltk.core.refactoring.participants.MoveRefactoring
+import org.eclipse.jdt.internal.corext.refactoring.structure.MoveStaticMembersProcessor
+import core.helper.RefactoringHelper
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -79,35 +82,16 @@ class SampleHandler extends AbstractHandler {
 			var firstElement = sSelection.getFirstElement()
 			if (firstElement.isInstanceOf[ICompilationUnit]) {
 				var unit: ICompilationUnit = firstElement.asInstanceOf[ICompilationUnit]
-				var typ: IType = unit.getType("Foo")
-				var members: Array[IMember] = typ.getFields().map(e => e.asInstanceOf[IMember])
-				var methods: Array[IMember] = typ.getMethods().map(e => e.asInstanceOf[IMember])
-				var merged: Array[IMember] = merge(members, methods)
-				println(RefactoringAvailabilityTester.isPushDownAvailable(merged))
-
-				var project = members(0).getJavaProject()
-				assert(project != null)
+				var typ: IType = unit.getType("MoveMethod")
+				var member: IMember = typ.getField("staticField").asInstanceOf[IMember]
 				
-				var processor = new PushDownRefactoringProcessor(members)
-				new ProcessorBasedRefactoring(processor)
-				var refactoring: Refactoring = processor.getRefactoring()
-
-				assert(refactoring != null)
-
-				var pm = new NullProgressMonitor()
-				var initialStatus = refactoring.checkInitialConditions(pm)
-				println(initialStatus.isOK())
-
-				assert(refactoring != null)
-				var finalStatus = refactoring.checkFinalConditions(new NullProgressMonitor())
-				println(finalStatus)
-
-				var change: Change = refactoring.createChange(pm)
-				var undo: Change = change.perform(pm)
-				// undo.perform(pm)
-				change.dispose()
-				undo.dispose()
-
+				// これ必要（たぶん，対象プロジェクトを教えてあげる必要がある）
+				var project = member.getJavaProject()
+				var processor = new MoveStaticMembersProcessor(Array[IMember](member), JavaPreferencesSettings.getCodeGenerationSettings(project))
+				processor.setDestinationTypeFullyQualifiedName("move2.Destination2")
+				
+				var refactoring: MoveRefactoring = new MoveRefactoring(processor)
+				RefactoringHelper.performRefactoring(refactoring)
 			}
 		}
 

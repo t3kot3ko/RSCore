@@ -13,6 +13,7 @@ import org.eclipse.ltk.core.refactoring.CreateChangeOperation
 import org.eclipse.ltk.core.refactoring.PerformChangeOperation
 import org.eclipse.ltk.core.refactoring.CheckConditionsOperation
 import org.eclipse.core.resources.ResourcesPlugin
+import core.helper.RefactoringHelper
 
 object RenameField {
 	// äÓñ{ìIÇ…ÇÕÇ±Ç¡ÇøÇÃï˚êjÇ≈ÅI
@@ -24,22 +25,11 @@ object RenameField {
 		processor.setNewElementName(newFieldName)
 
 		var refactoring: RenameRefactoring = new RenameRefactoring(processor)
-		var pm = new NullProgressMonitor()
-
-		var check = new CheckConditionsOperation(refactoring, CheckConditionsOperation.ALL_CONDITIONS);
-		var create: CreateChangeOperation = new CreateChangeOperation(check, RefactoringStatus.FATAL)
-		
-		var perform: PerformChangeOperation = new PerformChangeOperation(create)
-		ResourcesPlugin.getWorkspace().run(perform, pm)
-		
-		var status: RefactoringStatus = create.getConditionCheckingStatus()
-		if(status.isOK()){
-			println("ok")
-		}
-		else{
+		println("PERFORMING")
+		var status = RefactoringHelper.performRefactoring(refactoring)
+		if(status != null){
 			println(status)
 		}
-
 	}
 
 	def renameFieldRefactoringSample(unit: ICompilationUnit, targetFieldName: String, newFieldName: String): Unit = {
