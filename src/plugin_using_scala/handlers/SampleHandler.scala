@@ -52,6 +52,7 @@ import org.eclipse.jdt.internal.corext.refactoring.structure.PushDownRefactoring
 import org.eclipse.ltk.core.refactoring.participants.MoveRefactoring
 import org.eclipse.jdt.internal.corext.refactoring.structure.MoveStaticMembersProcessor
 import core.helper.RefactoringHelper
+import core.sandbox.MoveMethod
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -82,16 +83,8 @@ class SampleHandler extends AbstractHandler {
 			var firstElement = sSelection.getFirstElement()
 			if (firstElement.isInstanceOf[ICompilationUnit]) {
 				var unit: ICompilationUnit = firstElement.asInstanceOf[ICompilationUnit]
-				var typ: IType = unit.getType("MoveMethod")
-				var member: IMember = typ.getField("staticField").asInstanceOf[IMember]
-				
-				// これ必要（たぶん，対象プロジェクトを教えてあげる必要がある）
-				var project = member.getJavaProject()
-				var processor = new MoveStaticMembersProcessor(Array[IMember](member), JavaPreferencesSettings.getCodeGenerationSettings(project))
-				processor.setDestinationTypeFullyQualifiedName("move2.Destination2")
-				
-				var refactoring: MoveRefactoring = new MoveRefactoring(processor)
-				RefactoringHelper.performRefactoring(refactoring)
+				// var typ: IType = unit.getType("MoveMethod")
+				MoveMethod.moveMethodSample(unit, "move2.Destination2")
 			}
 		}
 
