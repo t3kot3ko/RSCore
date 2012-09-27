@@ -26,10 +26,10 @@ object MoveMethod {
 		assert(staticMethod != null)
 
 		// これ必要（たぶん，対象プロジェクトを教えてあげる必要がある）
-		var project = methods(0).getJavaProject()
+		var project = members(0).getJavaProject()
 		// var processor = new MoveStaticMembersProcessor(Array[IMember](member), JavaPreferencesSettings.getCodeGenerationSettings(project))
 		// var processor = new MoveStaticMembersProcessor(fields, JavaPreferencesSettings.getCodeGenerationSettings(project))
-		var processor = new MoveStaticMembersProcessor(methods, JavaPreferencesSettings.getCodeGenerationSettings(project))
+		var processor = new MoveStaticMembersProcessor(members, JavaPreferencesSettings.getCodeGenerationSettings(project))
 
 		processor.setDestinationTypeFullyQualifiedName(destination)
 
@@ -37,14 +37,17 @@ object MoveMethod {
 		RefactoringHelper.performRefactoring(refactoring)
 	}
 
-	def moveinstanceMethodSample(unit: ICompilationUnit, destination: String): Unit = {
+	// TODO: インスタンスメソッドを移動できない
+	def moveInstanceMethodSample(unit: ICompilationUnit, destination: String): Unit = {
 		var typ: IType = unit.getType("MoveMethod")
 		var instanceMethod = typ.getMethod("instanceMethod", Array(Signature.SIG_VOID))
 		assert(instanceMethod != null)
 		
 		var project = instanceMethod.getJavaProject()
 		var processor = new MoveInstanceMethodProcessor(instanceMethod, JavaPreferencesSettings.getCodeGenerationSettings(project))
-		processor.setdes
+		var ref = new MoveRefactoring(processor)
+		RefactoringHelper.performRefactoring(ref)
+		
 
 	}
 

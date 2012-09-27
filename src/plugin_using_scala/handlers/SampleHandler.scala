@@ -53,6 +53,7 @@ import org.eclipse.ltk.core.refactoring.participants.MoveRefactoring
 import org.eclipse.jdt.internal.corext.refactoring.structure.MoveStaticMembersProcessor
 import core.helper.RefactoringHelper
 import core.sandbox.MoveMethod
+import org.eclipse.jdt.internal.corext.refactoring.code.IntroduceFactoryRefactoring
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -70,6 +71,7 @@ class SampleHandler extends AbstractHandler {
 		var selection: ISelection = HandlerUtil.getCurrentSelection(event)
 
 		println(selection.getClass().toString())
+		
 		if (selection.isInstanceOf[TextSelection]) {
 			var tSelection = selection.asInstanceOf[TextSelection]
 			println("offset =" + tSelection.getOffset())
@@ -77,14 +79,20 @@ class SampleHandler extends AbstractHandler {
 			println("startline = " + tSelection.getStartLine())
 			println("endline= " + tSelection.getEndLine())
 			var text = tSelection.getText()
-
 		} else if (selection.isInstanceOf[IStructuredSelection]) {
 			var sSelection = selection.asInstanceOf[IStructuredSelection]
 			var firstElement = sSelection.getFirstElement()
 			if (firstElement.isInstanceOf[ICompilationUnit]) {
 				var unit: ICompilationUnit = firstElement.asInstanceOf[ICompilationUnit]
-				// var typ: IType = unit.getType("MoveMethod")
-				MoveMethod.moveMethodSample(unit, "move2.Destination2")
+				var source: String = unit.getSource()
+				var range = SelectionHelper.getSelection(source)
+				
+				println(range(0))
+				println(range(1))
+				
+				var refactoring: IntroduceFactoryRefactoring = new IntroduceFactoryRefactoring(unit, range(0), range(1))
+				RefactoringHelper.performRefactoring(refactoring)
+				
 			}
 		}
 
