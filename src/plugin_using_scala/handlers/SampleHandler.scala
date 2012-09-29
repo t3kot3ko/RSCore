@@ -54,6 +54,17 @@ import org.eclipse.jdt.internal.corext.refactoring.structure.MoveStaticMembersPr
 import core.helper.RefactoringHelper
 import core.sandbox.MoveMethod
 import org.eclipse.jdt.internal.corext.refactoring.code.IntroduceFactoryRefactoring
+import core.sandbox.IntroduceFactory
+import core.helper.CUHelper
+import org.eclipse.jdt.core.dom.ASTParser
+import org.eclipse.jdt.core.dom.AST
+import org.eclipse.jdt.core.dom.CompilationUnit
+import org.eclipse.jdt.core.dom.TypeDeclaration
+import scala.collection.JavaConverters._
+import org.eclipse.jdt.core.dom.FieldDeclaration
+import org.eclipse.jdt.core.dom.Modifier
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment
+import scala.collection.mutable.Buffer
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -67,11 +78,60 @@ class SampleHandler extends AbstractHandler {
 	 * from the application context.
 	 */
 	def execute(event: ExecutionEvent): Object = {
+		println("execute() is invoked")
 		var window: IWorkbenchWindow = HandlerUtil.getActiveWorkbenchWindowChecked(event);
+
+		var project = CUHelper.getJavaProject("Sample")
+		assert(project != null)
+
+		var root = CUHelper.getSourceFolder(project)
+		assert(root != null)
+
+		var pack = root.getPackageFragment("rename")
+		assert(pack != null)
+
+		var cu = CUHelper.getCompilationUnit(pack, "RenameField")
+		assert(cu != null)
+
+		var typ = cu.getTypes().first
+		var fields: Array[IField] = typ.getFields()
+
+		var parser = ASTParser.newParser(AST.JLS2)
+		parser.setKind(ASTParser.K_COMPILATION_UNIT)
+		parser.setSource(cu)
+		var ast = parser.createAST(new NullProgressMonitor)
+
+		var node = ast.asInstanceOf[CompilationUnit]
+		var types = node.types().asScala.map(e => e.asInstanceOf[TypeDeclaration])
+		for (t <- types) {
+			println(t.getName().toString())
+		}
+		var target = types(0)
+		var astFields: Array[FieldDeclaration] = target.getFields()
+		var privateFields: Array[FieldDeclaration] = astFields.filter(e => Modifier.isPrivate(e.getModifiers()))
+		
+		def firstFragmentName(e: FieldDeclaration): String= {
+			var fragments: Buffer[VariableDeclarationFragment] = e.fragments().asScala.map(e => e.asInstanceOf[VariableDeclarationFragment])
+			return fragments.first.getName().toString()
+		}
+		var privateFieldNames: Array[String] = privateFields.map(e => firstFragmentName(e))
+		for(n <- privateFieldNames){
+			println(n)
+		}
+		
+		for(name <- privateFieldNames){
+			println(name)
+			var newName = "_" + name
+			RenameField.renameFieldRefactoringSample2(cu, name, newName)
+		}
+
+		alert(window, "Complete", "execute() has been successfully executed")
+		return null
+
 		var selection: ISelection = HandlerUtil.getCurrentSelection(event)
 
 		println(selection.getClass().toString())
-		
+
 		if (selection.isInstanceOf[TextSelection]) {
 			var tSelection = selection.asInstanceOf[TextSelection]
 			println("offset =" + tSelection.getOffset())
@@ -84,15 +144,6 @@ class SampleHandler extends AbstractHandler {
 			var firstElement = sSelection.getFirstElement()
 			if (firstElement.isInstanceOf[ICompilationUnit]) {
 				var unit: ICompilationUnit = firstElement.asInstanceOf[ICompilationUnit]
-				var source: String = unit.getSource()
-				var range = SelectionHelper.getSelection(source)
-				
-				println(range(0))
-				println(range(1))
-				
-				var refactoring: IntroduceFactoryRefactoring = new IntroduceFactoryRefactoring(unit, range(0), range(1))
-				RefactoringHelper.performRefactoring(refactoring)
-				
 			}
 		}
 
@@ -102,11 +153,14 @@ class SampleHandler extends AbstractHandler {
 			"Hello, Eclipse world");
 		return null;
 	}
-	
-	private def merge(a:Array[IMember], b:Array[IMember]) :Array[IMember] = {
+
+	private def alert(window: IWorkbenchWindow, title: String, message: String): Unit = {
+		MessageDialog.openInformation(window.getShell(), title, message)
+	}
+
+	private def merge(a: Array[IMember], b: Array[IMember]): Array[IMember] = {
 		return JavaElementUtil.merge(a, b)
 	}
-		
 
 }
 
