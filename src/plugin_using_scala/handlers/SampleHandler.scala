@@ -65,6 +65,10 @@ import org.eclipse.jdt.core.dom.FieldDeclaration
 import org.eclipse.jdt.core.dom.Modifier
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment
 import scala.collection.mutable.Buffer
+import org.eclipse.jdt.internal.corext.refactoring.structure.ChangeSignatureProcessor
+import org.eclipse.jdt.internal.corext.refactoring.structure.BodyUpdater
+import org.eclipse.jdt.internal.corext.refactoring.ParameterInfo
+import java.util.ArrayList
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -80,50 +84,40 @@ class SampleHandler extends AbstractHandler {
 	def execute(event: ExecutionEvent): Object = {
 		println("execute() is invoked")
 		var window: IWorkbenchWindow = HandlerUtil.getActiveWorkbenchWindowChecked(event);
-
+		
+		/*
 		var project = CUHelper.getJavaProject("Sample")
-		assert(project != null)
-
 		var root = CUHelper.getSourceFolder(project)
-		assert(root != null)
-
-		var pack = root.getPackageFragment("rename")
-		assert(pack != null)
-
-		var cu = CUHelper.getCompilationUnit(pack, "RenameField")
-		assert(cu != null)
-
-		var typ = cu.getTypes().first
-		var fields: Array[IField] = typ.getFields()
-
-		var parser = ASTParser.newParser(AST.JLS2)
-		parser.setKind(ASTParser.K_COMPILATION_UNIT)
-		parser.setSource(cu)
-		var ast = parser.createAST(new NullProgressMonitor)
-
-		var node = ast.asInstanceOf[CompilationUnit]
-		var types = node.types().asScala.map(e => e.asInstanceOf[TypeDeclaration])
-		for (t <- types) {
-			println(t.getName().toString())
-		}
-		var target = types(0)
-		var astFields: Array[FieldDeclaration] = target.getFields()
-		var privateFields: Array[FieldDeclaration] = astFields.filter(e => Modifier.isPrivate(e.getModifiers()))
+		var pack = root.getPackageFragment("extract_constant")
+		var cu = CUHelper.getCompilationUnit(pack, "Foo")
+		*/
 		
-		def firstFragmentName(e: FieldDeclaration): String= {
-			var fragments: Buffer[VariableDeclarationFragment] = e.fragments().asScala.map(e => e.asInstanceOf[VariableDeclarationFragment])
-			return fragments.first.getName().toString()
-		}
-		var privateFieldNames: Array[String] = privateFields.map(e => firstFragmentName(e))
-		for(n <- privateFieldNames){
-			println(n)
-		}
+		// var typ = cu.getType("Foo")
 		
-		for(name <- privateFieldNames){
-			println(name)
-			var newName = "_" + name
-			RenameField.renameFieldRefactoringSample2(cu, name, newName)
-		}
+		var typ = CUHelper.findTargetType("Sample", "extract_constant", "Foo")
+		var cu = typ.getCompilationUnit()
+		
+		var source = typ.getSource()
+		var range = SelectionHelper.getSelection(source)
+		var refactoring = new ExtractConstantRefactoring(cu, range(0), range(1))
+		
+		refactoring.setConstantName("CONSTANT")
+		refactoring.setReplaceAllOccurrences(true)
+		refactoring.setQualifyReferencesWithDeclaringClassName(true)
+		
+		var pm = new NullProgressMonitor()
+		var initialStatus = refactoring.checkInitialConditions(pm)
+		println(initialStatus)
+		
+		assert(initialStatus.isOK())
+		// assert(finalStatus.isOK())
+		
+		var change = refactoring.createChange(pm)
+		var undo = change.perform(pm)
+		
+		change.dispose()
+		
+
 
 		alert(window, "Complete", "execute() has been successfully executed")
 		return null
