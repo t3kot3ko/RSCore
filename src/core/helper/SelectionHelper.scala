@@ -17,14 +17,17 @@ object SelectionHelper {
 	 * （テストを書くときには便利かも？）
 	 * @return start and length
 	 */
-	def getSelection(source: String): Array[Int] = {
+	def getSelection(source: String, openDelimiter: String = SQUARE_BRACKET_OPEN, closeDelimier: String = SQUARE_BRACKET_CLOSE): Array[Int] = {
 		var start = -1
 		var end = -1
 		
-		var includingStart = source.indexOf(SQUARE_BRACKET_OPEN)
-		var excludingStart = source.indexOf(SQUARE_BRACKET_CLOSE)
-		var includingEnd = source.lastIndexOf(SQUARE_BRACKET_CLOSE)
-		var excludingEnd = source.lastIndexOf(SQUARE_BRACKET_OPEN)
+		var includingStart = source.indexOf(openDelimiter)
+		var excludingStart = source.indexOf(closeDelimier)
+		var includingEnd = source.lastIndexOf(openDelimiter)
+		var excludingEnd = source.lastIndexOf(closeDelimier)
+		
+		var openLength = openDelimiter.length()
+		var closeLength = closeDelimier.length()
 
 		if (includingStart > excludingStart && excludingStart != -1) {
 			includingStart = -1
@@ -41,13 +44,13 @@ object SelectionHelper {
 		if (includingStart != -1) {
 			start = includingStart;
 		} else {
-			start = excludingStart + SQUARE_BRACKET_CLOSE_LENGTH
+			start = excludingStart + closeLength 
 		}
 
 		if (excludingEnd != -1) {
 			end = excludingEnd
 		} else {
-			end = includingEnd + SQUARE_BRACKET_CLOSE_LENGTH
+			end = includingEnd + closeLength
 		}
 		assert(start >= 0 && end >= 0 && end >= start)
 
