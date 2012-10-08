@@ -6,6 +6,9 @@ import org.eclipse.core.runtime.NullProgressMonitor
 import org.eclipse.jdt.core.dom.ASTNode
 
 object ASTUtil {
+	/**
+	 * ICompilationUnit Ç©ÇÁ CompilationUnit Çê∂ê¨Ç∑ÇÈ
+	 */
 	def createAST(cu: ICompilationUnit, kind: Int = ASTParser.K_COMPILATION_UNIT): ASTNode = {
 		var parser = ASTParser.newParser(AST.JLS3)
 		parser.setSource(cu)
@@ -15,5 +18,4 @@ object ASTUtil {
 		var ast = parser.createAST(new NullProgressMonitor)
 		return ast
 	}
-
 }

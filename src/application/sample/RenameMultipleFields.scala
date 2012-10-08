@@ -12,12 +12,14 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment
 import core.sandbox.RenameField
 import scala.collection.JavaConverters._
 import org.eclipse.jdt.core.dom.TypeDeclaration
+import org.eclipse.jdt.core.ICompilationUnit
 
 object RenameMultipleFields {
 	/**
 	 * プライベートなフィールドのプレフィクスにアンダースコアをつける
 	 */
-	def renamePrivateFieldWithUnderscoreSample(): Unit = {
+	def renamePrivateFieldWithUnderscoreSample(privateFieldNames: Array[String], cu: ICompilationUnit): Unit = {
+		/*
 		var project = CUHelper.getJavaProject("Sample")
 		assert(project != null)
 
@@ -52,6 +54,7 @@ object RenameMultipleFields {
 			return fragments.first.getName().toString()
 		}
 		var privateFieldNames: Array[String] = privateFields.map(e => firstFragmentName(e))
+		*/
 		for(n <- privateFieldNames){
 			println(n)
 		}

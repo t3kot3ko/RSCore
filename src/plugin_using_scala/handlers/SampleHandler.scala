@@ -69,6 +69,13 @@ import org.eclipse.jdt.internal.corext.refactoring.structure.ChangeSignatureProc
 import org.eclipse.jdt.internal.corext.refactoring.structure.BodyUpdater
 import org.eclipse.jdt.internal.corext.refactoring.ParameterInfo
 import java.util.ArrayList
+import dsl.entity.RSClass
+import dsl.entity.collection.RSMethods._
+import dsl.entity.collection.RSFields._
+import org.eclipse.jdt.internal.corext.refactoring.structure.ASTNodeSearchUtil
+import dsl.util.ASTUtil
+import application.sample.RenameMultipleFields
+import dsl.common.RSParams
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -84,16 +91,32 @@ class SampleHandler extends AbstractHandler {
 	def execute(event: ExecutionEvent): Object = {
 		println("execute() is invoked")
 		var window: IWorkbenchWindow = HandlerUtil.getActiveWorkbenchWindowChecked(event);
+
+		var projectName = "Sample"
+		var packageName = "rename"
+		var unitName = "RenameField"
+		var project = CUHelper.getJavaProject(projectName)
+		var root = CUHelper.getSourceFolder(project)
+		var pack = root.getPackageFragment(packageName)
+		var unit = CUHelper.getCompilationUnit(pack, unitName)
+		
+		// assert(unit == null)
+		
+		var typ = unit.getType(unitName)
+		var $ = new RSClass(typ)
+		var privateMethods = $.methods.where(RSParams("return" -> Array("int", "void")))
+		// var privateMethods = $.methods.where(RSParams("modifier" -> Array("private")))
+		// var privateMethods = $.methods.where(RSParams("return" -> Array("private"), "modifier" -> Array("private", "public")))
+		println("count = " + privateMethods.length)
 		
 		/*
-		var project = CUHelper.getJavaProject("Sample")
-		var root = CUHelper.getSourceFolder(project)
-		var pack = root.getPackageFragment("extract_constant")
-		var cu = CUHelper.getCompilationUnit(pack, "Foo")
+		println("private method count = " + $.fields.where("private").length)
+		var privateMethodNames = $.fields.where("private").map(e => e.name)
+		RenameMultipleFields.renamePrivateFieldWithUnderscoreSample(privateMethodNames, unit)
 		*/
 		
-		// var typ = cu.getType("Foo")
-		
+
+		/*
 		var typ = CUHelper.findTargetType("Sample", "extract_constant", "Foo")
 		var cu = typ.getCompilationUnit()
 		
@@ -116,8 +139,7 @@ class SampleHandler extends AbstractHandler {
 		var undo = change.perform(pm)
 		
 		change.dispose()
-		
-
+		*/
 
 		alert(window, "Complete", "execute() has been successfully executed")
 		return null

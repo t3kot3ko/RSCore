@@ -7,9 +7,12 @@ import core.helper.CUHelper
 import org.junit.runners.Parameterized.Parameters
 import java.util.Arrays
 import dsl.entity.RSClass
+import dsl.entity.collection.RSMethods._
+import dsl.entity.collection.RSMethods
+import dsl.entity.RSMethod
 
 class EntityTest {
-	var cu: ICompilationUnit
+	var cu: ICompilationUnit = null
 
 	private val PACKAGE_NAME = "testcases"
 	private val PROJECT_NAME = "EntityTest"
@@ -29,7 +32,8 @@ class EntityTest {
 	@Test
 	def ƒƒ\ƒbƒh‚Ì”‚ğ³‚µ‚­æ“¾‚Å‚«‚é: Unit = {
 		var typ = this.cu.getType(UNIT_NAME)
-		var $ = new RSClass(UNIT_NAME, typ)
+		var $ = new RSClass(typ)
+		var privateMethods: RSMethods = $.methods.privateMethods
 		assertEquals(3, $.methods.length)
 	}
 	
