@@ -1,4 +1,4 @@
-package dsl.entity
+package dsl.search_trait
 import org.eclipse.jdt.core.IJavaElement
 import dsl.util.ASTUtil
 import org.eclipse.jdt.core.dom.CompilationUnit
@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.Modifier
 import org.eclipse.jdt.core.dom.BodyDeclaration
 
 // アクセス修飾子を持ったエンティティ
-trait Modifiable {
+trait ModifierBasedSearchable {
 	val declaration: BodyDeclaration = getDeclaration()
 	val modifiersNum: Int = declaration.getModifiers()
 	

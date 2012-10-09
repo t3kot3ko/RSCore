@@ -8,8 +8,9 @@ import org.eclipse.jdt.core.dom.Modifier
 import scala.collection.JavaConversions._
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment
 import org.eclipse.jdt.core.dom.FieldDeclaration
+import dsl.search_trait.ModifierBasedSearchable
 
-class RSField(field: IField) extends Modifiable{
+class RSField(field: IField) extends ModifierBasedSearchable{
 		
 	/*
 	def isPrivate(): Boolean = {

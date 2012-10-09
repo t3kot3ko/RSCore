@@ -76,6 +76,7 @@ import org.eclipse.jdt.internal.corext.refactoring.structure.ASTNodeSearchUtil
 import dsl.util.ASTUtil
 import application.sample.RenameMultipleFields
 import dsl.common.RSParams
+import dsl.entity.RSPackage
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -98,16 +99,25 @@ class SampleHandler extends AbstractHandler {
 		var project = CUHelper.getJavaProject(projectName)
 		var root = CUHelper.getSourceFolder(project)
 		var pack = root.getPackageFragment(packageName)
+		
 		var unit = CUHelper.getCompilationUnit(pack, unitName)
 		
 		// assert(unit == null)
 		
 		var typ = unit.getType(unitName)
 		var $ = new RSClass(typ)
+		
 		var privateMethods = $.methods.where(RSParams("return" -> Array("int", "void")))
+		var nameMatchedMethods = $.methods.where(RSParams("name" -> Array("public3", "publicstatic")))
+		var regMatchedMethods = $.methods.where(RSParams("namereg" -> Array(""".*\d$"""), "modifier" -> Array("protected")))
+		
 		// var privateMethods = $.methods.where(RSParams("modifier" -> Array("private")))
 		// var privateMethods = $.methods.where(RSParams("return" -> Array("private"), "modifier" -> Array("private", "public")))
-		println("count = " + privateMethods.length)
+		println("private method count = " + privateMethods.length)
+		println("name matched count = " + nameMatchedMethods.length)
+		println("name matched count = " + regMatchedMethods.length)
+		
+		regMatchedMethods.foreach(e => println(e.name))
 		
 		/*
 		println("private method count = " + $.fields.where("private").length)

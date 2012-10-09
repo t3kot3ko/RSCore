@@ -14,34 +14,33 @@ import org.eclipse.jdt.core.dom.Modifier
 import dsl.entity.RSMethod._
 import dsl.entity.RSMethod
 import dsl.entity.collection.RSMethods
+import dsl.search_trait.NameBasedSearchable
+import dsl.search_trait.ModifierBasedSearchable
 
 
 object RSClass{
 	implicit def toRSClass(typ: IType) = new RSClass(typ: IType)
 }
-class RSClass(name: String, typ: IType){
-	// TODO: rename to 'name' ,remove name construct parameter
-	// and remove supplemental constructor
-	def getName(): String = {
-		return this.typ.getElementName()
-	}
-	def this(typ: IType) = this("", typ)
+class RSClass(typ: IType) extends NameBasedSearchable with ModifierBasedSearchable{
+	val name: String = this.typ.getElementName()
 	
 	def methods(): Array[RSMethod] = {
 		return typ.getMethods().map(e => new RSMethod(e))
 	}
 	
+	// Get method whose signature is matched
 	def method(name: String, signature: Array[String]): RSMethod = {
 		return typ.getMethod(name, signature)
 	}
 	
 	
+	// Get instance / class fields
 	def fields() : Array[RSField] = {
 		return this.typ.getFields().map(e => new RSField(e))
 	}
 	
 	
-	def ast() : TypeDeclaration = {
+	override def getDeclaration() : TypeDeclaration = {
 		var cu = this.typ.getCompilationUnit()
 		var newCU = ASTUtil.createAST(cu).asInstanceOf[CompilationUnit]
 		var types = newCU.types().asScala.map(e => e.asInstanceOf[TypeDeclaration])

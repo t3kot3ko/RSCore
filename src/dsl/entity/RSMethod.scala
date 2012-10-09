@@ -9,27 +9,18 @@ import org.eclipse.jdt.core.dom.Modifier
 import dsl.util.ASTUtil
 import org.eclipse.jdt.core.dom.CompilationUnit
 import org.eclipse.jdt.core.dom.Type
+import dsl.search_trait.ModifierBasedSearchable
+import dsl.search_trait.NameBasedSearchable
+import dsl.search_trait.ReturnTypeSearchable
 
-class RSMethod(val method: IMethod) extends Modifiable {
+class RSMethod(val method: IMethod) extends ModifierBasedSearchable with NameBasedSearchable with ReturnTypeSearchable{
+	val name = method.getElementName()
+	val returnType: Type = this.declaration.asInstanceOf[MethodDeclaration].getReturnType2()
+		
 	// 万一，IMethod が直接欲しくなった時用
 	def origin: IMethod = method
 
-	def name(): String = {
-		return method.getElementName()
-	}
 	
-	def returnType: Type = {
-		return this.declaration.asInstanceOf[MethodDeclaration].getReturnType2()
-	}
-	
-	// 返却値型が指定されたものと一致するか（単なる名前比較）
-	def hasReturnTypeName(returnTypeName: String): Boolean = {
-		return this.returnType.toString() == returnTypeName
-	}
-	
-	def hasReturnTypeNamesOr(returnTypeNames: Array[String]): Boolean = {
-		return returnTypeNames.exists(hasReturnTypeName(_))
-	}
 
 	override def getDeclaration(): MethodDeclaration = {
 		var cu = ASTUtil.createAST(method.getCompilationUnit()).asInstanceOf[CompilationUnit]

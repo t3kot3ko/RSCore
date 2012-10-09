@@ -64,4 +64,5 @@ Import-Package: org.eclipse.core.resources,
  scala.reflect.generic;version="2.9.2.v20120330-163119-949a4804e4",
  scala.runtime;version="2.9.2.v20120330-163119-949a4804e4",
  scala.text;version="2.9.2.v20120330-163119-949a4804e4",
+ scala.util.matching;version="2.9.2.v20120330-163119-949a4804e4",
  scala.util.regexp;version="2.9.2.v20120330-163119-949a4804e4"
