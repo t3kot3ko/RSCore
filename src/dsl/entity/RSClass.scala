@@ -40,7 +40,7 @@ class RSClass(typ: IType) extends NameBasedSearchable with ModifierBasedSearchab
 	}
 	
 	
-	override def getDeclaration() : TypeDeclaration = {
+	def ast() : TypeDeclaration = {
 		var cu = this.typ.getCompilationUnit()
 		var newCU = ASTUtil.createAST(cu).asInstanceOf[CompilationUnit]
 		var types = newCU.types().asScala.map(e => e.asInstanceOf[TypeDeclaration])
@@ -48,6 +48,12 @@ class RSClass(typ: IType) extends NameBasedSearchable with ModifierBasedSearchab
 		assert(target != null)
 		
 		return target
+	}
+	
+	override def getDeclaration(): TypeDeclaration = {
+		var cu = ASTUtil.createAST(typ.getCompilationUnit()).asInstanceOf[CompilationUnit]
+		var dec = ASTNodeSearchUtil.getTypeDeclarationNode(typ, cu)
+		return dec
 	}
 
 }

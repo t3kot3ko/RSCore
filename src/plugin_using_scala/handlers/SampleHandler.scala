@@ -117,7 +117,10 @@ class SampleHandler extends AbstractHandler {
 		println("name matched count = " + nameMatchedMethods.length)
 		println("name matched count = " + regMatchedMethods.length)
 		
-		regMatchedMethods.foreach(e => println(e.name))
+		var privateFields = $.fields.where(RSParams("modifier" -> Array("final"))).where(RSParams("namereg" -> Array("""[a-z].*""")))
+		
+		// regMatchedMethods.foreach(e => println(e.name))
+		privateFields.foreach(e => println(e.name))
 		
 		/*
 		println("private method count = " + $.fields.where("private").length)

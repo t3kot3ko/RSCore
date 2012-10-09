@@ -9,9 +9,18 @@ import scala.collection.JavaConversions._
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment
 import org.eclipse.jdt.core.dom.FieldDeclaration
 import dsl.search_trait.ModifierBasedSearchable
+import dsl.search_trait.NameBasedSearchable
 
-class RSField(field: IField) extends ModifierBasedSearchable{
-		
+class RSField(field: IField) extends ModifierBasedSearchable with NameBasedSearchable {
+	// TODO: ワンライナだと長いから．
+	val name: String = {
+		() =>
+			{
+				var dec = getDeclaration()
+				dec.fragments().first.asInstanceOf[VariableDeclarationFragment].getName().toString()
+			}
+	}.apply()
+
 	/*
 	def isPrivate(): Boolean = {
 		var dec = getDeclaration()
@@ -20,10 +29,12 @@ class RSField(field: IField) extends ModifierBasedSearchable{
 	}
 	*/
 
-	def name(): String = {
+	/*
+	name(): String = {
 		var dec = getDeclaration()
 		return dec.fragments().first.asInstanceOf[VariableDeclarationFragment].getName().toString()
 	}
+	*/
 
 	// 自分自身の定義をASTから探す
 	override def getDeclaration(): FieldDeclaration = {

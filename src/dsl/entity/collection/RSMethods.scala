@@ -13,7 +13,7 @@ import dsl.common.RSParams
 import scala.collection.mutable.LinkedList
 import scala.util.matching.Regex
 
-class RSMethods(val elements: Array[RSMethod]) {
+class RSMethods(val elements: Array[RSMethod]) extends Where[RSMethod]{
 	// ŽÀ‘Ì‚ª—~‚µ‚­‚È‚Á‚½Žži‚¢‚¸‚êÁ‚·j
 	def origin(): Array[IMethod] = {
 		return elements.map(e => e.origin)
@@ -25,14 +25,10 @@ class RSMethods(val elements: Array[RSMethod]) {
 	 * TODO: extract to somewhere! make trait and apply to other classes
 	 */
 	def where(params: RSParams): Array[RSMethod] = {
-		var result = elements.toSet[RSMethod]
-		for (param <- params.getValue()) {
-			result = result & dispatch(param)
-		}
-		return result.toArray[RSMethod]
+		return executeWhereQuery(params).toArray[RSMethod]
 	}
 
-	private def dispatch(param: (String, Array[String])): Set[RSMethod] = {
+	override def dispatch(param: (String, Array[String])): Set[RSMethod] = {
 		param match {
 			case ("modifier", modifiers) => return this.elements.filter(e => e.hasModifiersOr(modifiers)).toSet
 			case ("return", returnTypes) => return this.elements.filter(e => e.hasReturnTypeNamesOr(returnTypes)).toSet
