@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.dom.FieldDeclaration
 import dsl.search_trait.ModifierBasedSearchable
 import dsl.search_trait.NameBasedSearchable
 
-class RSField(field: IField) extends ModifierBasedSearchable with NameBasedSearchable {
+class RSField(val value: IField) extends ModifierBasedSearchable with NameBasedSearchable {
 	// TODO: ワンライナだと長いから．
 	val name: String = {
 		() =>
@@ -21,25 +21,10 @@ class RSField(field: IField) extends ModifierBasedSearchable with NameBasedSearc
 			}
 	}.apply()
 
-	/*
-	def isPrivate(): Boolean = {
-		var dec = getDeclaration()
-		var modifiers = dec.getModifiers()
-		return Modifier.isPrivate(modifiers)
-	}
-	*/
-
-	/*
-	name(): String = {
-		var dec = getDeclaration()
-		return dec.fragments().first.asInstanceOf[VariableDeclarationFragment].getName().toString()
-	}
-	*/
-
 	// 自分自身の定義をASTから探す
 	override def getDeclaration(): FieldDeclaration = {
-		var cu = ASTUtil.createAST(field.getCompilationUnit()).asInstanceOf[CompilationUnit]
-		var dec = ASTNodeSearchUtil.getFieldDeclarationNode(field, cu)
+		var cu = ASTUtil.createAST(value.getCompilationUnit()).asInstanceOf[CompilationUnit]
+		var dec = ASTNodeSearchUtil.getFieldDeclarationNode(value, cu)
 		return dec
 	}
 }

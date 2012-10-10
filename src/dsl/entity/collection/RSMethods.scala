@@ -12,6 +12,7 @@ import scala.collection.mutable.ListBuffer
 import dsl.common.RSParams
 import scala.collection.mutable.LinkedList
 import scala.util.matching.Regex
+import dsl.common.RSParam
 
 class RSMethods(val elements: Array[RSMethod]) extends Where[RSMethod]{
 	// 実体が欲しくなった時（いずれ消す）
@@ -22,27 +23,53 @@ class RSMethods(val elements: Array[RSMethod]) extends Where[RSMethod]{
 	/**
 	 * $.methods.where(modifier -> Array("public", "private"), xxx -> Array(1, 2, 3)...)
 	 * where に与えられたクエリはすべて AND で解釈される
-	 * TODO: extract to somewhere! make trait and apply to other classes
 	 */
-	def where(params: RSParams): Array[RSMethod] = {
+	def where(params: RSParam[_]*): Array[RSMethod] = {
+		return executeWhereQuery(params.toArray).toArray[RSMethod]
+	}
+	def where(params: Array[RSParam[_]]): Array[RSMethod] = {
 		return executeWhereQuery(params).toArray[RSMethod]
 	}
+	
+	/**
+	 * params を「満たさない」要素を返す
+	 */
+	def whereNot(params: RSParam[_]*): Array[RSMethod] = {
+		return executeWhereNotQuery(params.toArray).toArray[RSMethod]
+	}
 
-	override def dispatch(param: (String, Array[String])): Set[RSMethod] = {
-		param match {
-			case ("modifier", modifiers) => return this.elements.filter(e => e.hasModifiersOr(modifiers)).toSet
-			case ("return", returnTypes) => return this.elements.filter(e => e.hasReturnTypeNamesOr(returnTypes)).toSet
-			case ("name", names) => return this.elements.filter(e => e.hasNamesOr(names)).toSet
-			
-			// TODO
-			// Array[Regex] を混ぜるなら，Array[String], Array[Regex] をラップするクラスが必要かも
-			// case ("namereg", names: Array[Regex]) => return this.methods.filter(e => e.hasRegexeMathcedNamesOr(names)).toSet
-			case ("namereg", names: Array[String]) => return this.elements.filter(e => e.hasRegexeMathcedNamesOr(names)).toSet
-			
+	override def dispatchWhere(param: RSParam[_]): Set[RSMethod] = {
+		param.value match {
+			case ("modifier", modifiers: Array[String]) => 
+				return this.elements.filter(e => e.hasModifiersOr(modifiers)).toSet
+			case ("return", returnTypes: Array[String]) => 
+				return this.elements.filter(e => e.hasReturnTypeNamesOr(returnTypes)).toSet
+			case ("name", names: Array[String]) => 
+				return this.elements.filter(e => e.hasNamesOr(names)).toSet
+			case ("namereg", names: Array[Regex]) => 
+				return this.elements.filter(e => e.hasRegexeMathcedNamesOr(names)).toSet
+			case ("namereg", names: Array[String]) => 
+				return this.elements.filter(e => e.hasRegexeMathcedNamesOr(names)).toSet
 			case _ => return this.elements.toSet
 		}
 	}
-
+	
+	override def dispatchWhereNot(param: RSParam[_]): Set[RSMethod] = {
+		param.value match {
+			case ("modifier", modifiers: Array[String]) => 
+				return this.elements.filterNot(e => e.hasModifiersOr(modifiers)).toSet
+			case ("return", returnTypes: Array[String]) => 
+				return this.elements.filterNot(e => e.hasReturnTypeNamesOr(returnTypes)).toSet
+			case ("name", names: Array[String]) => 
+				return this.elements.filterNot(e => e.hasNamesOr(names)).toSet
+			case ("namereg", names: Array[String]) => 
+				return this.elements.filterNot(e => e.hasRegexeMathcedNamesOr(names)).toSet
+			case ("namereg", names: Array[Regex]) => 
+				return this.elements.filterNot(e => e.hasRegexeMathcedNamesOr(names)).toSet
+			case _ => return this.elements.toSet
+		}
+	}
+	
 	def all(): Array[RSMethod] = {
 		return elements
 	}

@@ -16,12 +16,16 @@ import dsl.entity.RSMethod
 import dsl.entity.collection.RSMethods
 import dsl.search_trait.NameBasedSearchable
 import dsl.search_trait.ModifierBasedSearchable
+import dsl.common.RSParams
+import dsl.entity.collection.RSMethods._
+import dsl.search_trait.CallbackBasedSearchable
+import dsl.common.RSParam
 
 
 object RSClass{
 	implicit def toRSClass(typ: IType) = new RSClass(typ: IType)
 }
-class RSClass(typ: IType) extends NameBasedSearchable with ModifierBasedSearchable{
+class RSClass(typ: IType) extends RSEntity(typ) with NameBasedSearchable with ModifierBasedSearchable with CallbackBasedSearchable[RSClass]{
 	val name: String = this.typ.getElementName()
 	
 	def methods(): Array[RSMethod] = {
@@ -33,21 +37,15 @@ class RSClass(typ: IType) extends NameBasedSearchable with ModifierBasedSearchab
 		return typ.getMethod(name, signature)
 	}
 	
+	// ‚à‚µ‚àCcls.methods(RSParams("modifier" -> Array("public"))) ‚Æ‚©‚µ‚½‚¯‚ê‚ÎCˆÈ‰º‚ð—LŒø‚É‚·‚é
+	def methods(params: RSParam[_]*): Array[RSMethod] = {
+		return this.methods().where(params.toArray)
+	}
+	
 	
 	// Get instance / class fields
 	def fields() : Array[RSField] = {
 		return this.typ.getFields().map(e => new RSField(e))
-	}
-	
-	
-	def ast() : TypeDeclaration = {
-		var cu = this.typ.getCompilationUnit()
-		var newCU = ASTUtil.createAST(cu).asInstanceOf[CompilationUnit]
-		var types = newCU.types().asScala.map(e => e.asInstanceOf[TypeDeclaration])
-		var target = types.find(e => e.getName().toString() == this.name).get
-		assert(target != null)
-		
-		return target
 	}
 	
 	override def getDeclaration(): TypeDeclaration = {

@@ -1,6 +1,7 @@
 package dsl.entity
+import org.eclipse.jdt.core.IJavaElement
 
-class RSEntity {
+class RSEntity(val element: IJavaElement) {
 
 }
 

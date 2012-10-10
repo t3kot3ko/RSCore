@@ -3,21 +3,24 @@ import org.eclipse.jdt.core.IField
 import org.eclipse.jdt.core.dom.Modifier
 import dsl.entity.RSField
 import dsl.common.RSParams
+import sun.reflect.generics.reflectiveObjects.NotImplementedException
+import dsl.common.RSParam
 
 class RSFields(val elements: Array[RSField]) extends Where[RSField]{
-	/*
-	def where(modifier: String): Array[RSField] = {
-		modifier match{
-			case "private" => elements.filter(e => e.isPrivate())
-		}
-		
+	def where(params: RSParam[_]*): Array[RSField] = {
+		return executeWhereQuery(params.toArray).toArray[RSField]
 	}
-	*/
+	def whereNot(params: RSParam[_]*): Array[RSField] = {
+		return executeWhereNotQuery(params.toArray).toArray[RSField]
+	}
 	
-	def where(params: RSParams): Array[RSField] = {
-		return executeWhereQuery(params).toArray[RSField]
+	override def dispatchWhere(param: RSParam[_]): Set[RSField] = {
+		return this.elements.toSet
 	}
-	override def dispatch(param: (String, Array[String])): Set[RSField] = {
+	override def dispatchWhereNot(param: RSParam[_]): Set[RSField] = {
+		return this.elements.toSet
+	}
+	def dispatchWhere(param: (String, Array[String])): Set[RSField] = {
 		param match {
 			case ("modifier", modifiers) => return this.elements.filter(e => e.hasModifiersOr(modifiers)).toSet
 			case ("name", names) => return this.elements.filter(e => e.hasNamesOr(names)).toSet
@@ -29,6 +32,11 @@ class RSFields(val elements: Array[RSField]) extends Where[RSField]{
 			
 			case _ => return this.elements.toSet
 		}
+	}
+	
+	def dispatchWhereNot(param: (String, Array[String])): Set[RSField] = {
+		throw new NotImplementedException
+		// return this.elements.toSet
 	}
 
 }
