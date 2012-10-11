@@ -14,7 +14,7 @@ import scala.collection.mutable.LinkedList
 import scala.util.matching.Regex
 import dsl.common.RSParam
 
-class RSMethods(val elements: Array[RSMethod]) extends Where[RSMethod]{
+class RSMethods(override val elements: Array[RSMethod]) extends RSCollection(elements) with Where[RSMethod]{
 	// 実体が欲しくなった時（いずれ消す）
 	def origin(): Array[IMethod] = {
 		return elements.map(e => e.origin)
@@ -24,9 +24,6 @@ class RSMethods(val elements: Array[RSMethod]) extends Where[RSMethod]{
 	 * $.methods.where(modifier -> Array("public", "private"), xxx -> Array(1, 2, 3)...)
 	 * where に与えられたクエリはすべて AND で解釈される
 	 */
-	def where(params: RSParam[_]*): Array[RSMethod] = {
-		return executeWhereQuery(params.toArray).toArray[RSMethod]
-	}
 	def where(params: Array[RSParam[_]]): Array[RSMethod] = {
 		return executeWhereQuery(params).toArray[RSMethod]
 	}
@@ -34,8 +31,12 @@ class RSMethods(val elements: Array[RSMethod]) extends Where[RSMethod]{
 	/**
 	 * params を「満たさない」要素を返す
 	 */
-	def whereNot(params: RSParam[_]*): Array[RSMethod] = {
-		return executeWhereNotQuery(params.toArray).toArray[RSMethod]
+	def whereNot(params: Array[RSParam[_]]): Array[RSMethod] = {
+		return executeWhereNotQuery(params).toArray[RSMethod]
+	}
+	
+	def aaa(): Unit = {
+		var a = this.find(Array[RSParam[_]]())
 	}
 
 	override def dispatchWhere(param: RSParam[_]): Set[RSMethod] = {

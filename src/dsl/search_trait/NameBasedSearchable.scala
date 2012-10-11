@@ -23,12 +23,11 @@ trait NameBasedSearchable {
 		return names.exists(hasName(_))
 	}
 	
-	// Array[String], Array[Regex] を受け付けられる拡張 RSParams を作るまでは使えない
+	// nameRagexes 中の正規表現の1つにマッチすればOK
+	// nameRagexes の要素は，Regex オブジェクトでも，変換する前の文字列でもよい
 	def hasRegexeMathcedNamesOr(nameRegexes: Array[Regex]): Boolean ={
 		return nameRegexes.exists(hasRegexMatchedName(_))
 	}
-	
-	// いつか消す
 	def hasRegexeMathcedNamesOr(nameRegexStrings: Array[String]): Boolean ={
 		return nameRegexStrings.exists(e => hasRegexMatchedName(e.r))
 	}
