@@ -14,31 +14,30 @@ import scala.collection.mutable.LinkedList
 import scala.util.matching.Regex
 import dsl.common.RSParam
 
-class RSMethods(override val elements: Array[RSMethod]) extends RSCollection(elements) with Where[RSMethod]{
+class RSMethods(override val elements: Array[RSMethod]) extends RSCollection[RSMethod] with Where[RSMethod]{
 	// ŽÀ‘Ì‚ª—~‚µ‚­‚È‚Á‚½Žži‚¢‚¸‚êÁ‚·j
 	def origin(): Array[IMethod] = {
 		return elements.map(e => e.origin)
 	}
+	
+	// ‚·‚×‚Ä‚Ì—v‘f‚ð•Ô‚·
+	override def all(): Array[RSMethod] = elements
 
 	/**
 	 * $.methods.where(modifier -> Array("public", "private"), xxx -> Array(1, 2, 3)...)
 	 * where ‚É—^‚¦‚ç‚ê‚½ƒNƒGƒŠ‚Í‚·‚×‚Ä AND ‚Å‰ðŽß‚³‚ê‚é
 	 */
-	def where(params: Array[RSParam[_]]): Array[RSMethod] = {
+	override def where(params: Array[RSParam[_]]): Array[RSMethod] = {
 		return executeWhereQuery(params).toArray[RSMethod]
 	}
 	
 	/**
 	 * params ‚ðu–ž‚½‚³‚È‚¢v—v‘f‚ð•Ô‚·
 	 */
-	def whereNot(params: Array[RSParam[_]]): Array[RSMethod] = {
+	override def whereNot(params: Array[RSParam[_]]): Array[RSMethod] = {
 		return executeWhereNotQuery(params).toArray[RSMethod]
 	}
 	
-	def aaa(): Unit = {
-		var a = this.find(Array[RSParam[_]]())
-	}
-
 	override def dispatchWhere(param: RSParam[_]): Set[RSMethod] = {
 		param.value match {
 			case ("modifier", modifiers: Array[String]) => 
@@ -71,10 +70,6 @@ class RSMethods(override val elements: Array[RSMethod]) extends RSCollection(ele
 		}
 	}
 	
-	def all(): Array[RSMethod] = {
-		return elements
-	}
-
 	def privateMethods(): Array[RSMethod] = {
 		return elements.filter(e => e.isPrivate())
 	}

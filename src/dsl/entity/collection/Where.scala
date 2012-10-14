@@ -4,14 +4,29 @@ import dsl.common.RSParam
 
 /**
  * where() 等の検索をできるようにするトレイト
- * 型変換がうまくいかないので，実装クラスで toArray をかける
+ * @see http://www.scala-lang.org/docu/files/collections-api/collections_38.html
  */
 trait Where[T]{
 	val elements: Array[T]
-	// def dispatchWhere(param: (String, Array[String])): Set[T]
-	// def dispatchWhereNot(param: (String, Array[String])): Set[T]
+	
+	// -- To be overridden in subclasses
 	def dispatchWhere(param: RSParam[_]): Set[T]
 	def dispatchWhereNot(param: RSParam[_]): Set[T]
+	
+	def where(params: Array[RSParam[_]]): Array[T]
+	def where(params: RSParam[_]*): Array[T] = where(params.toArray)
+	
+	/**
+	 * 見つかった最初の要素だけ返す
+	 * TODO: アルゴリズム修正
+	 */
+	def find(params: Array[RSParam[_]]): T = where(params).first
+	def find(params: RSParam[_]*): T = find(params.toArray)
+	
+	def whereNot(params: Array[RSParam[_]]): Array[T]
+	def whereNot(params: RSParam[_]*): Array[T] = {
+		return whereNot(params.toArray)
+	}
  
  	def executeWhereQuery(params: Array[RSParam[_]]): Set[T] = {
 		var result = elements.toSet[T]
