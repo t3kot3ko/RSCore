@@ -11,7 +11,11 @@ import org.eclipse.jdt.core.dom.FieldDeclaration
 import dsl.search_trait.ModifierBasedSearchable
 import dsl.search_trait.NameBasedSearchable
 
-class RSField(val value: IField) extends ModifierBasedSearchable with NameBasedSearchable {
+class RSField(val element: IField)
+	extends RSEntity[IField]
+	with ModifierBasedSearchable
+	with NameBasedSearchable {
+	
 	// TODO: ワンライナだと長いから．
 	val name: String = {
 		() =>
@@ -23,8 +27,8 @@ class RSField(val value: IField) extends ModifierBasedSearchable with NameBasedS
 
 	// 自分自身の定義をASTから探す
 	override def getDeclaration(): FieldDeclaration = {
-		var cu = ASTUtil.createAST(value.getCompilationUnit()).asInstanceOf[CompilationUnit]
-		var dec = ASTNodeSearchUtil.getFieldDeclarationNode(value, cu)
+		var cu = ASTUtil.createAST(element.getCompilationUnit()).asInstanceOf[CompilationUnit]
+		var dec = ASTNodeSearchUtil.getFieldDeclarationNode(element, cu)
 		return dec
 	}
 }
