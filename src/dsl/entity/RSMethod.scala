@@ -37,7 +37,3 @@ class RSMethod(val element: IMethod)
 		return Signature.getParameterTypes(element.getSignature())
 	}
 }
-
-object RSMethod {
-	// implicit def convertToRSMethod(method: IMethod): RSMethod = new RSMethod(method)
-}

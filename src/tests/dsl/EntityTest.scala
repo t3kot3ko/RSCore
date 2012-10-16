@@ -7,7 +7,6 @@ import core.helper.CUHelper
 import org.junit.runners.Parameterized.Parameters
 import java.util.Arrays
 import dsl.entity.RSClass
-import dsl.entity.collection.RSMethods._
 import dsl.entity.collection.RSMethods
 import dsl.entity.RSMethod
 
@@ -38,6 +37,5 @@ class EntityTest {
 		assertEquals(3, $.methods.length)
 		*/
 	}
-	
 	
 }

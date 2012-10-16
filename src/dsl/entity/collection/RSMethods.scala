@@ -77,7 +77,3 @@ class RSMethods(val elements: Array[RSMethod])
 
 	def first = if (elements.length > 1) elements(0) else null
 }
-
-object RSMethods {
-	// implicit def convertToRSMethods(methods: Array[RSMethod]) = new RSMethods(methods)
-}

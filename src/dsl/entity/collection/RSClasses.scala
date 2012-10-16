@@ -41,6 +41,3 @@ class RSClasses(val elements: Array[RSClass])
 	}
 
 }
-object RSClasses {
-	// implicit def convertToRSClasses(classes: Array[RSClass]) = new RSClasses(classes)
-}

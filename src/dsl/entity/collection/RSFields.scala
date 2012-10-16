@@ -40,7 +40,3 @@ class RSFields(val elements: Array[RSField])
 	}
 
 }
-
-object RSFields {
-	// implicit def convertToRSField(fields: Array[RSField]) = new RSFields(fields)
-}

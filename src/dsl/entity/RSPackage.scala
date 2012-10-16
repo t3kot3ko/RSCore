@@ -1,6 +1,5 @@
 package dsl.entity
 import org.eclipse.jdt.core.IPackageFragment
-import dsl.entity.collection.RSClasses._
 import dsl.entity.collection.RSClasses
 
 class RSPackage(val element: IPackageFragment) extends RSEntity[IPackageFragment]{
@@ -20,5 +19,4 @@ class RSPackage(val element: IPackageFragment) extends RSEntity[IPackageFragment
 	def classes(): Array[RSClass] = classes(true)
 	
 	override def origin() = element
-
 }

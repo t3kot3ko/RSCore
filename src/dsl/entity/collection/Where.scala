@@ -30,7 +30,4 @@ trait Where[T]{
 		// return result.toArray[T]
 		return result
 	}
-	
-	
-
 }

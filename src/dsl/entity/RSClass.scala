@@ -18,9 +18,6 @@ import dsl.common.RSParam
 import dsl.action.RSTarget
 import dsl.util.ImplicitConversions._
 
-object RSClass {
-	// implicit def convertToRSClass(typ: IType) = new RSClass(typ: IType)
-}
 class RSClass(val element: IType)
 	extends RSEntity[IType]
 	with NameBasedSearchable
