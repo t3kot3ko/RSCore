@@ -14,12 +14,15 @@ import scala.collection.mutable.LinkedList
 import scala.util.matching.Regex
 import dsl.common.RSParam
 
-class RSMethods(override val elements: Array[RSMethod]) extends RSCollection[RSMethod] with Where[RSMethod]{
+class RSMethods(override val elements: Array[RSMethod])
+	extends RSCollection[RSMethod]
+	with Where[RSMethod] {
+	
 	// ŽÀ‘Ì‚ª—~‚µ‚­‚È‚Á‚½Žži‚¢‚¸‚êÁ‚·j
 	def origin(): Array[IMethod] = {
 		return elements.map(e => e.origin)
 	}
-	
+
 	// ‚·‚×‚Ä‚Ì—v‘f‚ð•Ô‚·
 	override def all(): Array[RSMethod] = elements
 
@@ -30,50 +33,50 @@ class RSMethods(override val elements: Array[RSMethod]) extends RSCollection[RSM
 	override def where(params: Array[RSParam[_]]): Array[RSMethod] = {
 		return executeWhereQuery(params).toArray[RSMethod]
 	}
-	
+
 	/**
 	 * params ‚ðu–ž‚½‚³‚È‚¢v—v‘f‚ð•Ô‚·
 	 */
 	override def whereNot(params: Array[RSParam[_]]): Array[RSMethod] = {
 		return executeWhereNotQuery(params).toArray[RSMethod]
 	}
-	
+
 	override def dispatchWhere(param: RSParam[_]): Set[RSMethod] = {
 		param.value match {
-			case ("modifier", modifiers: Array[String]) => 
+			case ("modifier", modifiers: Array[String]) =>
 				return this.elements.filter(e => e.hasModifiersOr(modifiers)).toSet
-			case ("return", returnTypes: Array[String]) => 
+			case ("return", returnTypes: Array[String]) =>
 				return this.elements.filter(e => e.hasReturnTypeNamesOr(returnTypes)).toSet
-			case ("name", names: Array[String]) => 
+			case ("name", names: Array[String]) =>
 				return this.elements.filter(e => e.hasNamesOr(names)).toSet
-			case ("namereg", names: Array[Regex]) => 
+			case ("namereg", names: Array[Regex]) =>
 				return this.elements.filter(e => e.hasRegexeMathcedNamesOr(names)).toSet
-			case ("namereg", names: Array[String]) => 
+			case ("namereg", names: Array[String]) =>
 				return this.elements.filter(e => e.hasRegexeMathcedNamesOr(names)).toSet
 			case _ => return this.elements.toSet
 		}
 	}
-	
+
 	override def dispatchWhereNot(param: RSParam[_]): Set[RSMethod] = {
 		param.value match {
-			case ("modifier", modifiers: Array[String]) => 
+			case ("modifier", modifiers: Array[String]) =>
 				return this.elements.filterNot(e => e.hasModifiersOr(modifiers)).toSet
-			case ("return", returnTypes: Array[String]) => 
+			case ("return", returnTypes: Array[String]) =>
 				return this.elements.filterNot(e => e.hasReturnTypeNamesOr(returnTypes)).toSet
-			case ("name", names: Array[String]) => 
+			case ("name", names: Array[String]) =>
 				return this.elements.filterNot(e => e.hasNamesOr(names)).toSet
-			case ("namereg", names: Array[String]) => 
+			case ("namereg", names: Array[String]) =>
 				return this.elements.filterNot(e => e.hasRegexeMathcedNamesOr(names)).toSet
-			case ("namereg", names: Array[Regex]) => 
+			case ("namereg", names: Array[Regex]) =>
 				return this.elements.filterNot(e => e.hasRegexeMathcedNamesOr(names)).toSet
 			case _ => return this.elements.toSet
 		}
 	}
-	
+
 	def privateMethods(): Array[RSMethod] = {
 		return elements.filter(e => e.isPrivate())
 	}
-	
+
 	def first = if (elements.length > 1) elements(0) else null
 }
 

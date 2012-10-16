@@ -20,6 +20,8 @@ class RSField(val value: IField) extends ModifierBasedSearchable with NameBasedS
 				dec.fragments().first.asInstanceOf[VariableDeclarationFragment].getName().toString()
 			}
 	}.apply()
+	
+	def origin: IField = value
 
 	// ©•ª©g‚Ì’è‹`‚ğAST‚©‚ç’T‚·
 	override def getDeclaration(): FieldDeclaration = {

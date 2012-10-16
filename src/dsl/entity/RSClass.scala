@@ -27,6 +27,7 @@ object RSClass{
 }
 class RSClass(typ: IType) extends RSEntity(typ) with NameBasedSearchable with ModifierBasedSearchable with CallbackBasedSearchable[RSClass]{
 	val name: String = this.typ.getElementName()
+	def origin: IType = typ
 	
 	def methods(): Array[RSMethod] = {
 		return typ.getMethods().map(e => new RSMethod(e))

@@ -75,7 +75,6 @@ import dsl.entity.collection.RSFields._
 import org.eclipse.jdt.internal.corext.refactoring.structure.ASTNodeSearchUtil
 import dsl.util.ASTUtil
 import application.sample.RenameMultipleFields
-import dsl.common.RSParams
 import dsl.entity.RSPackage
 import dsl.common.RSParam
 import scala.util.matching.Regex
