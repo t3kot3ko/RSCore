@@ -14,38 +14,27 @@ import dsl.search_trait.NameBasedSearchable
 import dsl.search_trait.ReturnTypeSearchable
 import dsl.search_trait.CallbackBasedSearchable
 
-class RSMethod(val method: IMethod) extends RSEntity(method)
+class RSMethod(val element: IMethod)
+	extends RSEntity[IMethod]
 	with ModifierBasedSearchable
 	with NameBasedSearchable
 	with ReturnTypeSearchable
 	with CallbackBasedSearchable[RSMethod] {
-	
-	val name = method.getElementName()
+
+	val name = element.getElementName()
 	val returnType: Type = this.declaration.asInstanceOf[MethodDeclaration].getReturnType2()
 
-	// ñúàÍÅCIMethod Ç™íºê⁄ó~ÇµÇ≠Ç»Ç¡ÇΩéûóp
-	def origin: IMethod = method
-
 	override def getDeclaration(): MethodDeclaration = {
-		var cu = ASTUtil.createAST(method.getCompilationUnit()).asInstanceOf[CompilationUnit]
-		var dec: MethodDeclaration = ASTNodeSearchUtil.getMethodDeclarationNode(method, cu)
+		var cu = ASTUtil.createAST(element.getCompilationUnit()).asInstanceOf[CompilationUnit]
+		var dec: MethodDeclaration = ASTNodeSearchUtil.getMethodDeclarationNode(element, cu)
 		return dec
 	}
 
 	def signatures(): Array[String] = {
-		return Signature.getParameterTypes(method.getSignature())
+		return Signature.getParameterTypes(element.getSignature())
 	}
-
-	def ast(): MethodDeclaration = {
-		throw new NotImplementedException
-	}
-
 }
 
 object RSMethod {
 	implicit def convertToRSMethod(method: IMethod): RSMethod = new RSMethod(method)
-
-	def create(method: IMethod): RSMethod = {
-		return method.asInstanceOf[RSMethod]
-	}
 }

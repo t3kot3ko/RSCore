@@ -14,17 +14,15 @@ import scala.collection.mutable.LinkedList
 import scala.util.matching.Regex
 import dsl.common.RSParam
 
-class RSMethods(override val elements: Array[RSMethod])
+class RSMethods(val elements: Array[RSMethod])
 	extends RSCollection[RSMethod]
 	with Where[RSMethod] {
 	
-	// 実体が欲しくなった時（いずれ消す）
-	def origin(): Array[IMethod] = {
-		return elements.map(e => e.origin)
-	}
-
 	// すべての要素を返す
 	override def all(): Array[RSMethod] = elements
+	
+	// 実体が欲しくなった時（いずれ消す）
+	override def origin(): Array[IMethod] = elements.map(e => e.origin)
 
 	/**
 	 * $.methods.where(modifier -> Array("public", "private"), xxx -> Array(1, 2, 3)...)
@@ -32,13 +30,6 @@ class RSMethods(override val elements: Array[RSMethod])
 	 */
 	override def where(params: Array[RSParam[_]]): Array[RSMethod] = {
 		return executeWhereQuery(params).toArray[RSMethod]
-	}
-
-	/**
-	 * params を「満たさない」要素を返す
-	 */
-	override def whereNot(params: Array[RSParam[_]]): Array[RSMethod] = {
-		return executeWhereNotQuery(params).toArray[RSMethod]
 	}
 
 	override def dispatchWhere(param: RSParam[_]): Set[RSMethod] = {
@@ -55,6 +46,13 @@ class RSMethods(override val elements: Array[RSMethod])
 				return this.elements.filter(e => e.hasRegexeMathcedNamesOr(names)).toSet
 			case _ => return this.elements.toSet
 		}
+	}
+
+	/**
+	 * params を「満たさない」要素を返す
+	 */
+	override def whereNot(params: Array[RSParam[_]]): Array[RSMethod] = {
+		return executeWhereNotQuery(params).toArray[RSMethod]
 	}
 
 	override def dispatchWhereNot(param: RSParam[_]): Set[RSMethod] = {
