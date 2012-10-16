@@ -1,10 +1,12 @@
 package core.action.refactoring
 import dsl.action.RSAction
 import dsl.entity.RSClass
-import dsl.entity.collection.RSFields._
 import dsl.entity.RSMethod
 import dsl.common.RSParam
 import org.eclipse.jdt.internal.corext.refactoring.rename.RenameFieldProcessor
+import org.eclipse.ltk.core.refactoring.participants.RenameRefactoring
+import core.helper.RefactoringHelper
+import dsl.util.ImplicitConversions._
 
 class RenameFieldRefactoringProcessor {
 	def createAction(cls: RSClass, targetFieldName: String, newFieldName: String): RSAction = {
@@ -21,5 +23,7 @@ class RenameFieldRefactoringProcessor {
 		if (status != null) {
 			println(status)
 		}
+		
+		return null
 	}
 }

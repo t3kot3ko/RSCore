@@ -5,7 +5,6 @@ import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.jdt.core.JavaCore
-import dsl.entity.RSWorkspace
 
 object RSWorkspace{
 	val root: IWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot()

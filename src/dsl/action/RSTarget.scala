@@ -8,13 +8,8 @@ import dsl.entity.RSWorkspace
  * target.action(Processor).perform
  * fields.toTarget.action("refactoring", "rename").param(...).param(...).......perform()
  */
-class RSTarget(val entities: Array[_]){
+class RSTarget(val entities: Array[RSEntity[_]]){
 	def action(kind: String, id: String): RSAction = {
 		return null
-	}
-	
-	def syntaxCheck(): Unit = {
-		var $ = RSWorkspace
-		$.project("sample").getPackage("aaaaa")
 	}
 }

@@ -1,6 +1,6 @@
 package dsl.action
 
-class RSActionProcessor {
+class RSActionProcessor{
 	def createAction(): RSAction = {
 		return null
 	}

@@ -1,5 +1,4 @@
 package dsl.entity.collection
-import dsl.common.RSParams
 import dsl.common.RSParam
 
 /**
@@ -11,7 +10,6 @@ trait Where[T]{
 	
 	// -- To be overridden in subclasses
 	def dispatchWhere(param: RSParam[_]): Set[T]
-	def dispatchWhereNot(param: RSParam[_]): Set[T]
 	
 	def where(params: Array[RSParam[_]]): Array[T]
 	def where(params: RSParam[_]*): Array[T] = where(params.toArray)
@@ -23,10 +21,6 @@ trait Where[T]{
 	def find(params: Array[RSParam[_]]): T = where(params).first
 	def find(params: RSParam[_]*): T = find(params.toArray)
 	
-	def whereNot(params: Array[RSParam[_]]): Array[T]
-	def whereNot(params: RSParam[_]*): Array[T] = {
-		return whereNot(params.toArray)
-	}
  
  	def executeWhereQuery(params: Array[RSParam[_]]): Set[T] = {
 		var result = elements.toSet[T]
@@ -37,15 +31,6 @@ trait Where[T]{
 		return result
 	}
 	
-	def executeWhereNotQuery(params: Array[RSParam[_]]): Set[T] = {
-		var result = elements.toSet[T]
-		//for (param <- params.getValue()) {
-		for (param <- params) {
-			result = result & dispatchWhereNot(param)
-		}
-		// return result.toArray[T]
-		return result
-	}
 	
 
 }

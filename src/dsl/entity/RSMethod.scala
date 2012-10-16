@@ -13,17 +13,20 @@ import dsl.search_trait.ModifierBasedSearchable
 import dsl.search_trait.NameBasedSearchable
 import dsl.search_trait.ReturnTypeSearchable
 import dsl.search_trait.CallbackBasedSearchable
+import dsl.action.RSTarget
 
 class RSMethod(val element: IMethod)
 	extends RSEntity[IMethod]
 	with ModifierBasedSearchable
 	with NameBasedSearchable
 	with ReturnTypeSearchable
-	with CallbackBasedSearchable[RSMethod] {
+	with CallbackBasedSearchable[RSMethod]{
 
 	val name = element.getElementName()
 	val returnType: Type = this.declaration.asInstanceOf[MethodDeclaration].getReturnType2()
-
+	override def origin(): IMethod = element
+	// override def toTarget : RSTarget = new RSTarget(Array(element))
+	
 	override def getDeclaration(): MethodDeclaration = {
 		var cu = ASTUtil.createAST(element.getCompilationUnit()).asInstanceOf[CompilationUnit]
 		var dec: MethodDeclaration = ASTNodeSearchUtil.getMethodDeclarationNode(element, cu)
@@ -36,5 +39,5 @@ class RSMethod(val element: IMethod)
 }
 
 object RSMethod {
-	implicit def convertToRSMethod(method: IMethod): RSMethod = new RSMethod(method)
+	// implicit def convertToRSMethod(method: IMethod): RSMethod = new RSMethod(method)
 }

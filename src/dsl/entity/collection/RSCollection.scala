@@ -4,12 +4,7 @@ import dsl.entity.RSEntity
 
 trait RSCollection[T] {
 	val elements: Array[T]
-	def all(): Array[T] = {
-		return elements
-	}
-	def toTarget(): RSTarget = {
-		return new RSTarget(elements)
-	}
-
-	def origin(): Array[_]
+	def all(): Array[T] = elements
+	// def toTarget(): RSTarget
+	def origin: Array[_]
 }

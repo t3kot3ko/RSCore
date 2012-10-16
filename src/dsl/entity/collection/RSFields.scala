@@ -2,12 +2,16 @@ package dsl.entity.collection
 import org.eclipse.jdt.core.IField
 import org.eclipse.jdt.core.dom.Modifier
 import dsl.entity.RSField
-import dsl.common.RSParams
 import sun.reflect.generics.reflectiveObjects.NotImplementedException
 import dsl.common.RSParam
 import scala.util.matching.Regex
 
-class RSFields(val elements: Array[RSField]) extends Where[RSField] {
+class RSFields(val elements: Array[RSField])
+	extends RSCollection[RSField]
+	with Where[RSField]
+	with WhereNot[RSField] {
+
+	override def origin: Array[IField] = elements.map(_.origin)
 	override def where(params: Array[RSParam[_]]): Array[RSField] = {
 		return executeWhereQuery(params).toArray[RSField]
 	}
@@ -38,5 +42,5 @@ class RSFields(val elements: Array[RSField]) extends Where[RSField] {
 }
 
 object RSFields {
-	implicit def convertToRSField(fields: Array[RSField]) = new RSFields(fields)
+	// implicit def convertToRSField(fields: Array[RSField]) = new RSFields(fields)
 }

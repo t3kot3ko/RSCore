@@ -1,11 +1,10 @@
 package dsl.search_trait
 import org.eclipse.jdt.core.IJavaElement
+import scala.reflect.This
 
 trait CallbackBasedSearchable[T]{
-	val element: IJavaElement 
-	
-	def passCallback(callback: IJavaElement => Boolean): Boolean = {
-		return callback(element)
+	def passCallback(callback: T => Boolean): Boolean = {
+		return true
 	}
 
 }

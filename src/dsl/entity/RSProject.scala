@@ -12,8 +12,8 @@ class RSProject(project: IJavaProject) {
 		var root = getRoot()
 		return null
 	}
-
-	def getPackage(packageName: String): RSPackage = {
+	
+	def pkg(packageName: String): RSPackage = {
 		var root = getRoot()
 		return new RSPackage(root.getPackageFragment(packageName))
 		

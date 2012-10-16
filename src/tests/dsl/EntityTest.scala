@@ -33,8 +33,10 @@ class EntityTest {
 	def ƒƒ\ƒbƒh‚Ì”‚ğ³‚µ‚­æ“¾‚Å‚«‚é: Unit = {
 		var typ = this.cu.getType(UNIT_NAME)
 		var $ = new RSClass(typ)
+		/*
 		var privateMethods: RSMethods = $.methods.privateMethods
 		assertEquals(3, $.methods.length)
+		*/
 	}
 	
 	

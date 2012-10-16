@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment
 import org.eclipse.jdt.core.dom.FieldDeclaration
 import dsl.search_trait.ModifierBasedSearchable
 import dsl.search_trait.NameBasedSearchable
+import dsl.action.RSTarget
 
 class RSField(val element: IField)
 	extends RSEntity[IField]
@@ -25,7 +26,8 @@ class RSField(val element: IField)
 			}
 	}.apply()
 	
-	def origin: IField = value
+	override def origin: IField = element
+	// override def toTarget: RSTarget = new RSTarget(Array(element))
 
 	// é©ï™é©êgÇÃíËã`ÇASTÇ©ÇÁíTÇ∑
 	override def getDeclaration(): FieldDeclaration = {
@@ -33,8 +35,4 @@ class RSField(val element: IField)
 		var dec = ASTNodeSearchUtil.getFieldDeclarationNode(element, cu)
 		return dec
 	}
-}
-
-object RSField {
-	implicit def convertToRSField(field: IField) = new RSField(field)
 }

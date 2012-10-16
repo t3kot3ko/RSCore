@@ -5,46 +5,40 @@ import dsl.util.ASTUtil
 import org.eclipse.jdt.core.dom.CompilationUnit
 import scala.collection.JavaConverters._
 import org.eclipse.jdt.core.dom.TypeDeclaration
-import dsl.entity.RSField
 import org.eclipse.jdt.core.dom.FieldDeclaration
 import org.eclipse.jdt.core.dom.VariableDeclaration
 import org.eclipse.jdt.internal.corext.refactoring.structure.ASTNodeSearchUtil
 import org.eclipse.jdt.core.IMethod
 import org.eclipse.jdt.core.dom.Modifier
-import dsl.entity.RSMethod._
-import dsl.entity.RSMethod
 import dsl.entity.collection.RSMethods
 import dsl.search_trait.NameBasedSearchable
 import dsl.search_trait.ModifierBasedSearchable
-import dsl.common.RSParams
-import dsl.entity.collection.RSMethods._
 import dsl.search_trait.CallbackBasedSearchable
 import dsl.common.RSParam
+import dsl.action.RSTarget
+import dsl.util.ImplicitConversions._
 
 object RSClass {
-	implicit def convertToRSClass(typ: IType) = new RSClass(typ: IType)
+	// implicit def convertToRSClass(typ: IType) = new RSClass(typ: IType)
 }
-class RSClass(typ: IType) extends RSEntity(typ) with NameBasedSearchable with ModifierBasedSearchable with CallbackBasedSearchable[RSClass]{
-	val name: String = this.typ.getElementName()
-	def origin: IType = typ
-	
+class RSClass(val element: IType)
+	extends RSEntity[IType]
+	with NameBasedSearchable
+	with ModifierBasedSearchable
+	with CallbackBasedSearchable[RSClass]{
+
 	val name: String = this.element.getElementName()
+	override def origin: IType = element
+	// override def toTarget(): RSTarget = new RSTarget(Array(element))
 
 	def methods(): Array[RSMethod] = {
 		return element.getMethods().map(e => new RSMethod(e))
 	}
-	
-	def isInterface(): Boolean = {
-		return false
-	}
-	
-	def isClass(): Boolean = {
-		return false
-	}
-	
-	def kind: String = {
-		return ""
-	}
+
+	def isInterface(): Boolean = return this.element.isInterface()
+	def isClass(): Boolean = return this.element.isClass()
+	def kind: String = if (this.isClass) "class" else "interface"
+	val superclassName = this.element.getSuperclassName()
 
 	// Get method whose signature is matched
 	def method(name: String, signature: Array[String]): RSMethod = {
@@ -60,6 +54,18 @@ class RSClass(typ: IType) extends RSEntity(typ) with NameBasedSearchable with Mo
 	def fields(): Array[RSField] = {
 		return this.element.getFields().map(e => new RSField(e))
 	}
+	
+	override def passCallback(callback: RSClass => Boolean): Boolean = {
+		return callback(this)
+	}
+	
+	def passCallbacksOr(callbacks: Array[RSClass => Boolean]): Boolean = {
+		return callbacks.exists(e => e(this))
+	}
+	def passCallbacksAnd(callbacks: Array[RSClass => Boolean]): Boolean = {
+		return callbacks.forall(e => e(this))
+	}
+	
 
 	override def getDeclaration(): TypeDeclaration = {
 		var cu = ASTUtil.createAST(element.getCompilationUnit()).asInstanceOf[CompilationUnit]

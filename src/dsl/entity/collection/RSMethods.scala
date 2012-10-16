@@ -9,18 +9,18 @@ import org.eclipse.jdt.core.dom.MethodDeclaration
 import scala.collection.mutable.Buffer
 import org.eclipse.jdt.core.dom.Modifier
 import scala.collection.mutable.ListBuffer
-import dsl.common.RSParams
 import scala.collection.mutable.LinkedList
 import scala.util.matching.Regex
 import dsl.common.RSParam
 
 class RSMethods(val elements: Array[RSMethod])
 	extends RSCollection[RSMethod]
-	with Where[RSMethod] {
-	
+	with Where[RSMethod]
+	with WhereNot[RSMethod] {
+
 	// ‚·‚×‚Ä‚Ì—v‘f‚ð•Ô‚·
 	override def all(): Array[RSMethod] = elements
-	
+
 	// ŽÀ‘Ì‚ª—~‚µ‚­‚È‚Á‚½Žži‚¢‚¸‚êÁ‚·j
 	override def origin(): Array[IMethod] = elements.map(e => e.origin)
 
@@ -79,5 +79,5 @@ class RSMethods(val elements: Array[RSMethod])
 }
 
 object RSMethods {
-	implicit def convertToRSMethods(methods: Array[RSMethod]) = new RSMethods(methods)
+	// implicit def convertToRSMethods(methods: Array[RSMethod]) = new RSMethods(methods)
 }
