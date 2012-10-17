@@ -36,6 +36,16 @@ class RSMethod(val element: IMethod)
 		var dec: MethodDeclaration = ASTNodeSearchUtil.getMethodDeclarationNode(element, cu)
 		return dec
 	}
+	def passCallback(callback: (RSMethod => Boolean)): Boolean = callback(this)
+	def passCallbacksOr(callbacks: Array[RSMethod => Boolean]): Boolean = {
+		return callbacks.exists(cb => cb(this))
+	}
+	def passCallbacksAnd(callbacks: Array[RSMethod => Boolean]): Boolean = {
+		return callbacks.forall(cb => cb(this))
+	}
+	
+	// —áŠO‚Ì–¼‘O
+	def exceptionTypes: Array[String] = this.element.getExceptionTypes()
 
 	def signatures(): Array[String] = {
 		return Signature.getParameterTypes(element.getSignature())

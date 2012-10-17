@@ -52,7 +52,7 @@ class RSClass(val element: IType)
 		return this.element.getFields().map(e => new RSField(e))
 	}
 	
-	override def passCallback(callback: RSClass => Boolean): Boolean = {
+	def passCallback(callback: RSClass => Boolean): Boolean = {
 		return callback(this)
 	}
 	

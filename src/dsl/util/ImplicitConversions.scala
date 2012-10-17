@@ -8,6 +8,9 @@ import dsl.entity.collection.RSFields
 import org.eclipse.jdt.core.IType
 import dsl.entity.RSClass
 import dsl.entity.collection.RSClasses
+import org.eclipse.jdt.core.ILocalVariable
+import dsl.entity.RSParameter
+import dsl.entity.collection.RSParameters
 
 /**
  * ImplicitConversion Ç∑ÇÈÇΩÇﬂÇÃïœä∑ÉÅÉ\ÉbÉhåQ
@@ -22,4 +25,7 @@ object ImplicitConversions {
 	
 	implicit def convertToRSClass(cls: IType) = new RSClass(cls)
 	implicit def convertToRSClasses(clss: Array[RSClass]) = new RSClasses(clss)
+	
+	implicit def converToRSParameter(prm: ILocalVariable) = new RSParameter(prm)
+	implicit def convertTORSParameters(prms: Array[RSParameter]) = new RSParameters(prms)
 }

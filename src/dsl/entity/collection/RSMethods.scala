@@ -44,6 +44,11 @@ class RSMethods(val elements: Array[RSMethod])
 				return this.elements.filter(e => e.hasRegexeMathcedNamesOr(names)).toSet
 			case ("namereg", names: Array[String]) =>
 				return this.elements.filter(e => e.hasRegexeMathcedNamesOr(names)).toSet
+				
+			// TODO: EXPERIMENTAL
+			case ("callback", callbacks: Array[RSMethod => Boolean]) =>
+				return this.elements.filter(e => e.passCallbacksOr(callbacks)).toSet
+				
 			case _ => return this.elements.toSet
 		}
 	}

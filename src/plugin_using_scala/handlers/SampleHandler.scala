@@ -134,6 +134,14 @@ class SampleHandler extends AbstractHandler {
 			.methods.where(RSParam("callback" -> Array(c)))
 			
 		println("using CBs = " + searchMethodUsingCB.length)
+		
+		
+		privateMethods.first.parameters.length
+		
+		var voidMethods = $.project("Sample").pkg("rename").classes.where(RSParam("name" -> Array("RenameField"))).first.
+		methods.where(RSParam("callback" -> Array((m: RSMethod) => m.parameters.length == 0)))
+		println("void methods = " + voidMethods.length)
+		
 			
 		
 			
