@@ -24,6 +24,10 @@ class RSMethod(val element: IMethod)
 
 	val name = element.getElementName()
 	val returnType: Type = this.declaration.asInstanceOf[MethodDeclaration].getReturnType2()
+	
+	def parameters(): Array[RSParameter] = {
+		this.element.getParameters().map(e => new RSParameter(e))
+	}
 	override def origin(): IMethod = element
 	// override def toTarget : RSTarget = new RSTarget(Array(element))
 	
