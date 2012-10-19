@@ -82,6 +82,7 @@ import dsl.entity.RSProject
 import dsl.entity.RSWorkspace
 import dsl.util.ImplicitConversions._
 import dsl.entity.RSMethod
+import dsl.target.RSTargetCollection
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -122,27 +123,17 @@ class SampleHandler extends AbstractHandler {
 		val privateMethods = 
 			$.project("Sample").pkg("rename").classes.where(RSParam("name" -> Array("RenameField"))).first
 			.methods.where(RSParam("modifier" -> Array("private")))
-		println("privateMethods.length = " + privateMethods.length)
-		
-		def callback(method: RSMethod): Boolean = {
-			return true 
-		}
-		
-		val c = callback _
-		val searchMethodUsingCB = 
-			$.project("Sample").pkg("rename").classes.where(RSParam("name" -> Array("RenameField"))).first
-			.methods.where(RSParam("callback" -> Array(c)))
 			
-		println("using CBs = " + searchMethodUsingCB.length)
+		println("privateMethods.length = " + privateMethods.length)
 		
 		
 		privateMethods.first.parameters.length
 		
 		var voidMethods = $.project("Sample").pkg("rename").classes.where(RSParam("name" -> Array("RenameField"))).first.
-		methods.where(RSParam("callback" -> Array((m: RSMethod) => m.parameters.length == 0)))
-		println("void methods = " + voidMethods.length)
+		methods.where(RSParam("callback" -> Array((m: RSMethod) => m.parameters.length == 3)))
 		
-			
+		
+		println("void methods = " + voidMethods.length)
 		
 			
 		
@@ -156,6 +147,22 @@ class SampleHandler extends AbstractHandler {
 		println("privateStaticMethods2.length = " + privateStaticMethods2.length)
 		
 		println(privateStaticMethods1.first == privateStaticMethods2.first)
+		
+		
+		val publicFields =
+			$.project("Sample").pkg("rename").classes.where(RSParam("name" -> Array("RenameField"))).first
+			.fields.where(RSParam("modifier" -> Array("public")))
+		println(publicFields.length)
+		
+		
+		
+		println("SelfEncapsulateRefactoring...")
+		
+		
+		
+		var targets = new RSTargetCollection(publicFields.toTarget())
+		targets.perform("sef")
+		
 
 		// var privateParams = RSParam("modifier" -> Array("protected", "static"))
 		// var privateParamsAnd = RSParam("modifier" -> Array("protected")).and(RSParam("modifier" -> Array("static")))

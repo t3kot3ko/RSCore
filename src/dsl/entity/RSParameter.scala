@@ -9,6 +9,8 @@ import dsl.search_trait.NameBasedSearchable
 class RSParameter(val element: ILocalVariable)
 	extends RSEntity[ILocalVariable]
 	with NameBasedSearchable {
+	
+	override val __identifier = "parameter"
 
 	// •Ï”–¼
 	val name: String = element.getElementName()

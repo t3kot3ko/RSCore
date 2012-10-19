@@ -13,7 +13,6 @@ import dsl.search_trait.ModifierBasedSearchable
 import dsl.search_trait.NameBasedSearchable
 import dsl.search_trait.ReturnTypeSearchable
 import dsl.search_trait.CallbackBasedSearchable
-import dsl.action.RSTarget
 
 class RSMethod(val element: IMethod)
 	extends RSEntity[IMethod]
@@ -21,6 +20,8 @@ class RSMethod(val element: IMethod)
 	with NameBasedSearchable
 	with ReturnTypeSearchable
 	with CallbackBasedSearchable[RSMethod]{
+	
+	override val __identifier = "method"
 
 	val name = element.getElementName()
 	val returnType: Type = this.declaration.asInstanceOf[MethodDeclaration].getReturnType2()

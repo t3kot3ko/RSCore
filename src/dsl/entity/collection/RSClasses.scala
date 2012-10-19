@@ -4,11 +4,11 @@ import dsl.util.ImplicitConversions._
 import dsl.common.RSParam
 import scala.util.matching.Regex
 import org.eclipse.jdt.core.IType
-import dsl.action.RSTarget
 
 class RSClasses(val elements: Array[RSClass])
 	extends RSCollection[RSClass]
 	with Where[RSClass] {
+	
 	
 	override def origin: Array[IType] = elements.map(e => e.origin)
 	override def all: Array[RSClass] = elements

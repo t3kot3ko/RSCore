@@ -15,7 +15,6 @@ import dsl.search_trait.NameBasedSearchable
 import dsl.search_trait.ModifierBasedSearchable
 import dsl.search_trait.CallbackBasedSearchable
 import dsl.common.RSParam
-import dsl.action.RSTarget
 import dsl.util.ImplicitConversions._
 
 class RSClass(val element: IType)
@@ -23,6 +22,9 @@ class RSClass(val element: IType)
 	with NameBasedSearchable
 	with ModifierBasedSearchable
 	with CallbackBasedSearchable[RSClass]{
+	
+	val __identifier: String = "class"
+	
 
 	val name: String = this.element.getElementName()
 	override def origin: IType = element

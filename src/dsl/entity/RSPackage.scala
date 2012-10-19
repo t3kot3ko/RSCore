@@ -3,6 +3,9 @@ import org.eclipse.jdt.core.IPackageFragment
 import dsl.entity.collection.RSClasses
 
 class RSPackage(val element: IPackageFragment) extends RSEntity[IPackageFragment]{
+	
+	override val __identifier = "package"
+		
 	/**
 	 * パッケージ以下で宣言されているクラス(IType)をすべて取得する
 	 */

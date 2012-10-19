@@ -1,5 +1,4 @@
 package core.action.refactoring
-import dsl.action.RSAction
 import dsl.entity.RSClass
 import dsl.entity.RSMethod
 import dsl.common.RSParam
@@ -9,7 +8,7 @@ import core.helper.RefactoringHelper
 import dsl.util.ImplicitConversions._
 
 class RenameFieldRefactoringProcessor {
-	def createAction(cls: RSClass, targetFieldName: String, newFieldName: String): RSAction = {
+	def createAction(cls: RSClass, targetFieldName: String, newFieldName: String): Unit = {
 		var field = cls.fields.where(
 			RSParam(
 				"name" -> Array(targetFieldName))).first.origin
