@@ -5,10 +5,15 @@ import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.jdt.core.JavaCore
+import org.eclipse.core.runtime.NullProgressMonitor
 
 object RSWorkspace{
 	val root: IWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot()
 
+	def refresh(): Unit = {
+		root.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor)
+	}
+	
 	def project(projectName: String): RSProject = {
 		var project: IProject = root.getProject(projectName)
 
