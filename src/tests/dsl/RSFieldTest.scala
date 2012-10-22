@@ -10,21 +10,6 @@ import scala.reflect.This
 
 
 class FieldTest extends BaseTest{
-	@Before
-	def setUp(): Unit = {
-		this.project = $.project("Sample")
-	}
-	
-	@Test
-	def Workspace‚ðŽæ“¾‚Å‚«‚é(): Unit = {
-		assertNotNull(project)
-	}
-	
-	@Test
-	def RSPackage‚ðŽæ“¾‚Å‚«‚é(): Unit = {
-		var pkg = project.pkg("rename")
-		assertNotNull(pkg)
-	}
 	
 	@Test
 	def RSClass‚ðŽæ“¾‚Å‚«‚é(): Unit = {
