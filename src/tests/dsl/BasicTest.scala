@@ -13,7 +13,7 @@ class BasicTest extends BaseTest{
 	
 	@Test
 	def RSPackage‚ðŽæ“¾‚Å‚«‚é(): Unit = {
-		var pkg = project.pkg("rename")
+		var pkg = project.pkg("test.dsl")
 		assertNotNull(pkg)
 	}
 

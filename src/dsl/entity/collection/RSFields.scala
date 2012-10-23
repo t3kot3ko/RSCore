@@ -6,39 +6,32 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException
 import dsl.common.RSParam
 import scala.util.matching.Regex
 import dsl.target.RSTarget
+import dsl.query.RSQuery
+import dsl.query.NameQuery
+import dsl.query.ModifierQuery
+import dsl.query.NameRegQuery
 
 class RSFields(val elements: Array[RSField])
-	extends RSCollection[RSField]
-	with Where[RSField]
-	with WhereNot[RSField] {
+	extends RSCollection[RSField] with Find[RSField]{
 
 	override def origin: Array[IField] = elements.map(_.origin)
-	override def where(params: Array[RSParam[_]]): Array[RSField] = {
-		return executeWhereQuery(params).toArray[RSField]
-	}
-	override def whereNot(params: Array[RSParam[_]]): Array[RSField] = {
-		return executeWhereNotQuery(params).toArray[RSField]
-	}
-	
 	def toTarget(): Array[RSTarget] = this.elements.map(e => e.toTarget())
-
-	override def dispatchWhere(param: RSParam[_]): Set[RSField] = {
-		param.value match {
-			case ("modifier", modifiers: Array[String]) => return this.elements.filter(e => e.hasModifiersOr(modifiers)).toSet
-			case ("name", names: Array[String]) => return this.elements.filter(e => e.hasNamesOr(names)).toSet
-			case ("namereg", names: Array[Regex]) => return this.elements.filter(e => e.hasRegexeMathcedNamesOr(names)).toSet
-			case ("namereg", names: Array[String]) => return this.elements.filter(e => e.hasRegexeMathcedNamesOr(names)).toSet
-			case _ => return this.elements.toSet
+	
+	// TODO: extract
+	override def select(query: RSQuery): Array[RSField] = {
+		query match{
+			case NameQuery(names: Array[String]) => this.elements.filter(e => e.hasNamesOr(names))
+			case NameRegQuery(nameregs: Array[String]) => this.elements.filter(e => e.hasRegexeMathcedNamesOr(nameregs))
+			case ModifierQuery(modifiers: Array[String]) => return this.elements.filter(e => e.hasModifiersOr(modifiers))
+			case _ => return this.elements
 		}
 	}
-
-	override def dispatchWhereNot(param: RSParam[_]): Set[RSField] = {
-		param.value match {
-			case ("modifier", modifiers: Array[String]) => return this.elements.filterNot(e => e.hasModifiersOr(modifiers)).toSet
-			case ("name", names: Array[String]) => return this.elements.filterNot(e => e.hasNamesOr(names)).toSet
-			case ("namereg", names: Array[Regex]) => return this.elements.filterNot(e => e.hasRegexeMathcedNamesOr(names)).toSet
-			case ("namereg", names: Array[String]) => return this.elements.filterNot(e => e.hasRegexeMathcedNamesOr(names)).toSet
-			case _ => return this.elements.toSet
+	override def exclude(query: RSQuery) : Array[RSField] = {
+		query match{
+			case NameQuery(names: Array[String]) => this.elements.filterNot(e => e.hasNamesOr(names))
+			case NameRegQuery(nameregs: Array[String]) => this.elements.filterNot(e => e.hasRegexeMathcedNamesOr(nameregs))
+			case ModifierQuery(modifiers: Array[String]) => return this.elements.filterNot(e => e.hasModifiersOr(modifiers))
+			case _ => return this.elements
 		}
 	}
 

@@ -18,7 +18,7 @@ import dsl.common.RSParam
 import dsl.util.ImplicitConversions._
 
 class RSClass(val element: IType)
-	extends RSEntity[IType]
+extends RSEntity
 	with NameBasedSearchable
 	with ModifierBasedSearchable
 	with CallbackBasedSearchable[RSClass]{
@@ -42,11 +42,6 @@ class RSClass(val element: IType)
 	// Get method whose signature is matched
 	def method(name: String, signature: Array[String]): RSMethod = {
 		return element.getMethod(name, signature)
-	}
-
-	// ‚à‚µ‚àCcls.methods(RSParams("modifier" -> Array("public"))) ‚Æ‚©‚µ‚½‚¯‚ê‚ÎCˆÈ‰º‚ğ—LŒø‚É‚·‚é
-	def methods(params: RSParam[_]*): Array[RSMethod] = {
-		return this.methods().where(params.toArray)
 	}
 
 	// Get instance / class fields

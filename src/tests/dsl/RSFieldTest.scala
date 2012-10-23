@@ -7,15 +7,16 @@ import org.junit.Before
 import dsl.entity.RSWorkspace
 import dsl.entity.RSProject
 import scala.reflect.This
+import dsl.entity.collection.By
+import dsl.util.ImplicitConversions._
 
 
 class FieldTest extends BaseTest{
-	
 	@Test
 	def RSClass‚ðŽæ“¾‚Å‚«‚é(): Unit = {
-		var clss = project.pkg("rename").classes(false)
-		assertNotNull(clss)
-		assertEquals(2, clss.length)
+		var cls = project.pkg("test.dsl").classes.first
+		var publicIntField = cls.fields.select(By name("publicInt"))
+		assert(publicIntField.length == 1)
 	}
 	
 }

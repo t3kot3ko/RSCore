@@ -18,8 +18,10 @@ trait Where[T]{
 	 * Œ©‚Â‚©‚Á‚½Å‰‚Ì—v‘f‚¾‚¯•Ô‚·
 	 * TODO: ƒAƒ‹ƒSƒŠƒYƒ€C³
 	 */
+	/*
 	def find(params: Array[RSParam[_]]): T = where(params).first
 	def find(params: RSParam[_]*): T = find(params.toArray)
+	*/
 	
  
  	def executeWhereQuery(params: Array[RSParam[_]]): Set[T] = {

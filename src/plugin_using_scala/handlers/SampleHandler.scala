@@ -114,11 +114,16 @@ class SampleHandler extends AbstractHandler {
 		// var $ = new RSClass(typ)
 
 		var $ = RSWorkspace
+		// TODO: Extract to test cases
+		/*
 		val privateFields =
 			$.project("Sample").pkg("rename").classes.where(RSParam("name" -> Array("RenameField"))).first
 			.fields.where(RSParam("modifier" -> Array("private")))
 			
 		println("privateFields.length = " + privateFields.length)
+			*/
+		
+		/*
 		
 		val privateMethods = 
 			$.project("Sample").pkg("rename").classes.where(RSParam("name" -> Array("RenameField"))).first
@@ -149,6 +154,7 @@ class SampleHandler extends AbstractHandler {
 		println(privateStaticMethods1.first == privateStaticMethods2.first)
 		
 		
+		/*
 		val publicFields =
 			$.project("Sample").pkg("rename").classes.where(RSParam("name" -> Array("RenameField"))).first
 			.fields.where(RSParam("modifier" -> Array("public")))
@@ -162,6 +168,7 @@ class SampleHandler extends AbstractHandler {
 		
 		var targets = new RSTargetCollection(publicFields.toTarget())
 		targets.perform("sef")
+		*/
 		
 
 		// var privateParams = RSParam("modifier" -> Array("protected", "static"))
@@ -214,6 +221,7 @@ class SampleHandler extends AbstractHandler {
 		
 		change.dispose()
 		*/
+		**/
 
 		alert(window, "Complete", "execute() has been successfully executed")
 		return null
