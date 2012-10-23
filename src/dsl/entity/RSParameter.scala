@@ -7,7 +7,7 @@ import dsl.search_trait.NameBasedSearchable
  * @see ILocalVariables represents a local variable declared in a method or an initializer.
  */
 class RSParameter(val element: ILocalVariable)
-	extends RSEntity[ILocalVariable]
+	extends RSEntity
 	with NameBasedSearchable {
 	
 	override val __identifier = "parameter"
@@ -25,4 +25,6 @@ class RSParameter(val element: ILocalVariable)
 	def hasSignaturesOr(signatures: Array[String]): Boolean = {
 		return signatures.exists(e => this.hasSignature(e))
 	}
+	
+	override def origin() = element
 }

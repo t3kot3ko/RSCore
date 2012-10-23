@@ -15,7 +15,7 @@ import dsl.search_trait.ReturnTypeSearchable
 import dsl.search_trait.CallbackBasedSearchable
 
 class RSMethod(val element: IMethod)
-	extends RSEntity[IMethod]
+	extends RSEntity
 	with ModifierBasedSearchable
 	with NameBasedSearchable
 	with ReturnTypeSearchable

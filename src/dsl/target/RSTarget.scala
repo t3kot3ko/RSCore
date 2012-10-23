@@ -8,10 +8,10 @@ import dsl.entity.RSWorkspace
  * target.action(Processor).perform
  * fields.toTarget.action("refactoring", "rename").param(...).param(...).......perform()
  */
-class RSTarget(val id: String, val entity: RSEntity[_], val parameters: (String, String)){
+class RSTarget(val id: String, val entity: RSEntity, val parameters: (String, String)){
 	// パラメータが要らない場合
-	def this(id: String, entity: RSEntity[_]) = this(id, entity, null) 
+	def this(id: String, entity: RSEntity) = this(id, entity, null) 
 	
 	// id すらいらない場合
-	def this(entity: RSEntity[_]) = this("", entity, null)
+	def this(entity: RSEntity) = this("", entity, null)
 }

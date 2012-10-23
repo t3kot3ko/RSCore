@@ -13,7 +13,7 @@ import dsl.search_trait.NameBasedSearchable
 import dsl.target.RSTarget
 
 class RSField(val element: IField)
-	extends RSEntity[IField]
+	extends RSEntity
 	with ModifierBasedSearchable
 	with NameBasedSearchable {
 	
