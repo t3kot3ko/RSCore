@@ -47,7 +47,14 @@ class FieldsTest extends BaseTest{
 	
 	@Test
 	def 型名からフィールドを絞り込める(): Unit = {
-		
+		var intFields = this.cls.fields.select(By returnType(With("int")))
+		assertEquals(2, intFields.length)
+	}
+	
+	@Test
+	def 正規表現でフィールドを絞り込める(): Unit = {
+		var prFields = this.cls.fields.select(By.namereg(With("^pr")))
+		assertEquals(2, prFields.length)
 	}
 	
 }
