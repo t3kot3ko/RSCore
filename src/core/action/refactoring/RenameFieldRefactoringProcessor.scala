@@ -7,10 +7,11 @@ import org.eclipse.ltk.core.refactoring.participants.RenameRefactoring
 import core.helper.RefactoringHelper
 import dsl.util.ImplicitConversions._
 import dsl.entity.collection.By
+import dsl.entity.collection.With
 
 class RenameFieldRefactoringProcessor {
 	def createAction(cls: RSClass, targetFieldName: String, newFieldName: String): Unit = {
-		var field = cls.fields.select(By.name(targetFieldName)).first.origin
+		var field = cls.fields.select(By name With(targetFieldName)).first.origin
 		var processor: RenameFieldProcessor = new RenameFieldProcessor(field)
 		processor.setNewElementName(newFieldName)
 

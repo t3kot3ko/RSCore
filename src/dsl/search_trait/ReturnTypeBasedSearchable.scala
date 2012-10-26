@@ -1,7 +1,7 @@
 package dsl.search_trait
 import org.eclipse.jdt.core.dom.Type
 
-trait ReturnTypeSearchable {
+trait ReturnTypeBasedSearchable {
 	val returnType: Type
 	
 	// •Ô‹p’lŒ^‚ªw’è‚³‚ê‚½‚à‚Ì‚Æˆê’v‚·‚é‚©i’P‚È‚é–¼‘O”äŠrj

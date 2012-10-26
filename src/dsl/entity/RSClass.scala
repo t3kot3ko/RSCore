@@ -18,13 +18,13 @@ import dsl.common.RSParam
 import dsl.util.ImplicitConversions._
 
 class RSClass(val element: IType)
-extends RSEntity
+	extends RSEntity
 	with NameBasedSearchable
 	with ModifierBasedSearchable
-	with CallbackBasedSearchable[RSClass]{
-	
+	with CallbackBasedSearchable[RSClass] {
+
 	val __identifier: String = "class"
-	
+	val self = this
 
 	val name: String = this.element.getElementName()
 	override def origin: IType = element
@@ -48,18 +48,7 @@ extends RSEntity
 	def fields(): Array[RSField] = {
 		return this.element.getFields().map(e => new RSField(e))
 	}
-	
-	def passCallback(callback: RSClass => Boolean): Boolean = {
-		return callback(this)
-	}
-	
-	def passCallbacksOr(callbacks: Array[RSClass => Boolean]): Boolean = {
-		return callbacks.exists(e => e(this))
-	}
-	def passCallbacksAnd(callbacks: Array[RSClass => Boolean]): Boolean = {
-		return callbacks.forall(e => e(this))
-	}
-	
+
 
 	override def getDeclaration(): TypeDeclaration = {
 		var cu = ASTUtil.createAST(element.getCompilationUnit()).asInstanceOf[CompilationUnit]
