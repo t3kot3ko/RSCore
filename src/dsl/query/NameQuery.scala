@@ -1,5 +1,5 @@
 package dsl.query
-import dsl.search_trait.NameBasedSearchable
+import dsl.traits.search.NameBasedSearchable
 import dsl.entity.collection.Qualifier
 import dsl.entity.collection.WithOr
 import dsl.entity.collection.Without

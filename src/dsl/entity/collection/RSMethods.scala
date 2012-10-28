@@ -23,6 +23,5 @@ class RSMethods(val elements: Array[RSMethod])
 
 	// ‚·‚×‚Ä‚Ì—v‘f‚ð•Ô‚·
 	override def all(): Array[RSMethod] = elements
-
-	override def origin(): Array[IMethod] = elements.map(e => e.origin)
+	override def origin(): Array[IMethod] = elements.map(_.origin)
 }

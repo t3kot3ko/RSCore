@@ -1,7 +1,7 @@
 package dsl.entity
 import org.eclipse.jdt.core.ILocalVariable
-import dsl.search_trait.NameBasedSearchable
-import dsl.search_trait.SignatureBasedSearchable
+import dsl.traits.search.NameBasedSearchable
+import dsl.traits.search.SignatureBasedSearchable
 import org.eclipse.jdt.core.Signature
 
 /**

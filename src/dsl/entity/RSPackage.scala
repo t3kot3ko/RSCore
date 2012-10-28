@@ -17,7 +17,7 @@ class RSPackage(val element: IPackageFragment) extends RSEntity{
 		} else {
 			for (cu <- cus) { result = result ::: cu.getTypes().map(e => new RSClass(e)).toList }
 		}
-		return result.toArray[RSClass]
+		return result.toArray
 	}
 	def classes(): Array[RSClass] = classes(true)
 	

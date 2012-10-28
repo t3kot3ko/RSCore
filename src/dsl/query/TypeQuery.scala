@@ -3,7 +3,7 @@ import dsl.entity.collection.Qualifier
 import dsl.entity.RSEntity
 import dsl.entity.collection.WithOr
 import dsl.entity.collection.Without
-import dsl.search_trait.TypeBasedSearchable
+import dsl.traits.search.TypeBasedSearchable
 
 case class TypeQuery(val q: Qualifier) extends RSQuery(q){
 	override def execute(elements: Array[_ <: RSEntity]): Array[_ <: RSEntity] = {

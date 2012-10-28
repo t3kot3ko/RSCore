@@ -22,11 +22,13 @@ class RSClassesTest extends BaseTest{
 		assertEquals(3, project.pkg("test.dsl").classes.length)
 	}
 	
+	/*
 	@Test
 	def 名前からクラスを絞り込める(): Unit = {
 		var c = project.pkg("test.dsl").classes(true).select(By.Name(With.or("FindTest1")))
 		assertEquals(1, c.length)
 	}
+	*/
 	
 	@Test
 	def 修飾子からクラスを絞り込める(): Unit = {

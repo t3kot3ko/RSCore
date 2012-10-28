@@ -1,5 +1,5 @@
 package dsl.query
-import dsl.search_trait.RSSearchTrait
+import dsl.traits.search.RSSearchTrait
 import dsl.entity.RSEntity
 import dsl.entity.collection.Qualifier
 

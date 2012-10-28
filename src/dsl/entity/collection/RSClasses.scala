@@ -10,7 +10,6 @@ import dsl.query.NameRegQuery
 import dsl.query.ModifierQuery
 import dsl.query.CallbackQuery
 import dsl.entity.RSEntity
-import dsl.search_trait.NameBasedSearchable
 
 class RSClasses(val elements: Array[RSClass])
 	extends RSCollection[RSClass]{

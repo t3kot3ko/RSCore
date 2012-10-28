@@ -82,7 +82,8 @@ import dsl.entity.RSProject
 import dsl.entity.RSWorkspace
 import dsl.util.ImplicitConversions._
 import dsl.entity.RSMethod
-import dsl.target.RSTargetCollection
+import dsl.entity.collection.By
+import dsl.entity.collection.With
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -99,130 +100,10 @@ class SampleHandler extends AbstractHandler {
 		println("execute() is invoked")
 		var window: IWorkbenchWindow = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 
-		var projectName = "Sample"
-		var packageName = "rename"
-		var unitName = "RenameField"
-		var project = CUHelper.getJavaProject(projectName)
-		var root = CUHelper.getSourceFolder(project)
-		var pack = root.getPackageFragment(packageName)
-
-		var unit = CUHelper.getCompilationUnit(pack, unitName)
-
-		// assert(unit == null)
-
-		var typ = unit.getType(unitName)
-		// var $ = new RSClass(typ)
-
 		var $ = RSWorkspace
-		// TODO: Extract to test cases
-		/*
-		val privateFields =
-			$.project("Sample").pkg("rename").classes.where(RSParam("name" -> Array("RenameField"))).first
-			.fields.where(RSParam("modifier" -> Array("private")))
-			
-		println("privateFields.length = " + privateFields.length)
-			*/
+		// $.project("Sample").pkg("test.dsl").classes.first.fields.select(By.Name(With.or("publicInt"))).first.rename("newName")
+		// $.project("Sample").pkg("test.dsl").classes.first.fields.select(By.Modifier(With.or("public"))).encapsulate()
 		
-		/*
-		
-		val privateMethods = 
-			$.project("Sample").pkg("rename").classes.where(RSParam("name" -> Array("RenameField"))).first
-			.methods.where(RSParam("modifier" -> Array("private")))
-			
-		println("privateMethods.length = " + privateMethods.length)
-		
-		
-		privateMethods.first.parameters.length
-		
-		var voidMethods = $.project("Sample").pkg("rename").classes.where(RSParam("name" -> Array("RenameField"))).first.
-		methods.where(RSParam("callback" -> Array((m: RSMethod) => m.parameters.length == 3)))
-		
-		
-		println("void methods = " + voidMethods.length)
-		
-			
-		
-		val privateStaticMethods1 = 
-			$.project("Sample").pkg("rename").classes.where(RSParam("name" -> Array("RenameField"))).first
-			.methods.where(RSParam("modifier" -> Array("private")).and(RSParam("modifier" -> Array("static"))))
-		println("privateStaticMethods1.length = " + privateStaticMethods1.length)
-		
-		
-		val privateStaticMethods2= privateMethods.where(RSParam("modifier" -> Array("static")))
-		println("privateStaticMethods2.length = " + privateStaticMethods2.length)
-		
-		println(privateStaticMethods1.first == privateStaticMethods2.first)
-		
-		
-		/*
-		val publicFields =
-			$.project("Sample").pkg("rename").classes.where(RSParam("name" -> Array("RenameField"))).first
-			.fields.where(RSParam("modifier" -> Array("public")))
-		println(publicFields.length)
-		
-		
-		
-		println("SelfEncapsulateRefactoring...")
-		
-		
-		
-		var targets = new RSTargetCollection(publicFields.toTarget())
-		targets.perform("sef")
-		*/
-		
-
-		// var privateParams = RSParam("modifier" -> Array("protected", "static"))
-		// var privateParamsAnd = RSParam("modifier" -> Array("protected")).and(RSParam("modifier" -> Array("static")))
-
-		// var nameParams = RSParam("namereg" -> Array("""^public\d""".r))
-		// var returnParams = RSParam("return" -> Array("int", "void"))
-		// var privateMethods = $.methods.where(RSParams("return" -> Array("int", "void")))
-		// var privateMethods = $.methods.where(param)
-		// var nameMatchedMethods = $.methods.where(RSParams("name" -> Array("public3", "publicstatic")))
-		// var regMatchedMethods = $.methods.where(RSParams("namereg" -> Array(""".*\d$"""), "modifier" -> Array("protected")))
-
-		// var privateMethods = $.methods.where(RSParams("modifier" -> Array("private")))
-		// var privateMethods = $.methods.where(RSParams("return" -> Array("private"), "modifier" -> Array("private", "public")))
-		// println("private method count = " + privateMethods.length)
-		// privateMethods.foreach(e => println(e.name))
-		// println("name matched count = " + nameMatchedMethods.length)
-		// println("name matched count = " + regMatchedMethods.length)
-		// var privateFields = $.fields.where(RSParams("modifier" -> Array("final"))).where(RSParams("namereg" -> Array("""[a-z].*""")))
-		// regMatchedMethods.foreach(e => println(e.name))
-		// privateFields.foreach(e => println(e.name))
-
-		/*
-		println("private method count = " + $.fields.where("private").length)
-		var privateMethodNames = $.fields.where("private").map(e => e.name)
-		RenameMultipleFields.renamePrivateFieldWithUnderscoreSample(privateMethodNames, unit)
-		*/
-
-		/*
-		var typ = CUHelper.findTargetType("Sample", "extract_constant", "Foo")
-		var cu = typ.getCompilationUnit()
-		
-		var source = typ.getSource()
-		var range = SelectionHelper.getSelection(source)
-		var refactoring = new ExtractConstantRefactoring(cu, range(0), range(1))
-		
-		refactoring.setConstantName("CONSTANT")
-		refactoring.setReplaceAllOccurrences(true)
-		refactoring.setQualifyReferencesWithDeclaringClassName(true)
-		
-		var pm = new NullProgressMonitor()
-		var initialStatus = refactoring.checkInitialConditions(pm)
-		println(initialStatus)
-		
-		assert(initialStatus.isOK())
-		// assert(finalStatus.isOK())
-		
-		var change = refactoring.createChange(pm)
-		var undo = change.perform(pm)
-		
-		change.dispose()
-		*/
-		**/
-
 		alert(window, "Complete", "execute() has been successfully executed")
 		return null
 

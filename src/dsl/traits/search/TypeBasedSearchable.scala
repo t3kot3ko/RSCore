@@ -1,4 +1,4 @@
-package dsl.search_trait
+package dsl.traits.search
 import org.eclipse.jdt.core.dom.Type
 
 /**

@@ -6,8 +6,9 @@ import dsl.entity.RSField
 import scala.collection.mutable.ArraySeq
 import dsl.query.NameRegQuery
 import dsl.query.ModifierQuery
+import dsl.common.RSObject
 
-trait RSCollection[T <: RSEntity] {
+abstract class RSCollection[T <: RSEntity] extends RSObject {
 
 	val elements: Array[T]
 	def all(): Array[T] = elements

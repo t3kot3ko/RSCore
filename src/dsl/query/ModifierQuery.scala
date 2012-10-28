@@ -1,7 +1,7 @@
 package dsl.query
 import dsl.entity.collection.Qualifier
 import dsl.entity.RSEntity
-import dsl.search_trait.ModifierBasedSearchable
+import dsl.traits.search.ModifierBasedSearchable
 import dsl.entity.collection.WithOr
 import dsl.entity.collection.WithAnd
 import dsl.entity.collection.Without

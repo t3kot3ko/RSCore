@@ -11,9 +11,9 @@ import org.eclipse.jdt.internal.corext.refactoring.structure.ASTNodeSearchUtil
 import org.eclipse.jdt.core.IMethod
 import org.eclipse.jdt.core.dom.Modifier
 import dsl.entity.collection.RSMethods
-import dsl.search_trait.NameBasedSearchable
-import dsl.search_trait.ModifierBasedSearchable
-import dsl.search_trait.CallbackBasedSearchable
+import dsl.traits.search.NameBasedSearchable
+import dsl.traits.search.ModifierBasedSearchable
+import dsl.traits.search.CallbackBasedSearchable
 import dsl.common.RSParam
 import dsl.util.ImplicitConversions._
 

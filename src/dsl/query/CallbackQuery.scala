@@ -1,11 +1,11 @@
 package dsl.query
 import dsl.entity.RSEntity
 import dsl.entity.collection.Qualifier
-import dsl.search_trait.CallbackBasedSearchable
+import dsl.traits.search.CallbackBasedSearchable
 import dsl.entity.collection.WithOr
 import dsl.entity.collection.WithAnd
 import dsl.entity.collection.Without
-import dsl.search_trait.CallbackBasedSearchable
+import dsl.traits.search.CallbackBasedSearchable
 
 case class CallbackQuery[T <: RSEntity](q: Qualifier) extends RSQuery(q) {
 	def execute(elements: Array[_ <: RSEntity]): Array[_ <: RSEntity] = {

@@ -1,4 +1,4 @@
-package dsl.search_trait
+package dsl.traits.search
 import org.eclipse.jdt.core.IJavaElement
 import dsl.util.ASTUtil
 import org.eclipse.jdt.core.dom.CompilationUnit

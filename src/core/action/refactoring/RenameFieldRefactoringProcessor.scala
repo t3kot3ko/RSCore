@@ -8,18 +8,24 @@ import core.helper.RefactoringHelper
 import dsl.util.ImplicitConversions._
 import dsl.entity.collection.By
 import dsl.entity.collection.With
+import dsl.entity.RSField
+import org.eclipse.ltk.core.refactoring.RefactoringStatus
 
-class RenameFieldRefactoringProcessor {
-	def createAction(cls: RSClass, targetFieldName: String, newFieldName: String): Unit = {
-		var field = cls.fields.select(By.Name(With.or(targetFieldName))).first.origin
-		var processor: RenameFieldProcessor = new RenameFieldProcessor(field)
-		processor.setNewElementName(newFieldName)
+object RenameFieldRefactoringProcessor {
+	def createAction(rsField: RSField, newFieldName: String): RSRefactoringAction = {
+		val action = () => {
+			val field = rsField.origin()
+			val processor: RenameFieldProcessor = new RenameFieldProcessor(field)
+			processor.setNewElementName(newFieldName)
 
-		var refactoring: RenameRefactoring = new RenameRefactoring(processor)
-		println("PERFORMING")
-		var status = RefactoringHelper.performRefactoring(refactoring)
-		if (status != null) {
-			println(status)
+			val refactoring: RenameRefactoring = new RenameRefactoring(processor)
+
+			var status: RefactoringStatus = RefactoringHelper.performRefactoring(refactoring)
+			if (status != null) {
+				println(status)
+			}
 		}
+		return new RSRefactoringAction(Seq(action))
 	}
+	
 }

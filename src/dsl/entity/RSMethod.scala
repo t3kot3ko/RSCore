@@ -9,11 +9,11 @@ import org.eclipse.jdt.core.dom.Modifier
 import dsl.util.ASTUtil
 import org.eclipse.jdt.core.dom.CompilationUnit
 import org.eclipse.jdt.core.dom.Type
-import dsl.search_trait.ModifierBasedSearchable
-import dsl.search_trait.NameBasedSearchable
-import dsl.search_trait.CallbackBasedSearchable
-import dsl.search_trait.TypeBasedSearchable
-import dsl.search_trait.SignatureBasedSearchable
+import dsl.traits.search.ModifierBasedSearchable
+import dsl.traits.search.NameBasedSearchable
+import dsl.traits.search.CallbackBasedSearchable
+import dsl.traits.search.TypeBasedSearchable
+import dsl.traits.search.SignatureBasedSearchable
 
 class RSMethod(val element: IMethod)
 	extends RSEntity

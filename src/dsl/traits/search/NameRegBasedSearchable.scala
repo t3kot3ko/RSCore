@@ -1,4 +1,4 @@
-package dsl.search_trait
+package dsl.traits.search
 
 trait NameRegBasedSearchable {
 
