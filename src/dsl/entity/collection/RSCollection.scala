@@ -15,7 +15,7 @@ trait RSCollection[T <: RSEntity] {
 	def origin: Array[_]
 
 	/**
-	 * 
+	 * コレクションからクエリにマッチするオブジェクトを検索する
 	 */
 	def select(query: RSQuery): ArraySeq[T] = {
 		var abstractArray = query.execute(this.elements)

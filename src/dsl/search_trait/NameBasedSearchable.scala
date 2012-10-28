@@ -1,4 +1,4 @@
-package dsl.search_trait
+package dsl.search_trait 
 import scala.util.matching.Regex
 
 trait NameBasedSearchable {

@@ -11,17 +11,17 @@ import org.eclipse.jdt.core.dom.FieldDeclaration
 import dsl.search_trait.ModifierBasedSearchable
 import dsl.search_trait.NameBasedSearchable
 import dsl.target.RSTarget
-import dsl.search_trait.ReturnTypeBasedSearchable
 import org.eclipse.jdt.core.dom.Type
+import dsl.search_trait.TypeBasedSearchable
 
 class RSField(val element: IField)
 	extends RSEntity
 	with ModifierBasedSearchable
 	with NameBasedSearchable
-	with ReturnTypeBasedSearchable {
+	with TypeBasedSearchable{
 
 	val __identifier = "field"
-	val returnType: Type = this.getDeclaration().getType()
+	val typ: Type = this.getDeclaration().getType()
 
 	// TODO: ÉèÉìÉâÉCÉiÇæÇ∆í∑Ç¢Ç©ÇÁÅD
 	val name: String = {
@@ -43,4 +43,5 @@ class RSField(val element: IField)
 		var dec = ASTNodeSearchUtil.getFieldDeclarationNode(element, cu)
 		return dec
 	}
+
 }

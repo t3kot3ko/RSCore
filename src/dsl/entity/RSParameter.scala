@@ -1,6 +1,8 @@
 package dsl.entity
 import org.eclipse.jdt.core.ILocalVariable
 import dsl.search_trait.NameBasedSearchable
+import dsl.search_trait.SignatureBasedSearchable
+import org.eclipse.jdt.core.Signature
 
 /**
  * メソッドパラメータを表すクラス
@@ -8,23 +10,16 @@ import dsl.search_trait.NameBasedSearchable
  */
 class RSParameter(val element: ILocalVariable)
 	extends RSEntity
-	with NameBasedSearchable {
+	with NameBasedSearchable
+	// with SignatureBasedSearchable
+	{
 	
 	override val __identifier = "parameter"
 
 	// 変数名
-	val name: String = element.getElementName()
-
+	override val name: String = element.getElementName()
 	// シグネチャ ≒ 型名
-	def signature: String = element.getTypeSignature()
+	// override val signature: Array[String] = Signature.getParameterTypes(element.getTypeSignature())
 
-	def hasSignature(signature: String): Boolean = {
-		return this.signature == signature
-	}
-	
-	def hasSignaturesOr(signatures: Array[String]): Boolean = {
-		return signatures.exists(e => this.hasSignature(e))
-	}
-	
 	override def origin() = element
 }

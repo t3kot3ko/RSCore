@@ -8,13 +8,12 @@ import dsl.entity.RSWorkspace
 import dsl.entity.RSProject
 import scala.reflect.This
 import dsl.entity.collection.By
-import dsl.util.ImplicitConversions._
 import dsl.entity.collection.With
-import dsl.entity.collection.WithAnd
+import dsl.util.ImplicitConversions._
 import tests.dsl.BaseTest
 import dsl.entity.RSClass
 
-class FieldsTest extends BaseTest{
+class RSFieldsTest extends BaseTest{
 	var cls: RSClass = null
 	
 	@Before
@@ -25,35 +24,34 @@ class FieldsTest extends BaseTest{
 	
 	@Test
 	def 名前からフィールドを絞り込める(): Unit = { 
-		// var cls = project.pkg("test.dsl").classes.first
-		var publicIntField = cls.fields.select(By name With("publicInt"))
+		var publicIntField = cls.fields.select(By.Name(With.or("publicInt", "aaa")))
 		assertEquals(1, publicIntField.length)
 	}
 	
 	@Test
 	def 修飾子からフィールドを絞り込める(): Unit = {
-		var publicFields = this.cls.fields.select(By.modifier(With("public")))
-		// assertEquals(1, publicFields.length)
+		var publicFields = this.cls.fields.select(By.Modifier(With.or("public")))
+		assertEquals(1, publicFields.length)
 		
-		var privateFields = this.cls.fields.select(By.modifier(With("private")))
+		var privateFields = this.cls.fields.select(By.Modifier(With.or("private" )))
 		assertEquals(1, privateFields.length)
 		
-		var protectedFields = this.cls.fields.select(By.modifier(With("protected")))
+		var protectedFields = this.cls.fields.select(By.Modifier(With.or("protected")))
 		assertEquals(1, protectedFields.length)
 		
-		var publicStaticFields = this.cls.fields.select(By.modifier(WithAnd("public", "static")))
+		var publicStaticFields = this.cls.fields.select(By Modifier With.and("public", "static"))
 		assertEquals(0, publicStaticFields.length)
 	}
 	
 	@Test
 	def 型名からフィールドを絞り込める(): Unit = {
-		var intFields = this.cls.fields.select(By returnType(With("int")))
+		var intFields = this.cls.fields.select(By Type(With.or("int")))
 		assertEquals(2, intFields.length)
 	}
 	
 	@Test
 	def 正規表現でフィールドを絞り込める(): Unit = {
-		var prFields = this.cls.fields.select(By.namereg(With("^pr")))
+		var prFields = this.cls.fields.select(By.Namereg(With.or("^pr")))
 		assertEquals(2, prFields.length)
 	}
 	

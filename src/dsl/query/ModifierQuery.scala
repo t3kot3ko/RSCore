@@ -2,7 +2,7 @@ package dsl.query
 import dsl.entity.collection.Qualifier
 import dsl.entity.RSEntity
 import dsl.search_trait.ModifierBasedSearchable
-import dsl.entity.collection.With
+import dsl.entity.collection.WithOr
 import dsl.entity.collection.WithAnd
 import dsl.entity.collection.Without
 import dsl.entity.RSField
@@ -12,7 +12,7 @@ case class ModifierQuery(q: Qualifier) extends RSQuery(q) {
 		elements match {
 			case e: Array[ModifierBasedSearchable] =>
 				q match {
-					case w: With[String] =>
+					case w: WithOr[String] =>
 						return elements.filter(e => e.asInstanceOf[ModifierBasedSearchable].hasModifiersOr(w.values.toArray))
 					case w: WithAnd[String] =>
 						return elements.filter(e => e.asInstanceOf[ModifierBasedSearchable].hasModifiersAnd(w.values.toArray))

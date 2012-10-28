@@ -11,23 +11,27 @@ import org.eclipse.jdt.core.dom.CompilationUnit
 import org.eclipse.jdt.core.dom.Type
 import dsl.search_trait.ModifierBasedSearchable
 import dsl.search_trait.NameBasedSearchable
-import dsl.search_trait.ReturnTypeBasedSearchable
 import dsl.search_trait.CallbackBasedSearchable
+import dsl.search_trait.TypeBasedSearchable
+import dsl.search_trait.SignatureBasedSearchable
 
 class RSMethod(val element: IMethod)
 	extends RSEntity
 	with ModifierBasedSearchable
 	with NameBasedSearchable
-	with ReturnTypeBasedSearchable
+	with TypeBasedSearchable
+	with SignatureBasedSearchable
 	with CallbackBasedSearchable[RSMethod] {
 
 	override val __identifier = "method"
+		
+	override val signature: Array[String] = Signature.getParameterTypes(element.getSignature())
+	override val typ: Type = this.declaration.asInstanceOf[MethodDeclaration].getReturnType2()
+	override val name: String = element.getElementName()
+	
 	val self = this
+
 	override def origin(): IMethod = element
-
-	val name = element.getElementName()
-	val returnType: Type = this.declaration.asInstanceOf[MethodDeclaration].getReturnType2()
-
 	def parameters(): Array[RSParameter] = {
 		this.element.getParameters().map(e => new RSParameter(e))
 	}
@@ -39,7 +43,4 @@ class RSMethod(val element: IMethod)
 	}
 	def exceptionTypes: Array[String] = this.element.getExceptionTypes()
 
-	def signatures(): Array[String] = {
-		return Signature.getParameterTypes(element.getSignature())
-	}
 }
