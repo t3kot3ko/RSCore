@@ -114,35 +114,4 @@ object CUHelper {
 		}
 	}
 	
-	@deprecated
-	def createJavaProject(projectName: String, binFolderName: String = "bin"): IJavaProject = {
-		var root: IWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot()
-		var project: IProject = root.getProject(projectName)
-
-		if (!project.exists()) {
-			project.create(null)
-		} else {
-			project.refreshLocal(IResource.DEPTH_INFINITE, null)
-		}
-		if (!project.isOpen()) {
-			project.open(null)
-		}
-
-		var binFolder: IFolder = project.getFolder(binFolderName)
-
-		var outputLocation: IPath = null
-		if (!binFolder.exists()) {
-			CoreUtility.createFolder(binFolder, false, true, null)
-			outputLocation = binFolder.getFullPath()
-		} else {
-			outputLocation = project.getFullPath()
-		}
-
-		println(outputLocation)
-
-		var descripttion = project.getDescription()
-		var javaProject: IJavaProject = JavaCore.create(project)
-
-		return javaProject
-	}
 }
