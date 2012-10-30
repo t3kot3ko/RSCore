@@ -14,6 +14,7 @@ import dsl.traits.search.NameBasedSearchable
 import dsl.traits.search.CallbackBasedSearchable
 import dsl.traits.search.TypeBasedSearchable
 import dsl.traits.search.SignatureBasedSearchable
+import org.eclipse.jdt.core.IType
 
 class RSMethod(val element: IMethod)
 	extends RSEntity
@@ -42,5 +43,9 @@ class RSMethod(val element: IMethod)
 		return dec
 	}
 	def exceptionTypes: Array[String] = this.element.getExceptionTypes()
+	
+	def isConstructor(): Boolean = {
+		return element.getParent().asInstanceOf[IType].getElementName() == this.name
+	}
 
 }

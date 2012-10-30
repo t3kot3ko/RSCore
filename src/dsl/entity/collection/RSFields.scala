@@ -13,9 +13,9 @@ import dsl.traits.action.RSTSelfEncapsulateFieldRefactoring
 
 class RSFields(val elements: Array[RSField])
 	extends RSCollection[RSField]
-	/*with RSTSelfEncapsulateFieldRefactoring */{
+	with RSTSelfEncapsulateFieldRefactoring {
 
-	// override val self = this
+	override val self = this
 
 	override def origin: Array[IField] = elements.map(_.origin)
 	// def toTarget(): Array[RSTarget] = this.elements.map(e => e.toTarget())

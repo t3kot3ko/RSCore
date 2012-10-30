@@ -14,6 +14,7 @@ abstract class RSCollection[T <: RSEntity] extends RSObject {
 	def all(): Array[T] = elements
 	// def toTarget(): RSTarget
 	def origin: Array[_]
+	def first() : T = elements.first
 
 	/**
 	 * コレクションからクエリにマッチするオブジェクトを検索する

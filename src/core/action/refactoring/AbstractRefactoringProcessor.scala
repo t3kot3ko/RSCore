@@ -1,4 +1,9 @@
 package core.action.refactoring
 
-object AbstractRefactoringProcessor {
+abstract class AbstractRefactoringProcessor {
+	def createAction(): RSRefactoringAction
+	
+	private def checkCondition(): Boolean = {
+		return true
+	}
 }

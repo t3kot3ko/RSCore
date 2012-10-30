@@ -16,12 +16,18 @@ import dsl.traits.search.ModifierBasedSearchable
 import dsl.traits.search.CallbackBasedSearchable
 import dsl.common.RSParam
 import dsl.util.ImplicitConversions._
+import dsl.entity.collection.With
+import dsl.entity.collection.By
+import dsl.traits.action.RSTIntroduceFactory
 
 class RSClass(val element: IType)
 	extends RSEntity
 	with NameBasedSearchable
 	with ModifierBasedSearchable
-	with CallbackBasedSearchable[RSClass] {
+	with CallbackBasedSearchable[RSClass]
+	
+	// Refactoring traits
+	with RSTIntroduceFactory{
 
 	val __identifier: String = "class"
 	val self = this
@@ -42,6 +48,14 @@ class RSClass(val element: IType)
 	// Get method whose signature is matched
 	def method(name: String, signature: Array[String]): RSMethod = {
 		return element.getMethod(name, signature)
+	}
+	
+	/**
+	 * クラスのコンストラクタを検索します
+	 * （メソッド名がクラス名と一致しているものをコンストラクタとみなしています）
+	 */
+	def constructors(): Array[RSMethod] = {
+		return this.methods.select(By.Name(With.or(this.name))).toArray
 	}
 
 	// Get instance / class fields

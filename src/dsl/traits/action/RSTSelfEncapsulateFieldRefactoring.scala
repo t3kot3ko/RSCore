@@ -7,11 +7,16 @@ trait RSTSelfEncapsulateFieldRefactoring extends RefactoringTrait {
 	def encapsulate(): Unit = {
 		self match {
 			case f: RSField => {
-				SelfEncapsulateFieldRefactoringProcessor.createAction(f.asInstanceOf[RSField]).perform()
+				println("encapsulate to RSField")
+				val processor = new SelfEncapsulateFieldRefactoringProcessor(f)
+				processor.createAction().perform()
 			}
 			case fs: RSFields => {
-				SelfEncapsulateFieldRefactoringProcessor.createAction(fs.asInstanceOf[RSFields]).perform()
+				println("encapsulate to RSFields")
+				val processor = new SelfEncapsulateFieldRefactoringProcessor(fs)
+				processor.createAction().perform()
 			}
+			case _ => throw new Exception("Receiver is not RSField or RSFields")
 
 		}
 

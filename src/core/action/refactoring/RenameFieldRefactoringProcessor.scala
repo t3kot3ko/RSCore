@@ -10,9 +10,10 @@ import dsl.entity.collection.By
 import dsl.entity.collection.With
 import dsl.entity.RSField
 import org.eclipse.ltk.core.refactoring.RefactoringStatus
+import core.action.refactoring.AbstractRefactoringProcessor
 
-object RenameFieldRefactoringProcessor {
-	def createAction(rsField: RSField, newFieldName: String): RSRefactoringAction = {
+class RenameFieldRefactoringProcessor(rsField: RSField, newFieldName: String) extends AbstractRefactoringProcessor{
+	override def createAction(): RSRefactoringAction = {
 		val action = () => {
 			val field = rsField.origin()
 			val processor: RenameFieldProcessor = new RenameFieldProcessor(field)

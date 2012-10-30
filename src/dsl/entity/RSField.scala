@@ -13,13 +13,15 @@ import dsl.traits.search.NameBasedSearchable
 import org.eclipse.jdt.core.dom.Type
 import dsl.traits.search.TypeBasedSearchable
 import dsl.traits.action.RSTRenameRefactoring
+import dsl.traits.action.RSTSelfEncapsulateFieldRefactoring
 
 class RSField(val element: IField)
 	extends RSEntity
 	with ModifierBasedSearchable
 	with NameBasedSearchable
 	with TypeBasedSearchable
-	with RSTRenameRefactoring{
+	with RSTRenameRefactoring
+	with RSTSelfEncapsulateFieldRefactoring{
 
 	override val __identifier = "field"
 	override val typ: Type = this.getDeclaration().getType()

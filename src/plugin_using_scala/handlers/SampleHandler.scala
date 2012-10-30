@@ -84,6 +84,11 @@ import dsl.util.ImplicitConversions._
 import dsl.entity.RSMethod
 import dsl.entity.collection.By
 import dsl.entity.collection.With
+import core.action.refactoring.SelfEncapsulateFieldRefactoringProcessor
+import dsl.entity.RSField
+import dsl.common.RSObject
+import core.action.refactoring.SelfEncapsulateFieldRefactoringProcessor
+import core.action.refactoring.RSRefactoringAction
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -101,9 +106,12 @@ class SampleHandler extends AbstractHandler {
 		var window: IWorkbenchWindow = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 
 		var $ = RSWorkspace
-		// $.project("Sample").pkg("test.dsl").classes.first.fields.select(By.Name(With.or("publicInt"))).first.rename("newName")
-		// $.project("Sample").pkg("test.dsl").classes.first.fields.select(By.Modifier(With.or("public"))).encapsulate()
+		// $.project("Sample").pkg("introduce_factory").classes.first.introduce_factory
 		
+		// rename private fields adding prefix
+		$.project("Sample").pkg("test.dsl").classes.first.fields.select(By.Modifier(With.or("private")))
+		.foreach(e => e.rename("_" + e.name))
+
 		alert(window, "Complete", "execute() has been successfully executed")
 		return null
 

@@ -8,27 +8,30 @@ import dsl.util.ImplicitConversions._
 import dsl.common.RSObject
 import dsl.entity.collection.RSFields
 
-object SelfEncapsulateFieldRefactoringProcessor {
-	def createAction(rsField: RSObject): RSRefactoringAction = {
+class SelfEncapsulateFieldRefactoringProcessor(rsField: RSObject) extends AbstractRefactoringProcessor {
+	// def createAction(rsField: RSObject): RSRefactoringAction = {
+	override def createAction(): RSRefactoringAction = {
 		rsField match {
-			case f: RSField => createActionForEntity(f)
-			case fs: RSFields => createActionForCollection(fs)
+			case f: RSField => return createActionForEntity(f)
+			case fs: RSFields => return createActionForCollection(fs)
 		}
+		return new RSRefactoringAction(Seq())
 	}
 
 	private def createActionForEntity(rsField: RSField): RSRefactoringAction = {
 		val action = a(rsField)
-		return new RSRefactoringAction(Seq(action))
+		return RSRefactoringAction(Seq(action))
 	}
 
 	private def createActionForCollection(rsFields: RSFields): RSRefactoringAction = {
 		val ary = rsFields.all()
-		val actions = ary.toSeq.map(e => a(e))
-		return new RSRefactoringAction(actions)
+		val actions = ary.map(e => a(e))
+		return RSRefactoringAction(actions)
 	}
 
-	def a(f: RSField): (() => Unit) = {
-		val action =
+	// TODO: rename to an appropreate name
+	def a(f: RSField): () => Unit = {
+		val action: (() => Unit)=
 			() => {
 				val field: IField = f.origin()
 				var pm = new NullProgressMonitor
@@ -37,13 +40,11 @@ object SelfEncapsulateFieldRefactoringProcessor {
 				var initialStatus = refactoring.checkInitialConditions(pm)
 				var finalStatus = refactoring.checkFinalConditions(pm)
 				if (!initialStatus.isOK() || !finalStatus.isOK()) {
-					return null
+					throw new Exception("Condition checking exception")
 				}
 
 				var change: Change = refactoring.createChange(pm)
 				change.perform(pm)
-
-				return null // TODO: refactor to deal undo changes
 			}
 		return action
 	}
