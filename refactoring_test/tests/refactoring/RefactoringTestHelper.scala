@@ -55,7 +55,7 @@ object RefactoringTestHelper {
 			project.setDescription(description, null)
 		}
 
-		println(outputLocation)
+		// println(outputLocation)
 		var javaProject: IJavaProject = JavaCore.create(project)
 		javaProject.setOutputLocation(outputLocation, null)
 		javaProject.setRawClasspath(new Array[IClasspathEntry](0), null)
@@ -82,7 +82,8 @@ object RefactoringTestHelper {
 		jproject: IJavaProject,
 		containerName: String = "src",
 		inclusionFilters: Array[IPath] = new Array[IPath](0),
-		exclusionFilters: Array[IPath] = new Array[IPath](0)): IPackageFragmentRoot = {
+		exclusionFilters: Array[IPath] = new Array[IPath](0), 
+		outputLocation: String = null): IPackageFragmentRoot = {
 		
 		val p: IProject = jproject.getProject()
 		var container: IContainer = null
@@ -96,9 +97,29 @@ object RefactoringTestHelper {
 			}
 			container = folder
 		}
-		
 		val root: IPackageFragmentRoot = jproject.getPackageFragmentRoot(container)
+		
+		var outputPath: IPath = null
+		if(outputLocation != null){
+			val folder = p.getFolder(outputLocation)
+			if(!folder.exists()){
+				CoreUtility.createFolder(folder, false, true, null)
+			}
+			outputPath = folder.getFullPath()
+		}
+		val cpe = JavaCore.newSourceEntry(root.getPath(), inclusionFilters, exclusionFilters, outputPath)
+		addToClasspath(jproject, cpe)
+		
 		return root
+	}
+	
+	private def addToClasspath(jproject: IJavaProject, cpe: IClasspathEntry): Unit = {
+		val oldEntries = jproject.getRawClasspath()
+		if(oldEntries.exists(_.equals(cpe))){
+			return;
+		}
+		val newEntries = (oldEntries.toBuffer + cpe).toArray
+		jproject.setRawClasspath(newEntries, new NullProgressMonitor)
 	}
 	
 	

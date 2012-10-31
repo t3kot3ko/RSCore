@@ -9,6 +9,7 @@ import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.ltk.core.refactoring.RefactoringCore
 import org.junit.Test
 import org.junit.Assert._
+import org.eclipse.core.runtime.NullProgressMonitor
 
 class RefactoringBaseTest {
 	var fgRoot: IPackageFragmentRoot = _
@@ -26,15 +27,11 @@ class RefactoringBaseTest {
 		RefactoringCore.getUndoManager().flush()
 	}
 	
-	private def restoreTestProject(): Unit = {
-		val javaProject: IJavaProject = fgRoot.getJavaProject()
-		if(javaProject.exists()){
-		}
-	}
-	
 	@Test
 	def sample(): Unit = {
-		assertTrue(true)
+		this.fgJavaTestProject.open(new NullProgressMonitor)
+		val cu = this.fgPackageP.createCompilationUnit("cu.java", "contents", true, new NullProgressMonitor)
+		cu.save(new NullProgressMonitor, true)
 	}
 
 	@After

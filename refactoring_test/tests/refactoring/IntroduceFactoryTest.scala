@@ -8,13 +8,13 @@ import org.junit.Test
 import org.eclipse.core.runtime.NullProgressMonitor
 
 class IntroduceFactoryTest extends RefactoringBaseTest {
-	@Before
+	// @Before
 	override def setUp(): Unit = {
 		super.setUp()
 		createCUForSimpleTest(this.fgPackageP)
 	}
 	
-	@Test
+	// @Test
 	def sandbox(): Unit = {
 		Assert.assertTrue(true)
 	}
