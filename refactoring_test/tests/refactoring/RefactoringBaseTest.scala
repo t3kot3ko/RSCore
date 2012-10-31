@@ -23,20 +23,17 @@ class RefactoringBaseTest {
 		this.fgJavaTestProject = RefactoringTestHelper.createJavaProject("TestProject" + System.currentTimeMillis(), "bin")
 		this.fgRoot = RefactoringTestHelper.addSourceContainer(this.fgJavaTestProject, "src")
 		this.fgPackageP = fgRoot.createPackageFragment("p", true, null)
+		this.fgJavaTestProject.open(new NullProgressMonitor)
 		
 		RefactoringCore.getUndoManager().flush()
 	}
 	
-	@Test
-	def sample(): Unit = {
-		this.fgJavaTestProject.open(new NullProgressMonitor)
-		val cu = this.fgPackageP.createCompilationUnit("cu.java", "contents", true, new NullProgressMonitor)
-		cu.save(new NullProgressMonitor, true)
-	}
 
 	@After
 	def tearDown(): Unit = {
-		// RefactoringTestHelper.delete(this.fgJavaTestProject.getProject())
+		println("RefactoringBaseTest :: tearDown()")
+		RefactoringTestHelper.delete(this.fgJavaTestProject.getProject())
 	}
+	
 
 }
