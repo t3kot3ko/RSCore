@@ -18,6 +18,7 @@ class RefactoringBaseTest {
 
 	@Before
 	def setUp(): Unit = {
+		println("RefactoringBaseTest :: setUp()")
 		this.fgJavaTestProject = RefactoringTestHelper.createJavaProject("TestProject" + System.currentTimeMillis(), "bin")
 		this.fgRoot = RefactoringTestHelper.addSourceContainer(this.fgJavaTestProject, "src")
 		this.fgPackageP = fgRoot.createPackageFragment("p", true, null)
@@ -38,7 +39,7 @@ class RefactoringBaseTest {
 
 	@After
 	def tearDown(): Unit = {
-		RefactoringTestHelper.delete(this.fgJavaTestProject.getProject())
+		// RefactoringTestHelper.delete(this.fgJavaTestProject.getProject())
 	}
 
 }
