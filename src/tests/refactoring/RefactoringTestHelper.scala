@@ -15,6 +15,10 @@ import org.eclipse.core.runtime.NullProgressMonitor
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.jdt.core.IPackageFragmentRoot
 import org.eclipse.core.resources.IContainer
+import org.eclipse.jdt.internal.corext.util.Strings
+import org.junit.Assert
+import org.eclipse.jdt.core.IPackageFragment
+import org.eclipse.jdt.core.ICompilationUnit
 
 object RefactoringTestHelper {
 	def createJavaProject(projectName: String, binFolderName: String = "bin"): IJavaProject = {
@@ -96,4 +100,27 @@ object RefactoringTestHelper {
 		val root: IPackageFragmentRoot = jproject.getPackageFragmentRoot(container)
 		return root
 	}
+	
+	
+	/**
+	 * Line-based version of assertEquals(String, String)
+	 * without considering line delimiters
+	 */
+	def assertEqualLines(expected: String, actual: String, message: String = ""): Unit = {
+		val expectedLines = Strings.convertIntoLines(expected)
+		val actualLines = Strings.convertIntoLines(actual)
+		
+		val expected2 = Strings.concatenate(expectedLines, "\n")
+		val actual2 = Strings.concatenate(actualLines, "\n")
+		Assert.assertEquals(message, expected2, actual2)
+	}
+	
+	def createCU(pack: IPackageFragment, name: String, contents: String): ICompilationUnit = {
+		Assert.assertFalse(pack.getCompilationUnit(name).exists())
+		val cu = pack.createCompilationUnit(name, contents, true, null)
+		cu.save(new NullProgressMonitor, true)
+		return cu
+	}
+	
+	
 }
