@@ -6,6 +6,7 @@
 	<classpathentry excluding="dsl/target/RSTargetCollection.scala|dsl/target/RSTarget.scala" kind="src" path="src"/>
 	<classpathentry kind="src" path="dsl_test"/>
 	<classpathentry kind="src" path="refactoring_test"/>
+	<classpathentry kind="src" path="test_resources_input"/>
 	<classpathentry kind="lib" path="/Applications/eclipse/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar"/>
 	<classpathentry kind="lib" path="/Applications/eclipse/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar"/>
 	<classpathentry kind="output" path="bin"/>

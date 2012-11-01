@@ -11,37 +11,45 @@ import dsl.entity.RSWorkspace
 import dsl.util.ImplicitConversions._
 import dsl.entity.collection.By
 import dsl.entity.collection.With
-
+import org.junit.Ignore
+import java.io.FileNotFoundException
 
 class IntroduceFactoryTest extends RefactoringBaseTest {
+	override val testGroupIdentifier = "introduce_factory"
+	var projName: String = _
+
 	@Before
 	override def setUp(): Unit = {
 		super.setUp()
+		this.projName = this.fgJavaTestProject.getElementName()
 	}
-	
+
 	@Test
-	def test0(): Unit = {
-		val inputFilename = "test_resources/IntroduceFactory/" + "0/In.java"
-		val inputSource = FileUtil.getFileContents(inputFilename)
-		println(inputFilename)
-		println(inputSource)
-		val cu = this.fgPackageP.createCompilationUnit("in1.java", inputSource, true, new NullProgressMonitor)
-		cu.save(new NullProgressMonitor, true)
-		
-		
+	def クラス定義のみ(): Unit = {
+		val testName = "DeclarationOnly"
+		prepareTest(testName)
+
 		val $ = RSWorkspace
-		val projName = this.fgJavaTestProject.getElementName()
-		$.project(projName).pkg("p").classes.select(By.Name(With.or("Foo"))).first.introduce_factory
+		$.project(projName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.introduce_factory
 		
-		Assert.assertTrue(true)
+		doAssert(testName)
 	}
-	
+
+	@Test
+	def クラス定義とコンストラクタ呼び出し() = {
+		val testName = "DeclarationAndCaller"
+		prepareTest(testName)
+
+		val $ = RSWorkspace
+		$.project(projName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.introduce_factory
+		
+		doAssert(testName)
+	}
+
+
 	@After
 	override def tearDown(): Unit = {
-		
+		println("tearing down without removing generated files...")
 	}
-	
-	
-
 
 }
