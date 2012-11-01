@@ -43,6 +43,36 @@ class IntroduceFactoryTest extends RefactoringBaseTest {
 		
 		doAssert(testName)
 	}
+	
+	@Test
+	def コンストラクタを指定してクラス定義のみをリファクタリング(): Unit = {
+		val testName = "DeclarationOnly"
+		prepareTest(testName)
+
+		val $ = RSWorkspace
+		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.constructors.first.introduce_factory
+		
+		doAssert(testName)
+		
+	}
+	
+	@Test
+	def コンストラクタを指定してクラス定義とコンストラクタ呼び出しをリファクタリング(): Unit = {
+		val testName = "DeclarationAndCaller"
+		prepareTest(testName)
+
+		val $ = RSWorkspace
+		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.introduce_factory
+		
+		doAssert(testName)
+	}
+	
+	
+	@Test
+	def 複数のコンストラクタがある場合(): Unit = {
+		val testName = "MultipleConstructor"
+		prepareTest(testName)
+	}
 
 
 	/*
