@@ -45,11 +45,9 @@ class IntroduceFactoryTest extends RefactoringBaseTest {
 	}
 
 
-	/*
 	@After
 	override def tearDown(): Unit = {
 		println("tearing down without removing generated files...")
 	}
-	*/
 
 }

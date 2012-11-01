@@ -4,6 +4,7 @@ import org.junit.Test
 import dsl.entity.RSWorkspace
 import dsl.util.ImplicitConversions._
 import dsl.entity.collection.By
+import org.junit.After
 
 class RenameFieldTest extends RefactoringBaseTest{
 	override val testGroupIdentifier = "rename_field" 
@@ -23,6 +24,11 @@ class RenameFieldTest extends RefactoringBaseTest{
 		.foreach(field => field.rename("new" + field.name.toUpperCase()))
 		
 		doAssert(testName)
+	}
+	
+	@After
+	override def tearDown(): Unit = {
+		println("teardown... ")
 	}
 	
 }
