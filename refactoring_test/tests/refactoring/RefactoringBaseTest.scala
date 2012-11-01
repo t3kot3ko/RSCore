@@ -19,13 +19,14 @@ class RefactoringBaseTest {
 	var fgPackageP: IPackageFragment = _
 	var fgJavaTestProject: IJavaProject = _
 	var projectName: String = _
+	var testName: String = _
 
 	// to be overridden in subclasses
 	val testGroupIdentifier: String = ""
 
 	@Before
 	def setUp(): Unit = {
-		println("RefactoringBaseTest :: setUp()")
+		println(testGroupIdentifier + " setUp()")
 		this.projectName = "TestProject" + System.currentTimeMillis()
 		this.fgJavaTestProject = RefactoringTestHelper.createJavaProject(projectName, "bin")
 		this.fgRoot = RefactoringTestHelper.addSourceContainer(this.fgJavaTestProject, "src")
@@ -37,6 +38,8 @@ class RefactoringBaseTest {
 	}
 
 	protected def prepareTest(testName: String): Unit = {
+		this.testName = testName
+		
 		try {
 			val inputFilepath = "test_resources_input/" + testGroupIdentifier + "/" + testName + ".java"
 			val inputSource = FileUtil.getFileContents(inputFilepath)
@@ -49,25 +52,17 @@ class RefactoringBaseTest {
 	}
 
 	protected def doAssert(testName: String): Unit = {
-		val actualSource = eliminateBlankLines(
+		val actualSource = FileUtil.eliminateBlankLines(
 			this.fgPackageP.getCompilationUnit(testName + ".java").getSource())
-
 		val outputFilepath = "test_resources_output/" + testGroupIdentifier + "/" + testName + ".java"
-		val expectedSource = eliminateBlankLines(
-			FileUtil.getFileContents(outputFilepath))
-
+		val expectedSource = FileUtil.getFileContents(outputFilepath) 
 		RefactoringTestHelper.assertEqualLines(expectedSource, actualSource)
-	}
-
-	private def eliminateBlankLines(string: String): String = {
-		val blankLine = """^\s*$"""
-		val lines = string.split("\n").filterNot(line => line.matches(blankLine) || line == "")
-		return lines.mkString("\n")
 	}
 
 	@After
 	def tearDown(): Unit = {
-		println("RefactoringBaseTest :: tearDown()")
+		println(testGroupIdentifier + " tearDown()")
+		// println("RefactoringBaseTest :: tearDown()")
 		RefactoringTestHelper.delete(this.fgJavaTestProject.getProject())
 	}
 

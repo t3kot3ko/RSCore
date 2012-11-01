@@ -5,44 +5,30 @@ import java.io.InputStreamReader
 import java.io.FileInputStream
 
 object FileUtil {
-	def getFileContents(filepath: String): String = {
-		/*
-		val sb = new StringBuffer(1024)
-		for (line <- scala.io.Source.fromFile(filepath).getLines) {
-			sb.append(line)
-			sb.append("\n")
-		}
-		return sb.toString()
-		*/
-		return scala.io.Source.fromFile(filepath).getLines.toArray.mkString("\n")
+	/**
+	 * ファイルパスをキーに，その内容を取得する
+	 * @param eliminateBlankLines 空行を削除するか
+	 */
+	def getFileContents(filepath: String, eliminateBlankLines: Boolean = true): String = {
+		val blankLine = """^\s*$"""
 
-	}
-	// InputStream から文字列を取り出す
-	@Deprecated
-	def getContents(is: InputStream): String = {
-		var br: BufferedReader = new BufferedReader(new InputStreamReader(is))
-		var sb: StringBuffer = new StringBuffer(1024)
-		// try {
-		var read = 0
-		while ((read = br.read()) != 1) {
-			sb.append(read)
+		if (eliminateBlankLines) {
+			return scala.io.Source.fromFile(filepath).getLines.toArray
+				.filterNot(line => line.matches(blankLine) || line == "")
+				.mkString("\n")
+		} else {
+			return scala.io.Source.fromFile(filepath).getLines.toArray
+				.mkString("\n")
 		}
-		// }
-		/*
-		finally{
-			br.close()
-		}
-		*/
-		return sb.toString()
 	}
-
-	@Deprecated
-	def getFileContents_deprecated(filepath: String): String = {
-		return getContents(getFileInputStream(filepath))
-	}
-
-	def getFileInputStream(filePath: String): InputStream = {
-		return new FileInputStream(filePath)
+	
+	/**
+	 * 文字列から空行を取り除く
+	 */
+	def eliminateBlankLines(string: String): String = {
+		val blankLine = """^\s*$"""
+		val lines = string.split("\n").filterNot(line => line.matches(blankLine) || line == "")
+		return lines.mkString("\n")
 	}
 
 }

@@ -16,12 +16,10 @@ import java.io.FileNotFoundException
 
 class IntroduceFactoryTest extends RefactoringBaseTest {
 	override val testGroupIdentifier = "introduce_factory"
-	var projName: String = _
 
 	@Before
 	override def setUp(): Unit = {
 		super.setUp()
-		this.projName = this.fgJavaTestProject.getElementName()
 	}
 
 	@Test
@@ -30,7 +28,7 @@ class IntroduceFactoryTest extends RefactoringBaseTest {
 		prepareTest(testName)
 
 		val $ = RSWorkspace
-		$.project(projName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.introduce_factory
+		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.introduce_factory
 		
 		doAssert(testName)
 	}
@@ -41,15 +39,17 @@ class IntroduceFactoryTest extends RefactoringBaseTest {
 		prepareTest(testName)
 
 		val $ = RSWorkspace
-		$.project(projName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.introduce_factory
+		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.introduce_factory
 		
 		doAssert(testName)
 	}
 
 
+	/*
 	@After
 	override def tearDown(): Unit = {
 		println("tearing down without removing generated files...")
 	}
+	*/
 
 }
