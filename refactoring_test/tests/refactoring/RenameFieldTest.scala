@@ -5,11 +5,12 @@ import dsl.entity.RSWorkspace
 import dsl.util.ImplicitConversions._
 import dsl.entity.collection.By
 import org.junit.After
+import org.junit.Ignore
 
 class RenameFieldTest extends RefactoringBaseTest {
 	override val testGroupIdentifier = "rename_field"
 
-	@Test
+	@Ignore
 	def •Ï”‚ğ1‚Â‚¾‚¯ƒŠƒl[ƒ€‚·‚é(): Unit = {
 		prepareTest("RenameOneField")
 	}
@@ -32,9 +33,11 @@ class RenameFieldTest extends RefactoringBaseTest {
 		doAssert(testName)
 	}
 	
+	/*
 	@After
 	override def tearDown(): Unit = {
 		println("teardown... ")
 	}
+	*/
 	
 }

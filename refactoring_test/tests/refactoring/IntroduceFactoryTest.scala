@@ -68,16 +68,18 @@ class IntroduceFactoryTest extends RefactoringBaseTest {
 	}
 	
 	
-	@Test
+	@Ignore
 	def 複数のコンストラクタがある場合(): Unit = {
 		val testName = "MultipleConstructor"
 		prepareTest(testName)
 	}
 
 
+	/*
 	@After
 	override def tearDown(): Unit = {
 		println("tearing down without removing generated files...")
 	}
+	*/
 
 }
