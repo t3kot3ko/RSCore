@@ -106,12 +106,13 @@ class SampleHandler extends AbstractHandler {
 		var window: IWorkbenchWindow = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 
 		var $ = RSWorkspace
+		// $.refresh()
 		// $.project("Sample").pkg("introduce_factory").classes.first.introduce_factory
 		
 		// rename private fields adding prefix
-		$.project("Sample").pkg("test.dsl").classes.first.fields.select(By.Modifier(With.or("private")))
+		val privateFields = $.project("Sample").pkg("test.dsl").classes.first.fields.select(By.Modifier(With.or("private")))
 		.foreach(e => e.rename("_" + e.name))
-
+		
 		alert(window, "Complete", "execute() has been successfully executed")
 		return null
 

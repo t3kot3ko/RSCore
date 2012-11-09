@@ -16,7 +16,7 @@ trait RSTRenameRefactoring extends RefactoringTrait {
 			}
 			// case m: RSMethod => RenameFieldRefactoringProcessor.createAction(self, newName).perform()	
 		}
-
+		println("rename refactoring is completed")
 	}
 
 }

@@ -18,6 +18,7 @@ trait RSTIntroduceFactory extends RefactoringTrait{
 				processor.createAction().perform()
 			}
 		}
+		println("introduce factory was completed")
 	}
 
 }
