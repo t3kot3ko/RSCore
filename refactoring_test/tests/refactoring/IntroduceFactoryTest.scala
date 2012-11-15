@@ -28,7 +28,7 @@ class IntroduceFactoryTest extends RefactoringBaseTest {
 		prepareTest(testName)
 
 		val $ = RSWorkspace
-		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.introduce_factory
+		$.project(projectName).pkg(testGroupIdentifier).classes.selects(By.Name(testName)).first.introduce_factory
 		
 		doAssert(testName)
 	}
@@ -39,7 +39,7 @@ class IntroduceFactoryTest extends RefactoringBaseTest {
 		prepareTest(testName)
 
 		val $ = RSWorkspace
-		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.introduce_factory
+		$.project(projectName).pkg(testGroupIdentifier).classes.selects(By.Name(testName)).first.introduce_factory
 		
 		doAssert(testName)
 	}
@@ -50,7 +50,7 @@ class IntroduceFactoryTest extends RefactoringBaseTest {
 		prepareTest(testName)
 
 		val $ = RSWorkspace
-		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.constructors.first.introduce_factory
+		$.project(projectName).pkg(testGroupIdentifier).classes.selects(By.Name(testName)).first.constructors.first.introduce_factory
 		
 		doAssert(testName)
 		
@@ -62,7 +62,7 @@ class IntroduceFactoryTest extends RefactoringBaseTest {
 		prepareTest(testName)
 
 		val $ = RSWorkspace
-		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.introduce_factory
+		$.project(projectName).pkg(testGroupIdentifier).classes.selects(By.Name(testName)).first.introduce_factory
 		
 		doAssert(testName)
 	}
