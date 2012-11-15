@@ -14,12 +14,16 @@ abstract class RSCollection[T <: RSEntity] extends RSObject {
 	def all(): Array[T] = elements
 	// def toTarget(): RSTarget
 	def origin: Array[_]
-	// def first() : T = elements.first
+	def first() : T = elements.first
 
 	/**
 	 * コレクションからクエリにマッチするオブジェクトを検索する
 	 */
-	def selects(query: RSQuery): ArraySeq[T] = {
+	def select(query: RSQuery): ArraySeq[T] = {
+		var abstractArray = query.execute(this.elements)
+		return abstractArray.map(_.asInstanceOf[T])
+	}
+	def my_select(query: RSQuery): ArraySeq[T] = {
 		var abstractArray = query.execute(this.elements)
 		return abstractArray.map(_.asInstanceOf[T])
 	}

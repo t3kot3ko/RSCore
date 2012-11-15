@@ -24,34 +24,34 @@ class RSFieldsTest extends BaseTest{
 	
 	@Test
 	def 名前からフィールドを絞り込める(): Unit = { 
-		var publicIntField = cls.fields.selects(By.Name(With.or("publicInt", "aaa")))
+		var publicIntField = cls.fields.select(By.Name(With.or("publicInt", "aaa")))
 		assertEquals(1, publicIntField.length)
 	}
 	
 	@Test
 	def 修飾子からフィールドを絞り込める(): Unit = {
-		var publicFields = this.cls.fields.selects(By.Modifier(With.or("public")))
+		var publicFields = this.cls.fields.select(By.Modifier(With.or("public")))
 		assertEquals(1, publicFields.length)
 		
-		var privateFields = this.cls.fields.selects(By.Modifier(With.or("private" )))
+		var privateFields = this.cls.fields.select(By.Modifier(With.or("private" )))
 		assertEquals(1, privateFields.length)
 		
-		var protectedFields = this.cls.fields.selects(By.Modifier(With.or("protected")))
+		var protectedFields = this.cls.fields.select(By.Modifier(With.or("protected")))
 		assertEquals(1, protectedFields.length)
 		
-		var publicStaticFields = this.cls.fields.selects(By Modifier With.and("public", "static"))
+		var publicStaticFields = this.cls.fields.select(By Modifier With.and("public", "static"))
 		assertEquals(0, publicStaticFields.length)
 	}
 	
 	@Test
 	def 型名からフィールドを絞り込める(): Unit = {
-		var intFields = this.cls.fields.selects(By Type(With.or("int")))
+		var intFields = this.cls.fields.select(By Type(With.or("int")))
 		assertEquals(2, intFields.length)
 	}
 	
 	@Test
 	def 正規表現でフィールドを絞り込める(): Unit = {
-		var prFields = this.cls.fields.selects(By.Namereg(With.or("^pr")))
+		var prFields = this.cls.fields.select(By.Namereg(With.or("^pr")))
 		assertEquals(2, prFields.length)
 	}
 }

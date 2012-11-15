@@ -19,5 +19,9 @@ class RSFields(val elements: Array[RSField])
 
 	override def origin: Array[IField] = elements.map(_.origin)
 	// def toTarget(): Array[RSTarget] = this.elements.map(e => e.toTarget())
+	
+	def select_with_foo(): String = {
+		return "dummy method"
+	}
 
 }

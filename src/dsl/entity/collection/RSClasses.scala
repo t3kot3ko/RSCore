@@ -16,5 +16,9 @@ class RSClasses(val elements: Array[RSClass])
 
 	override def origin: Array[IType] = elements.map(e => e.origin)
 	override def all: Array[RSClass] = elements
+	
+	def select_with_foo(): String = {
+		return "dummy"
+	}
 
 }

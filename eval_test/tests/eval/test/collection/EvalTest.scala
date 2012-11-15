@@ -2,7 +2,8 @@ package tests.eval.test.collection;
 
 import org.junit.Test
 import org.jruby.embed.ScriptingContainer
-import org.junit.Ignore
+
+import dsl.util.ImplicitConversions._
 
 class EvalTest {
 	@Test
@@ -16,7 +17,17 @@ class EvalTest {
 			java_import 'dsl.entity.collection.WithOr'
 			java_import 'dsl.entity.collection.WithAnd'
 			
-			a = RSWorkspace.project("Sample").pkg("test.dsl").classes.first.fields.selects(By.Modifier("public"))
+			w = WithOr.new(["public"])
+			q = By.Modifier(w)
+			
+			puts RSWorkspace.project("Sample").pkg("test.dsl").classes.first.constructors.size
+			
+			# RSWorkspace.project("Sample").pkg("test.dsl").classes.first.fields.first.rename("newnewnew")
+			RSWorkspace.project("Sample").pkg("test.dsl").classes.first.fields.first.encapsulate()
+			
+			# puts RSWorkspace.project("Sample").pkg("test.dsl").classes.select_with_foo
+			# puts RSWorkspace.project("Sample").pkg("test.dsl").classes.first.fields.select_with_foo
+			
 			
 			# f.rename("")
 		"""

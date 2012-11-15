@@ -24,22 +24,22 @@ class RSMethodsTest extends BaseTest{
 	@Test
 	def 名前からメソッドを絞り込める(): Unit = {
 		val targetMethodName = "publicVoidMethod"
-		val results = methods.selects(By.Name(With.or(targetMethodName)))
+		val results = methods.select(By.Name(With.or(targetMethodName)))
 		assertEquals(1, results.length)
 		assertEquals(targetMethodName, results.first.name)
 	}
 	
 	@Test
 	def 正規表現からメソッドを絞り込める(): Unit = {
-		assertEquals(1, methods.selects(By.Namereg(With.or("publicStaticVoidMethod"))).length)
+		assertEquals(1, methods.select(By.Namereg(With.or("publicStaticVoidMethod"))).length)
 		
-		val prMethods = methods.selects(By.Namereg(With.or("^pr.*Method$")))
+		val prMethods = methods.select(By.Namereg(With.or("^pr.*Method$")))
 		assertEquals(2, prMethods.length)
 	}
 	
 	@Test
 	def 返却値型からメソッドを絞り込める(): Unit = {
-		var voidMethods = methods.selects(By.Type(With.or("void")))
+		var voidMethods = methods.select(By.Type(With.or("void")))
 		assertEquals(2, voidMethods.length)
 	}
 	
@@ -51,10 +51,10 @@ class RSMethodsTest extends BaseTest{
 	
 	@Test
 	def 修飾子からメソッドを絞り込める(): Unit = {
-		val publicMethods = methods.selects(By.Modifier(With.or("public")))
+		val publicMethods = methods.select(By.Modifier(With.or("public")))
 		assertEquals(2, publicMethods.length)
 		
-		val publicStaticMethods = methods.selects(By.Modifier(With.and("public", "static")))
+		val publicStaticMethods = methods.select(By.Modifier(With.and("public", "static")))
 		assertEquals(1, publicStaticMethods.length)
 	}
 	
@@ -63,7 +63,7 @@ class RSMethodsTest extends BaseTest{
 		// パラメータが1つ以上のメソッドを探す
 		val callback: RSMethod => Boolean = 
 			(method: RSMethod) => method.parameters.length > 0
-		val methodsHaveParameter: ArraySeq[RSMethod] = methods.selects(By.Callback(With.or(callback)))
+		val methodsHaveParameter: ArraySeq[RSMethod] = methods.select(By.Callback(With.or(callback)))
 		assertEquals(2, methodsHaveParameter.length)
 	}
 

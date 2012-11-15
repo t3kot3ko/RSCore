@@ -26,8 +26,8 @@ class RenameFieldTest extends RefactoringBaseTest {
 		prepareTest(testName)
 
 		val $ = RSWorkspace
-		$.project(projectName).pkg(testGroupIdentifier).classes.selects(By.Name(testName)).first
-			.fields.selects(By.Modifier("private"))
+		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first
+			.fields.select(By.Modifier("private"))
 			.foreach(field => field.rename("new" + field.name.toUpperCase()))
 
 		doAssert(testName)

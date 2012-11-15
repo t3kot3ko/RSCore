@@ -36,6 +36,7 @@ class IntroduceFactoryRefactoringProcessor(rsObject: RSObject) extends AbstractR
 	}
 
 	private def createActionForClass(cls: RSClass): RSRefactoringAction = {
+		println("createActionForClass")
 		return new RSRefactoringAction(cls.constructors.map(createElement(_)).toSeq)
 	}
 
