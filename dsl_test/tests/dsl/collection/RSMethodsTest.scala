@@ -1,5 +1,4 @@
 package tests.dsl.collection
-import tests.dsl.BaseTest
 import org.junit.Test
 import org.junit.Before
 import dsl.entity.RSMethod
@@ -10,14 +9,16 @@ import org.junit.Ignore
 import org.junit.Assert._
 import dsl.entity.collection.With
 import scala.collection.mutable.ArraySeq
+import tests.dsl.DSLBaseTest
 
-class RSMethodsTest extends BaseTest{
-	var methods: Array[RSMethod] = null
+class RSMethodsTest extends DSLBaseTest{
+	private var methods: Array[RSMethod] = _
 	
 	@Before
 	override def setUp(): Unit = {
 		super.setUp()
-		this.methods = project.pkg("test.dsl").classes.first.methods
+		prepareTest("RSMethodsTest")
+		this.methods = $.project(this.projectName).pkg("find_test").classes.first.methods
 		println("methods were collected")
 	}
 	

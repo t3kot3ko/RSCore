@@ -8,9 +8,8 @@ import dsl.entity.RSWorkspace
  * ワークスペースから各エンティティを取得する，など基本動作に関するテスト
  */
 class BasicTest extends DSLBaseTest{
-		
 	@Before
-	def setUp(): Unit = {
+	override def setUp(): Unit = {
 		super.setUp()
 		prepareTest("BasicTest")
 	}

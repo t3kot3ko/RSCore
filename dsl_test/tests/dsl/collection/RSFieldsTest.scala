@@ -10,17 +10,17 @@ import scala.reflect.This
 import dsl.entity.collection.By
 import dsl.entity.collection.With
 import dsl.util.ImplicitConversions._
-import tests.dsl.BaseTest
 import dsl.entity.RSClass
 import tests.dsl.DSLBaseTest
 
 class RSFieldsTest extends DSLBaseTest{
-	var cls: RSClass = null
+	private var cls: RSClass = _ 
 	
 	@Before
 	override def setUp(): Unit ={
 		super.setUp()
-		this.cls = project.pkg("test.dsl").classes.first
+		prepareTest("RSFieldsTest")
+		this.cls = $.project(this.projectName).pkg("find_test").classes.first
 	}
 	
 	@Test

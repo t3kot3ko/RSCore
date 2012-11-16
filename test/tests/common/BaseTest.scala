@@ -19,9 +19,9 @@ import org.junit.After
  * （テスト用のプロジェクトを作って，テストが終わったらそれを削除する）
  */
 class BaseTest {
-	private var fgRoot: IPackageFragmentRoot = _
-	private var fgPackageP: IPackageFragment = _
-	private var fgJavaTestProject: IJavaProject = _
+	protected var fgRoot: IPackageFragmentRoot = _
+	protected var fgPackageP: IPackageFragment = _
+	protected var fgJavaTestProject: IJavaProject = _
 	
 	// 自動的に決定されるテストプロジェクトの名前
 	var projectName: String = _

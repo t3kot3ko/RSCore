@@ -1,17 +1,18 @@
 package tests.dsl.entity
 import org.junit.Test
-import tests.dsl.BaseTest
 import org.junit.Before
 import dsl.entity.RSMethod
 import org.junit.Assert._
+import tests.dsl.DSLBaseTest
 
-class MethodTest extends BaseTest {
+class MethodTest extends DSLBaseTest {
 	var methods: Array[RSMethod] = null
 
 	@Before
 	override def setUp(): Unit = {
 		super.setUp()
-		this.methods = project.pkg("test.dsl").classes.first.methods
+		prepareTest("RSMethodsTest")
+		this.methods = $.project(this.projectName).pkg("find_test").classes.first.methods
 		assertEquals(4, this.methods.length)
 	}
 	@Test
