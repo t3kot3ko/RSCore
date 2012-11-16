@@ -20,12 +20,13 @@ class EvalTest {
 			w = WithOr.new(["public"])
 			q = By.Modifier(w)
 			
+			#### WORKS! ####
 			# RSWorkspace.project("Sample").pkg("test.dsl").classes.first.constructors.size
-			RSWorkspace.project("Sample").pkg("test.dsl").classes.first.constructors.first.introduce_factory
-			
+			# RSWorkspace.project("Sample").pkg("test.dsl").classes.first.constructors.first.introduce_factory
 			# RSWorkspace.project("Sample").pkg("test.dsl").classes.first.fields.first.rename("newnewnew")
 			# RSWorkspace.project("Sample").pkg("test.dsl").classes.first.fields.first.encapsulate()
 			
+			#### EXPERIMENTAL ###
 			# puts RSWorkspace.project("Sample").pkg("test.dsl").classes.select_with_foo
 			# puts RSWorkspace.project("Sample").pkg("test.dsl").classes.first.fields.select_with_foo
 			
