@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="jars/jruby-complete-1.7.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="jars/jruby-engine-1.1.7.jar"/>
 	<classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
@@ -8,6 +10,7 @@
 	<classpathentry kind="src" path="refactoring_test"/>
 	<classpathentry kind="src" path="test_resources_input"/>
 	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="eval_test"/>
 	<classpathentry kind="lib" path="/Applications/eclipse/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar"/>
 	<classpathentry kind="lib" path="/Applications/eclipse/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar"/>
 	<classpathentry kind="output" path="bin"/>

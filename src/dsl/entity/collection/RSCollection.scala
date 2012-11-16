@@ -23,5 +23,9 @@ abstract class RSCollection[T <: RSEntity] extends RSObject {
 		var abstractArray = query.execute(this.elements)
 		return abstractArray.map(_.asInstanceOf[T])
 	}
+	def my_select(query: RSQuery): ArraySeq[T] = {
+		var abstractArray = query.execute(this.elements)
+		return abstractArray.map(_.asInstanceOf[T])
+	}
 
 }

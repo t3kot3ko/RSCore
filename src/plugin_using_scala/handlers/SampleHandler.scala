@@ -110,7 +110,7 @@ class SampleHandler extends AbstractHandler {
 		// $.project("Sample").pkg("introduce_factory").classes.first.introduce_factory
 		
 		// rename private fields adding prefix
-		val privateFields = $.project("Sample").pkg("test.dsl").classes.first.fields.select(By.Modifier(With.or("private")))
+		val privateFields = $.project("Sample").pkg("test.dsl").classes.first.fields.select(By.Modifier(With.or(Array("private"))))
 		.foreach(e => e.rename("_" + e.name))
 		
 		alert(window, "Complete", "execute() has been successfully executed")

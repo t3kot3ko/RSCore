@@ -14,17 +14,17 @@ object By {
 	 * èåèÇÇ–Ç∆Ç¬ÇµÇ©éwíËÇµÇ»Ç¢Ç∆Ç´ÇÕÅCBy.Name("aaaa") ÇÃÇÊÇ§Ç…Ç‡èëÇØÇÈ
 	 */
 	def Name(q: Qualifier): NameQuery = NameQuery(q)
-	def Name(name: String): NameQuery = NameQuery(With.or(name))
+	def Name(name: String): NameQuery = NameQuery(With.or(Array(name)))
 
 	def Namereg(q: Qualifier): NameRegQuery = NameRegQuery(q)
-	def Namereg(namereg: String): NameRegQuery = NameRegQuery(With.or(namereg))
+	def Namereg(namereg: String): NameRegQuery = NameRegQuery(With.or(Array(namereg)))
 	
 	def Modifier(q: Qualifier): ModifierQuery = ModifierQuery(q)
-	def Modifier(modifier: String): ModifierQuery = ModifierQuery(With.or(modifier))
+	def Modifier(modifier: String): ModifierQuery = ModifierQuery(With.or(Array(modifier)))
 	
 	def Type(q: Qualifier): TypeQuery = TypeQuery(q)
-	def Type(typeName: String): TypeQuery = TypeQuery(With.or(typeName))
+	def Type(typeName: String): TypeQuery = TypeQuery(With.or(Array(typeName)))
 	
-	def Callback[T <: RSEntity](q: Qualifier): CallbackQuery[T] = CallbackQuery[T](q)
-	def Callback[T <: RSEntity](callback: T => Boolean): CallbackQuery[T] = CallbackQuery[T](With.or(callback))
+	// def Callback[T <: RSEntity](q: Qualifier): CallbackQuery[T] = CallbackQuery[T](Array(q))
+	// def Callback[T <: RSEntity](callback: T => Boolean): CallbackQuery[T] = CallbackQuery[T](With.or(callback))
 }

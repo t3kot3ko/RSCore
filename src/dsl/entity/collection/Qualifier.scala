@@ -9,12 +9,18 @@ case class With[T](values: T*){
 	
 }
 object With{
-	def or[T](values: T*): WithOr[T] = new WithOr[T](values: _*)
-	def and[T](values: T*): WithAnd[T] = new WithAnd[T](values: _*)
-	def out[T](values: T*): Without[T] = new Without[T](values: _*)
+	def or[T](values: Array[T]): WithOr[T] = new WithOr[T](values)
+	def or[T](value: String): WithOr[String] = new WithOr[String](Array(value))
+	
+	def and[T](values: Array[T]): WithAnd[T] = new WithAnd[T](values)
+	def and[T](value: String): WithAnd[String] = new WithAnd[String](Array(value))
+	
+	def out[T](values: Array[T]): Without[T] = new Without[T](values)
+	def out[T](value: String): Without[String] = new Without[String](Array(value))
+	
 }
 
-class WithOr[T](val values: T*) extends Qualifier {}
-class WithAnd[T](val values: T*) extends Qualifier {}
-class Without[T](val values: T*) extends Qualifier {}
+class WithOr[T](val values: Array[T]) extends Qualifier {}
+class WithAnd[T](val values: Array[T]) extends Qualifier {}
+class Without[T](val values: Array[T]) extends Qualifier {}
 

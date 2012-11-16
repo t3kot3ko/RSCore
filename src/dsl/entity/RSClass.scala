@@ -55,7 +55,12 @@ class RSClass(val element: IType)
 	 * （メソッド名がクラス名と一致しているものをコンストラクタとみなしています）
 	 */
 	def constructors(): Array[RSMethod] = {
-		return this.methods.select(By.Name(With.or(this.name))).toArray
+		println("------------")
+		println(this.methods.length)
+		println("------------")
+		println(this.methods.select(By.Name(With.or(Array(this.name)))).length)
+		
+		return this.methods.select(By.Name(With.or(Array(this.name)))).toArray
 	}
 
 	// Get instance / class fields

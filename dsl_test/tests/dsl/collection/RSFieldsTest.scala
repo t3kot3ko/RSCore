@@ -25,7 +25,7 @@ class RSFieldsTest extends DSLBaseTest{
 	
 	@Test
 	def 名前からフィールドを絞り込める(): Unit = { 
-		var publicIntField = cls.fields.select(By.Name(With.or("publicInt", "aaa")))
+		var publicIntField = cls.fields.select(By.Name(With.or(Array("publicInt", "aaa"))))
 		assertEquals(1, publicIntField.length)
 	}
 	
@@ -40,7 +40,7 @@ class RSFieldsTest extends DSLBaseTest{
 		var protectedFields = this.cls.fields.select(By.Modifier(With.or("protected")))
 		assertEquals(1, protectedFields.length)
 		
-		var publicStaticFields = this.cls.fields.select(By Modifier With.and("public", "static"))
+		var publicStaticFields = this.cls.fields.select(By Modifier With.and(Array("public", "static")))
 		assertEquals(0, publicStaticFields.length)
 	}
 	
@@ -55,5 +55,4 @@ class RSFieldsTest extends DSLBaseTest{
 		var prFields = this.cls.fields.select(By.Namereg(With.or("^pr")))
 		assertEquals(2, prFields.length)
 	}
-	
 }
