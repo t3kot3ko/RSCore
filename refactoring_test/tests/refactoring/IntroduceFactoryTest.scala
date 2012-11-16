@@ -32,6 +32,17 @@ class IntroduceFactoryTest extends RefactoringBaseTest {
 		
 		doAssert(testName)
 	}
+	
+	@Test
+	def クラス定義のみ2(): Unit = {
+		val testName = "DeclarationOnly2"
+		prepareTest(testName)
+
+		val $ = RSWorkspace
+		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.introduce_factory
+		
+		doAssert(testName)
+	}
 
 	@Test
 	def クラス定義とコンストラクタ呼び出し() = {
@@ -62,18 +73,22 @@ class IntroduceFactoryTest extends RefactoringBaseTest {
 		prepareTest(testName)
 
 		val $ = RSWorkspace
-		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.introduce_factory
+		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.constructors.first.introduce_factory
 		
 		doAssert(testName)
 	}
 	
 	
-	@Ignore
-	def 複数のコンストラクタがある場合(): Unit = {
+	@Test
+	def 複数のコンストラクタがある場合にクラスを指定してすべてのコンストラクタをリファクタリング(): Unit = {
 		val testName = "MultipleConstructor"
 		prepareTest(testName)
+		
+		val $ = RSWorkspace
+		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.introduce_factory
+		
+		doAssert(testName)
 	}
-
 
 	/*
 	@After

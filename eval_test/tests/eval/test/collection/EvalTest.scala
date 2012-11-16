@@ -23,6 +23,10 @@ class EvalTest {
 			#### WORKS! ####
 			# RSWorkspace.project("Sample").pkg("test.dsl").classes.first.constructors.size
 			# RSWorkspace.project("Sample").pkg("test.dsl").classes.first.constructors.first.introduce_factory
+			
+			# RSWorkspace.project("Sample").pkg("test.dsl").classes.first.constructors.first.introduce_factory
+			RSWorkspace.project("Sample").pkg("test.dsl").classes.first.introduce_factory
+			
 			# RSWorkspace.project("Sample").pkg("test.dsl").classes.first.fields.first.rename("newnewnew")
 			# RSWorkspace.project("Sample").pkg("test.dsl").classes.first.fields.first.encapsulate()
 			
