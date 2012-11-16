@@ -12,8 +12,9 @@ import dsl.entity.collection.With
 import dsl.util.ImplicitConversions._
 import tests.dsl.BaseTest
 import dsl.entity.RSClass
+import tests.dsl.DSLBaseTest
 
-class RSFieldsTest extends BaseTest{
+class RSFieldsTest extends DSLBaseTest{
 	var cls: RSClass = null
 	
 	@Before

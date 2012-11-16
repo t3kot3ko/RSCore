@@ -1,4 +1,4 @@
-package tests.refactoring
+package tests.common
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.core.resources.IWorkspaceRoot
 import org.eclipse.core.resources.ResourcesPlugin
@@ -20,7 +20,7 @@ import org.junit.Assert
 import org.eclipse.jdt.core.IPackageFragment
 import org.eclipse.jdt.core.ICompilationUnit
 
-object RefactoringTestHelper {
+object TestHelper {
 	def createJavaProject(projectName: String, binFolderName: String = "bin"): IJavaProject = {
 		var root: IWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot()
 		var project: IProject = root.getProject(projectName)
