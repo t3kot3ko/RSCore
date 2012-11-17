@@ -22,6 +22,7 @@ class BaseTest {
 	protected var fgRoot: IPackageFragmentRoot = _
 	protected var fgPackageP: IPackageFragment = _
 	protected var fgJavaTestProject: IJavaProject = _
+	protected var fgJRELibrary: IPackageFragmentRoot = _
 	
 	// 自動的に決定されるテストプロジェクトの名前
 	var projectName: String = _
@@ -39,6 +40,7 @@ class BaseTest {
 		this.fgJavaTestProject = TestHelper.createJavaProject(projectName, "bin")
 		this.fgRoot = TestHelper.addSourceContainer(this.fgJavaTestProject, "src")
 		// this.fgPackageP = fgRoot.createPackageFragment("p", true, null)
+		this.fgJRELibrary = addRTJar(fgJavaTestProject)
 		this.fgPackageP = fgRoot.createPackageFragment(testGroupIdentifier, true, null)
 		this.fgJavaTestProject.open(new NullProgressMonitor)
 
@@ -56,6 +58,10 @@ class BaseTest {
 			case e: FileNotFoundException => Assert.fail("input file is not found")
 		}
 
+	}
+	
+	def addRTJar(project: IJavaProject): IPackageFragmentRoot = {
+		return TestHelper.addRTJar(project)
 	}
 
 	@After

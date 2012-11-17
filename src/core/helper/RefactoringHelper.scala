@@ -25,11 +25,10 @@ object RefactoringHelper {
 		ResourcesPlugin.getWorkspace().run(perform, new NullProgressMonitor())
 		
 		var status: RefactoringStatus = create.getConditionCheckingStatus()
-		if (!status.isOK()) {
+		// if (!status.isOK()) {
 			return status;
-		}
-		var undo: Change = perform.getUndoChange()
-		return null
+		// }
+		// var undo: Change = perform.getUndoChange()
 	}
 	
 	

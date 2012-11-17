@@ -90,11 +90,4 @@ class IntroduceFactoryTest extends RefactoringBaseTest {
 		doAssert(testName)
 	}
 
-	/*
-	@After
-	override def tearDown(): Unit = {
-		println("tearing down without removing generated files...")
-	}
-	*/
-
 }

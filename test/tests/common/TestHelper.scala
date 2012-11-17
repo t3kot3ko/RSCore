@@ -19,6 +19,8 @@ import org.eclipse.jdt.internal.corext.util.Strings
 import org.junit.Assert
 import org.eclipse.jdt.core.IPackageFragment
 import org.eclipse.jdt.core.ICompilationUnit
+import java.io.File
+import org.eclipse.core.runtime.Path
 
 object TestHelper {
 	def createJavaProject(projectName: String, binFolderName: String = "bin"): IJavaProject = {
@@ -120,6 +122,41 @@ object TestHelper {
 		}
 		val newEntries = (oldEntries.toBuffer + cpe).toArray
 		jproject.setRawClasspath(newEntries, new NullProgressMonitor)
+	}
+	
+	/**
+	 * ライブラリを（プロジェクトに対して）追加する
+	 */
+	def addLibrary(project: IJavaProject, path: IPath, sourceAttachPath: IPath, sourceAttachRoot: IPath): IPackageFragmentRoot = {
+		val cpe: IClasspathEntry = JavaCore.newLibraryEntry(path, sourceAttachPath, sourceAttachRoot)
+		addToClasspath(project, cpe)
+		val workspaceResource = ResourcesPlugin.getWorkspace().getRoot().findMember(path)
+		if(workspaceResource != null){
+			return project.getPackageFragmentRoot(workspaceResource)
+		}
+		return project.getPackageFragmentRoot(path.toString())
+	}
+	
+	
+	/**
+	 * 必要な基本ライブラリを追加する
+	 * （これがないと，組込型以外のハンドリングができない）
+	 */
+	def addRTJar(project: IJavaProject/*, path: IPath = RT_JAR_PATH*/): IPackageFragmentRoot = {
+		val RT_JAR_PATH = new Path("/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar")
+		val rtJarPath = Array[IPath](
+				RT_JAR_PATH, 
+				null,
+				null
+		)
+		
+		setCompilerOption(project)
+		return addLibrary(project, rtJarPath(0), rtJarPath(1), rtJarPath(2))
+	}
+	
+	def setCompilerOption(project: IJavaProject): Unit = {
+		val options = project.getOptions(false)
+		project.setOptions(options)
 	}
 	
 	
