@@ -32,3 +32,4 @@ class RSCollection[T <: RSEntity](val elements : Array[T]) extends RSObject {
 	}
 
 }
+

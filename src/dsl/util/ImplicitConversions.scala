@@ -22,17 +22,17 @@ import scala.collection.mutable.ArraySeq
 object ImplicitConversions {
 	implicit def convertToRSMethod(method: IMethod) = new RSMethod(method)
 	implicit def convertToRSMethods(methods: Array[RSMethod]) = new RSMethods(methods)
-	// implicit def convertToRSMethods(methods: ArraySeq[RSMethod]) = new RSMethods(methods.toArray)
+	implicit def convertToRSMethods(methods: ArraySeq[RSMethod]) = new RSMethods(methods.toArray)
 	
 	implicit def converToRSField(field: IField) = new RSField(field)
 	implicit def converToRSFields(fields: Array[RSField]) = new RSFields(fields)
-	// implicit def converToRSFields(fields: ArraySeq[RSField]) = new RSFields(fields.toArray)
+	implicit def converToRSFields(fields: ArraySeq[RSField]) = new RSFields(fields.toArray)
 	
 	implicit def convertToRSClass(cls: IType) = new RSClass(cls)
 	implicit def convertToRSClasses(clss: Array[RSClass]) = new RSClasses(clss)
-	// implicit def convertToRSClasses(clss: ArraySeq[RSClass]) = new RSClasses(clss.toArray)
+	implicit def convertToRSClasses(clss: ArraySeq[RSClass]) = new RSClasses(clss.toArray)
 	
 	implicit def converToRSParameter(prm: ILocalVariable) = new RSParameter(prm)
-	implicit def convertTORSParameters(prms: Array[RSParameter]) = new RSParameters(prms)
-	// implicit def convertTORSParameters(prms: ArraySeq[RSParameter]) = new RSParameters(prms.toArray)
+	implicit def convertToRSParameters(prms: Array[RSParameter]) = new RSParameters(prms)
+	implicit def convertTORSParameters(prms: ArraySeq[RSParameter]) = new RSParameters(prms.toArray)
 }

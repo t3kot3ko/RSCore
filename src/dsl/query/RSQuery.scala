@@ -8,4 +8,5 @@ abstract class RSQuery(val qualfier: Qualifier) {
 	// to be overridden in subclasses
 	def execute(elements: Array[_ <: RSEntity]): Array[_ <: RSEntity]
 	def execute[T <: RSEntity](collection: RSCollection[T]): RSCollection[T]
+	// def execute(collection: RSCollection[_]): Array[_ <: RSEntity]
 }

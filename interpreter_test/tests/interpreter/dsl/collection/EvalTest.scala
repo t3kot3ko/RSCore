@@ -1,12 +1,12 @@
-package tests.eval.test.collection;
+package tests.interpreter.dsl.collection;
 
 import org.junit.Test
 import org.jruby.embed.ScriptingContainer
-
 import dsl.util.ImplicitConversions._
+import org.junit.Ignore
 
 class EvalTest {
-	@Test
+	@Ignore
 	def インタープリタを呼び出せる(): Unit = {
 		val container: ScriptingContainer = new ScriptingContainer();
 		val source = """
