@@ -29,3 +29,4 @@ abstract class RSCollection[T <: RSEntity] extends RSObject {
 	}
 
 }
+

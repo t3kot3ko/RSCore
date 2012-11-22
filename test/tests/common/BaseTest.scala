@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.IPackageFragment
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.core.runtime.NullProgressMonitor
 import org.eclipse.ltk.core.refactoring.RefactoringCore
-import core.util.FileUtil
+import util.FileUtil
 import java.io.FileNotFoundException
 import junit.framework.Assert
 import org.junit.After

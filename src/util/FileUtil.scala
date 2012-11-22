@@ -1,4 +1,4 @@
-package core.util
+package util
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -21,14 +21,25 @@ object FileUtil {
 				.mkString("\n")
 		}
 	}
-	
+
 	/**
-	 * 文字列から空行を取り除く
+	 * 複数行文字列（から空行を取り除く
+	 * @param eliminateHeadBlanks 加えて，先頭の空白をすべて削除する
 	 */
-	def eliminateBlankLines(string: String): String = {
+	def eliminateBlankLines(string: String, eliminate: Boolean = false): String = {
 		val blankLine = """^\s*$"""
 		val lines = string.split("\n").filterNot(line => line.matches(blankLine) || line == "")
+			.map(e => if(eliminate) eliminateHeadBlanks(e) else e)
 		return lines.mkString("\n")
+	}
+
+	/**
+	 * 文字列の先頭の改行を取り除く
+	 */
+	def eliminateHeadBlanks(string: String): String = {
+		val headBlank = """^\s+"""
+		val r = string.replaceAll(headBlank, "")
+		return r
 	}
 
 }

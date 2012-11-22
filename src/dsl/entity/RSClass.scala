@@ -19,6 +19,7 @@ import dsl.util.ImplicitConversions._
 import dsl.entity.collection.With
 import dsl.entity.collection.By
 import dsl.traits.action.RSTIntroduceFactory
+import dsl.entity.collection.RSFields
 
 class RSClass(val element: IType)
 	extends RSEntity
@@ -39,6 +40,9 @@ class RSClass(val element: IType)
 	def methods(): Array[RSMethod] = {
 		return element.getMethods().map(e => new RSMethod(e))
 	}
+	def methodsR(): RSMethods = {
+		return new RSMethods(this.methods())
+	}
 
 	def isInterface(): Boolean = return this.element.isInterface()
 	def isClass(): Boolean = return this.element.isClass()
@@ -55,17 +59,18 @@ class RSClass(val element: IType)
 	 * （メソッド名がクラス名と一致しているものをコンストラクタとみなしています）
 	 */
 	def constructors(): Array[RSMethod] = {
-		println("------------")
-		println(this.methods.length)
-		println("------------")
-		println(this.methods.select(By.Name(With.or(Array(this.name)))).length)
-		
 		return this.methods.select(By.Name(With.or(Array(this.name)))).toArray
+	}
+	def constructors_(): RSMethods = {
+		return new RSMethods(this.constructors);
 	}
 
 	// Get instance / class fields
 	def fields(): Array[RSField] = {
 		return this.element.getFields().map(e => new RSField(e))
+	}
+	def fields_(): RSFields = {
+		return new RSFields(this.fields())
 	}
 
 

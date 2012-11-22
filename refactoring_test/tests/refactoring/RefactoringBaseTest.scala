@@ -12,12 +12,11 @@ import org.junit.Assert._
 import org.eclipse.core.runtime.NullProgressMonitor
 import java.io.FileNotFoundException
 import org.junit.Assert
-import core.util.FileUtil
+import util.FileUtil
 import tests.common.BaseTest
 import tests.common.TestHelper
 
 class RefactoringBaseTest extends BaseTest{
-
 	protected def doAssert(testName: String): Unit = {
 		val actualSource = FileUtil.eliminateBlankLines(
 			this.fgPackageP.getCompilationUnit(testName + ".java").getSource())

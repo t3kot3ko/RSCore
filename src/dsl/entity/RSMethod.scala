@@ -16,6 +16,7 @@ import dsl.traits.search.TypeBasedSearchable
 import dsl.traits.search.SignatureBasedSearchable
 import org.eclipse.jdt.core.IType
 import dsl.traits.action.RSTIntroduceFactory
+import dsl.entity.collection.RSParameters
 
 class RSMethod(val element: IMethod)
 	extends RSEntity
@@ -38,6 +39,10 @@ class RSMethod(val element: IMethod)
 	override def origin(): IMethod = element
 	def parameters(): Array[RSParameter] = {
 		this.element.getParameters().map(e => new RSParameter(e))
+	}
+	
+	def parameters_(): RSParameters = {
+		return new RSParameters(this.parameters())
 	}
 
 	override def getDeclaration(): MethodDeclaration = {

@@ -1,7 +1,7 @@
 package tests.refactoring
 import org.eclipse.jdt.core.ICompilationUnit
 import org.eclipse.jdt.core.IPackageFragment
-import core.util.FileUtil
+import util.FileUtil
 import org.junit.Before
 import org.junit.Assert
 import org.junit.Test

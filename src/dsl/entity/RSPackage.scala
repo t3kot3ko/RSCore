@@ -3,7 +3,6 @@ import org.eclipse.jdt.core.IPackageFragment
 import dsl.entity.collection.RSClasses
 
 class RSPackage(val element: IPackageFragment) extends RSEntity{
-	
 	val __identifier:String = "package"
 		
 	/**
@@ -19,7 +18,13 @@ class RSPackage(val element: IPackageFragment) extends RSEntity{
 		}
 		return result.toArray
 	}
+	
+	def classes_(includeNested: Boolean = false): RSClasses = {
+		return new RSClasses(this.classes())
+	}
+	
 	def classes(): Array[RSClass] = classes(true)
+	def classes_(): RSClasses = classes_(true)
 	
 	override def origin() = element
 }
