@@ -8,12 +8,11 @@ import dsl.query.NameRegQuery
 import dsl.query.ModifierQuery
 import dsl.common.RSObject
 
-abstract class RSCollection[T <: RSEntity] extends RSObject {
-
-	val elements: Array[T]
+class RSCollection[T <: RSEntity](val elements : Array[T]) extends RSObject {
+	// val elements: Array[T]
 	def all(): Array[T] = elements
 	// def toTarget(): RSTarget
-	def origin: Array[_]
+	def origin: Array[T] = elements
 	def first() : T = elements.first
 
 	/**
@@ -24,6 +23,10 @@ abstract class RSCollection[T <: RSEntity] extends RSObject {
 		return abstractArray.map(_.asInstanceOf[T])
 	}
 	def my_select(query: RSQuery): ArraySeq[T] = {
+		var abstractArray = query.execute(this.elements)
+		return abstractArray.map(_.asInstanceOf[T])
+	}
+	def new_select(query: RSQuery): RSCollection[T] = {
 		var abstractArray = query.execute(this.elements)
 		return abstractArray.map(_.asInstanceOf[T])
 	}
