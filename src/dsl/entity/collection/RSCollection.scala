@@ -8,27 +8,29 @@ import dsl.query.NameRegQuery
 import dsl.query.ModifierQuery
 import dsl.common.RSObject
 
-class RSCollection[T <: RSEntity](val elements : Array[T]) extends RSObject {
+case class RSCollection[T <: RSEntity](elements: Array[T]) extends RSObject{
+	// def this(elements: ArraySeq[T]) = this(elements.toArray[T])
 	// val elements: Array[T]
 	def all(): Array[T] = elements
 	// def toTarget(): RSTarget
 	def origin: Array[T] = elements
-	def first() : T = elements.first
+	def first(): T = elements.first
+
+	def length: Int = elements.length
+	def apply(index: Int): T = elements(index)
 
 	/**
 	 * コレクションからクエリにマッチするオブジェクトを検索する
 	 */
-	def select(query: RSQuery): ArraySeq[T] = {
-		var abstractArray = query.execute(this.elements)
-		return abstractArray.map(_.asInstanceOf[T])
+	def select(query: RSQuery): RSCollection[T] = {
+		var result = query.execute(this)
+		return result
+		// val a = abstractArray.map(_.asInstanceOf[T])
 	}
-	def my_select(query: RSQuery): ArraySeq[T] = {
-		var abstractArray = query.execute(this.elements)
-		return abstractArray.map(_.asInstanceOf[T])
-	}
-	def new_select(query: RSQuery): RSCollection[T] = {
-		var abstractArray = query.execute(this.elements)
-		return abstractArray.map(_.asInstanceOf[T])
+	
+	// Just an alias to select
+	def my_select(query: RSQuery): RSCollection[T] = {
+		return this.select(query)
 	}
 
 }

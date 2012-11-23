@@ -1,6 +1,6 @@
 package dsl.entity
 import org.eclipse.jdt.core.IPackageFragment
-import dsl.entity.collection.RSClasses
+import dsl.entity.collection.RSCollection
 
 class RSPackage(val element: IPackageFragment) extends RSEntity{
 	val __identifier:String = "package"
@@ -8,7 +8,7 @@ class RSPackage(val element: IPackageFragment) extends RSEntity{
 	/**
 	 * パッケージ以下で宣言されているクラス(IType)をすべて取得する
 	 */
-	def classes(includeNested: Boolean = false): Array[RSClass] = {
+	private def getClasses(includeNested: Boolean): Array[RSClass] = {
 		var result = List[RSClass]()
 		var cus = element.getCompilationUnits()
 		if (includeNested) {
@@ -19,12 +19,10 @@ class RSPackage(val element: IPackageFragment) extends RSEntity{
 		return result.toArray
 	}
 	
-	def classes_(includeNested: Boolean = false): RSClasses = {
-		return new RSClasses(this.classes())
+	def classes(includeNested: Boolean = false): RSCollection[RSClass] = {
+		return new RSCollection[RSClass](getClasses(includeNested))
 	}
-	
-	def classes(): Array[RSClass] = classes(true)
-	def classes_(): RSClasses = classes_(true)
+	def classes(): RSCollection[RSClass] = classes(true)
 	
 	override def origin() = element
 }

@@ -12,8 +12,7 @@ object ScriptHelper{
 			"dsl.entity.collection.By",
 			"dsl.entity.collection.With",
 			"dsl.entity.collection.WithOr",
-			"dsl.entity.collection.WithAnd", 
-			"dsl.util.ImplicitConversions"
+			"dsl.entity.collection.WithAnd"
 			)
 			
 	/**
@@ -25,7 +24,6 @@ object ScriptHelper{
 	
 	def buildScript(script: String): String = {
 		val newScript = "require 'java'\n" + buildImportDeclaration() + "\n" + script
-		println(newScript)
 		return newScript
 	}
 }

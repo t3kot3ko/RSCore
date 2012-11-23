@@ -6,6 +6,7 @@ import core.helper.RefactoringHelper
 import dsl.entity.RSClass
 import org.eclipse.jdt.core.ISourceRange
 import dsl.entity.RSMethod
+import dsl.entity.collection.RSCollection
 
 object IntroduceFactory {
 	def introduceFactorySample(unit: ICompilationUnit) = {
@@ -21,10 +22,10 @@ object IntroduceFactory {
 
 	def introduceFactorySample(cls: RSClass): Unit = {
 		val cu: ICompilationUnit = cls.origin().getCompilationUnit()
-		val constructors: Array[RSMethod] = cls.constructors
+		val constructors: RSCollection[RSMethod] = cls.constructors
 		// val firstConstructor: RSMethod = constructors.first
 
-		for (c <- constructors) {
+		for (c <- constructors.elements) {
 			val nameRange: ISourceRange = c.origin.getNameRange()
 			val offset = nameRange.getOffset()
 			val length = nameRange.getLength()

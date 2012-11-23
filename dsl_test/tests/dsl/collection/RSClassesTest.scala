@@ -41,8 +41,10 @@ class RSClassesTest extends DSLBaseTest{
 	
 	@Test
 	def Cüq‚©‚çƒNƒ‰ƒX‚ği‚è‚ß‚é(): Unit = {
-		var c = project.pkg("find_test").classes(true).select(By.Modifier(With.or("public"))).select(By.Modifier(With.or("public")))
+		val c = project.pkg("find_test").classes(true).select(By.Modifier(With.or("public"))).select(By.Modifier(With.or("public")))
 		assertEquals(1, c.length)
+		val pc = project.pkg("find_test").classes(true).select(By.Modifier(With.or("public"))).select(By.Modifier(With.or("private")))
+		assertEquals(0, pc.length)
 	}
 		
 }

@@ -1,7 +1,7 @@
 package dsl.traits.action
 import dsl.entity.RSField
-import dsl.entity.collection.RSFields
 import core.action.refactoring.SelfEncapsulateFieldRefactoringProcessor
+import dsl.entity.collection.RSCollection
 
 trait RSTSelfEncapsulateFieldRefactoring extends RefactoringTrait {
 	def encapsulate(): Unit = {
@@ -11,7 +11,7 @@ trait RSTSelfEncapsulateFieldRefactoring extends RefactoringTrait {
 				val processor = new SelfEncapsulateFieldRefactoringProcessor(f)
 				processor.createAction().perform()
 			}
-			case fs: RSFields => {
+			case fs: RSCollection[RSField] => {
 				println("encapsulate to RSFields")
 				val processor = new SelfEncapsulateFieldRefactoringProcessor(fs)
 				processor.createAction().perform()

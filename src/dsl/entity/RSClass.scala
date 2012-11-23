@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.VariableDeclaration
 import org.eclipse.jdt.internal.corext.refactoring.structure.ASTNodeSearchUtil
 import org.eclipse.jdt.core.IMethod
 import org.eclipse.jdt.core.dom.Modifier
-import dsl.entity.collection.RSMethods
 import dsl.traits.search.NameBasedSearchable
 import dsl.traits.search.ModifierBasedSearchable
 import dsl.traits.search.CallbackBasedSearchable
@@ -19,7 +18,7 @@ import dsl.util.ImplicitConversions._
 import dsl.entity.collection.With
 import dsl.entity.collection.By
 import dsl.traits.action.RSTIntroduceFactory
-import dsl.entity.collection.RSFields
+import dsl.entity.collection.RSCollection
 
 class RSClass(val element: IType)
 	extends RSEntity
@@ -37,11 +36,9 @@ class RSClass(val element: IType)
 	override def origin: IType = element
 	// override def toTarget(): RSTarget = new RSTarget(Array(element))
 
-	def methods(): Array[RSMethod] = {
-		return element.getMethods().map(e => new RSMethod(e))
-	}
-	def methodsR(): RSMethods = {
-		return new RSMethods(this.methods())
+	def methods(): RSCollection[RSMethod] = {
+		val rsMethods = element.getMethods().map(e => new RSMethod(e))
+		return new RSCollection[RSMethod](rsMethods)
 	}
 
 	def isInterface(): Boolean = return this.element.isInterface()
@@ -51,28 +48,22 @@ class RSClass(val element: IType)
 
 	// Get method whose signature is matched
 	def method(name: String, signature: Array[String]): RSMethod = {
-		return element.getMethod(name, signature)
+		return new RSMethod(element.getMethod(name, signature))
 	}
 	
 	/**
 	 * クラスのコンストラクタを検索します
 	 * （メソッド名がクラス名と一致しているものをコンストラクタとみなしています）
 	 */
-	def constructors(): Array[RSMethod] = {
-		return this.methods.select(By.Name(With.or(Array(this.name)))).toArray
-	}
-	def constructors_(): RSMethods = {
-		return new RSMethods(this.constructors);
+	def constructors(): RSCollection[RSMethod] = {
+		return this.methods.select(By.Name(With.or(Array(this.name))))
 	}
 
 	// Get instance / class fields
-	def fields(): Array[RSField] = {
-		return this.element.getFields().map(e => new RSField(e))
+	def fields(): RSCollection[RSField] = {
+		val fs = this.element.getFields().map(e => new RSField(e))
+		return new RSCollection[RSField](fs)
 	}
-	def fields_(): RSFields = {
-		return new RSFields(this.fields())
-	}
-
 
 	override def getDeclaration(): TypeDeclaration = {
 		var cu = ASTUtil.createAST(element.getCompilationUnit()).asInstanceOf[CompilationUnit]

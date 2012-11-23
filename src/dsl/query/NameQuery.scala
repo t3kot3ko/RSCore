@@ -7,29 +7,21 @@ import dsl.entity.RSEntity
 import dsl.entity.collection.RSCollection
 
 case class NameQuery(val q: Qualifier) extends RSQuery(q) {
-	override def execute(elements: Array[_ <: RSEntity]): Array[_ <: RSEntity] = {
-		elements match {
-			case e: Array[NameBasedSearchable] =>
-				q match {
-					case w: WithOr[String] => return elements.filter(e => e.asInstanceOf[NameBasedSearchable].hasNamesOr(w.values.toArray))
-					case w: Without[String] => return elements.filterNot(e => e.asInstanceOf[NameBasedSearchable].hasNamesOr(w.values.toArray))
-					case _ => return elements
-				}
-			case _ => return elements
-		}
-	}
 	override def execute[T <: RSEntity](collection: RSCollection[T]): RSCollection[T] = {
 		val elements = collection.elements
 		val result: Array[T] = elements match {
 			case e: Array[NameBasedSearchable] =>
 				q match {
-					case w: WithOr[String] => elements.filter(e => e.asInstanceOf[NameBasedSearchable].hasNamesOr(w.values.toArray))	
-					case w: Without[String] => elements.filterNot(e => e.asInstanceOf[NameBasedSearchable].hasNamesOr(w.values.toArray))	
-					case _ => elements
+					case w: WithOr[String] =>
+						elements.filter(e => e.asInstanceOf[NameBasedSearchable].hasNamesOr(w.values.toArray))
+					case w: Without[String] =>
+						elements.filterNot(e => e.asInstanceOf[NameBasedSearchable].hasNamesOr(w.values.toArray))
+					case _ =>
+						elements
 				}
 			case _ => elements
 		}
-		
-		return new RSCollection[T](elements)
+
+		return new RSCollection[T](result)
 	}
 }

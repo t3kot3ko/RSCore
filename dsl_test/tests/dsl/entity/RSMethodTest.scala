@@ -4,9 +4,10 @@ import org.junit.Before
 import dsl.entity.RSMethod
 import org.junit.Assert._
 import tests.dsl.DSLBaseTest
+import dsl.entity.collection.RSCollection
 
 class MethodTest extends DSLBaseTest {
-	var methods: Array[RSMethod] = null
+	var methods: RSCollection[RSMethod] = _
 
 	@Before
 	override def setUp(): Unit = {

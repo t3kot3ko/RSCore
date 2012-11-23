@@ -6,14 +6,14 @@ import org.eclipse.jdt.internal.corext.refactoring.sef.SelfEncapsulateFieldRefac
 import org.eclipse.ltk.core.refactoring.Change
 import dsl.util.ImplicitConversions._
 import dsl.common.RSObject
-import dsl.entity.collection.RSFields
+// import dsl.entity.collection.RSFields
 
 class SelfEncapsulateFieldRefactoringProcessor(rsField: RSObject) extends AbstractRefactoringProcessor {
 	// def createAction(rsField: RSObject): RSRefactoringAction = {
 	override def createAction(): RSRefactoringAction = {
 		rsField match {
 			case f: RSField => return createActionForEntity(f)
-			case fs: RSFields => return createActionForCollection(fs)
+			// case fs: RSFields => return createActionForCollection(fs)
 		}
 		return new RSRefactoringAction(Seq())
 	}
@@ -23,11 +23,13 @@ class SelfEncapsulateFieldRefactoringProcessor(rsField: RSObject) extends Abstra
 		return RSRefactoringAction(Seq(action))
 	}
 
+	/*
 	private def createActionForCollection(rsFields: RSFields): RSRefactoringAction = {
 		val ary = rsFields.all()
 		val actions = ary.map(e => a(e))
 		return RSRefactoringAction(actions)
 	}
+	*/
 
 	// TODO: rename to an appropreate name
 	def a(f: RSField): () => Unit = {

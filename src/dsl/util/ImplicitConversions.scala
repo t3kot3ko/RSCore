@@ -1,16 +1,16 @@
 package dsl.util
 import org.eclipse.jdt.core.IMethod
 import dsl.entity.RSMethod
-import dsl.entity.collection.RSMethods
+// import dsl.entity.collection.RSMethods
 import dsl.entity.RSField
 import org.eclipse.jdt.core.IField
-import dsl.entity.collection.RSFields
+// import dsl.entity.collection.RSFields
 import org.eclipse.jdt.core.IType
 import dsl.entity.RSClass
-import dsl.entity.collection.RSClasses
+// import dsl.entity.collection.RSClasses
 import org.eclipse.jdt.core.ILocalVariable
 import dsl.entity.RSParameter
-import dsl.entity.collection.RSParameters
+// import dsl.entity.collection.RSParameters
 import scala.collection.mutable.ArraySeq
 
 /**
@@ -20,6 +20,7 @@ import scala.collection.mutable.ArraySeq
  * TODO: Array Ç∆ ArraySeq ÇÃëäà·Ç…Ç¬Ç¢ÇƒÇÕóví≤ç∏
  */
 object ImplicitConversions {
+	/*
 	implicit def convertToRSMethod(method: IMethod) = new RSMethod(method)
 	implicit def convertToRSMethods(methods: Array[RSMethod]) = new RSMethods(methods)
 	implicit def convertToRSMethods(methods: ArraySeq[RSMethod]) = new RSMethods(methods.toArray)
@@ -35,4 +36,5 @@ object ImplicitConversions {
 	implicit def converToRSParameter(prm: ILocalVariable) = new RSParameter(prm)
 	implicit def convertToRSParameters(prms: Array[RSParameter]) = new RSParameters(prms)
 	implicit def convertTORSParameters(prms: ArraySeq[RSParameter]) = new RSParameters(prms.toArray)
+	*/
 }

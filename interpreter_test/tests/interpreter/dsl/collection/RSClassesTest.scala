@@ -8,6 +8,7 @@ import interpreter.ScriptHelper
 import tests.interpreter.InterpreterDSLBaseTest
 import org.junit.Before
 import scala.collection.mutable.ArraySeq
+import dsl.entity.collection.RSCollection
 
 class RSClassesTest extends InterpreterDSLBaseTest{
 	@Before
@@ -27,8 +28,8 @@ class RSClassesTest extends InterpreterDSLBaseTest{
 		classesWithoutInnerClass = project.pkg("find_test").classes(false)
 		"""
 		interpreter.execScript(ScriptHelper.buildScript(script))
-		val cwi = interpreter.getVariable[Array[RSClass]]("classesWithInnerClass") 
-		val cwoi = interpreter.getVariable[Array[RSClass]]("classesWithoutInnerClass") 
+		val cwi = interpreter.getVariable[RSCollection[RSClass]]("classesWithInnerClass") 
+		val cwoi = interpreter.getVariable[RSCollection[RSClass]]("classesWithoutInnerClass") 
 		assertEquals(3, cwi.length)
 		assertEquals(2, cwoi.length)
 	}
@@ -37,11 +38,12 @@ class RSClassesTest extends InterpreterDSLBaseTest{
 	def ñºëOÇ©ÇÁÉNÉâÉXÇçiÇËçûÇﬂÇÈ(): Unit = {
 		val script = """
 			query = By.Name(With.or("RSClassesTest"))
-			puts query
-			puts project.pkg("find_test").classes(true).class
+			c = project.pkg("find_test").classes(true).my_select(query)
 			"""
 		interpreter.execScript(script)
-		// assertEquals(1, c.length)
+		
+		val c = interpreter.getVariable[RSCollection[RSClass]]("c")
+		assertEquals(1, c.length)
 	}
 
 }

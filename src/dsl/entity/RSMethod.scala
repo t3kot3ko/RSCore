@@ -3,7 +3,6 @@ import org.eclipse.jdt.core.IMethod
 import org.eclipse.jdt.core.Signature
 import org.eclipse.jdt.core.dom.MethodDeclaration
 import sun.reflect.generics.reflectiveObjects.NotImplementedException
-import dsl.entity.collection.RSMethods
 import org.eclipse.jdt.internal.corext.refactoring.structure.ASTNodeSearchUtil
 import org.eclipse.jdt.core.dom.Modifier
 import dsl.util.ASTUtil
@@ -16,7 +15,7 @@ import dsl.traits.search.TypeBasedSearchable
 import dsl.traits.search.SignatureBasedSearchable
 import org.eclipse.jdt.core.IType
 import dsl.traits.action.RSTIntroduceFactory
-import dsl.entity.collection.RSParameters
+import dsl.entity.collection.RSCollection
 
 class RSMethod(val element: IMethod)
 	extends RSEntity
@@ -37,13 +36,11 @@ class RSMethod(val element: IMethod)
 	val self = this
 
 	override def origin(): IMethod = element
-	def parameters(): Array[RSParameter] = {
-		this.element.getParameters().map(e => new RSParameter(e))
+	def parameters(): RSCollection[RSParameter] = {
+		val ps = this.element.getParameters().map(e => new RSParameter(e))
+		return new RSCollection[RSParameter](ps)
 	}
 	
-	def parameters_(): RSParameters = {
-		return new RSParameters(this.parameters())
-	}
 
 	override def getDeclaration(): MethodDeclaration = {
 		var cu = ASTUtil.createAST(element.getCompilationUnit()).asInstanceOf[CompilationUnit]

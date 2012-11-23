@@ -10,9 +10,10 @@ import org.junit.Assert._
 import dsl.entity.collection.With
 import scala.collection.mutable.ArraySeq
 import tests.dsl.DSLBaseTest
+import dsl.entity.collection.RSCollection
 
 class RSMethodsTest extends DSLBaseTest{
-	private var methods: Array[RSMethod] = _
+	private var methods: RSCollection[RSMethod] = _
 	
 	@Before
 	override def setUp(): Unit = {
