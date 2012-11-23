@@ -36,11 +36,15 @@ class RSMethod(val element: IMethod)
 	val self = this
 
 	override def origin(): IMethod = element
+	
+	def localVariables : Any = {
+		return null
+	}
+	
 	def parameters(): RSCollection[RSParameter] = {
 		val ps = this.element.getParameters().map(e => new RSParameter(e))
 		return new RSCollection[RSParameter](ps)
 	}
-	
 
 	override def getDeclaration(): MethodDeclaration = {
 		var cu = ASTUtil.createAST(element.getCompilationUnit()).asInstanceOf[CompilationUnit]

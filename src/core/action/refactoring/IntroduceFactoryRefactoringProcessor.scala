@@ -18,10 +18,6 @@ class IntroduceFactoryRefactoringProcessor(rsObject: RSObject) extends AbstractR
 		}
 	}
 
-	/**
-	 * TODO: 範囲指定したときに名前解決できずに落ちる
-	 * （多分ライブラリが足りないせいなので，それを直す）
-	 */
 	private def createElement(method: RSMethod): (() => Unit) = {
 		val action: () => Unit =
 			() => {

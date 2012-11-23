@@ -16,13 +16,20 @@ import util.FileUtil
 import tests.common.BaseTest
 import tests.common.TestHelper
 
-class RefactoringBaseTest extends BaseTest{
-	protected def doAssert(testName: String): Unit = {
+class RefactoringBaseTest extends BaseTest {
+	protected def doAssert(testName: String, ignoreComment: Boolean = false): Unit = {
 		val actualSource = FileUtil.eliminateBlankLines(
 			this.fgPackageP.getCompilationUnit(testName + ".java").getSource())
 		val outputFilepath = "test_resources_output/" + testGroupIdentifier + "/" + testName + ".java"
-		val expectedSource = FileUtil.getFileContents(outputFilepath) 
-		TestHelper.assertEqualLines(expectedSource, actualSource)
+		val expectedSource = FileUtil.getFileContents(outputFilepath)
+		if (ignoreComment) {
+			TestHelper.assertEqualLines(
+				FileUtil.eliminateCommentLines(expectedSource),
+				FileUtil.eliminateCommentLines(actualSource))
+
+		} else {
+			TestHelper.assertEqualLines(expectedSource, actualSource)
+		}
 	}
 
 }
