@@ -4,5 +4,5 @@ import dsl.entity.RSWorkspace
 
 class DSLBaseTest extends BaseTest{
 	override val testGroupIdentifier = "find_test"
-	protected val $ = RSWorkspace
+	// protected val $ = RSWorkspace
 }

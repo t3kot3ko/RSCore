@@ -164,7 +164,11 @@ object TestHelper {
 	 * Line-based version of assertEquals(String, String)
 	 * without considering line delimiters
 	 */
-	def assertEqualLines(expected: String, actual: String, message: String = ""): Unit = {
+	
+	def assertEqualLines(expected: String, actual: String): Unit = {
+		assertEqualLines("", expected, actual)
+	}
+	def assertEqualLines(message: String = "", expected: String, actual: String): Unit = {
 		val expectedLines = Strings.convertIntoLines(expected)
 		val actualLines = Strings.convertIntoLines(actual)
 		

@@ -12,21 +12,22 @@ import dsl.entity.RSField
 import org.eclipse.ltk.core.refactoring.RefactoringStatus
 import core.action.refactoring.AbstractRefactoringProcessor
 
-class RenameFieldRefactoringProcessor(rsField: RSField, newFieldName: String) extends AbstractRefactoringProcessor{
+class RenameFieldRefactoringProcessor(rsField: RSField, newFieldName: String) extends AbstractRefactoringProcessor {
 	override def createAction(): RSRefactoringAction = {
-		val action = () => {
-			val field = rsField.origin()
-			val processor: RenameFieldProcessor = new RenameFieldProcessor(field)
-			processor.setNewElementName(newFieldName)
+		val action: (() => Unit) =
+			() => {
+				val field = rsField.origin()
+				val processor: RenameFieldProcessor = new RenameFieldProcessor(field)
+				processor.setNewElementName(newFieldName)
 
-			val refactoring: RenameRefactoring = new RenameRefactoring(processor)
+				val refactoring: RenameRefactoring = new RenameRefactoring(processor)
 
-			var status: RefactoringStatus = RefactoringHelper.performRefactoring(refactoring)
-			if (status != null) {
-				println(status)
+				var status: RefactoringStatus = RefactoringHelper.performRefactoring(refactoring)
+				if (status != null) {
+					println(status)
+				}
 			}
-		}
 		return new RSRefactoringAction(Seq(action))
 	}
-	
+
 }

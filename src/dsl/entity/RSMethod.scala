@@ -16,6 +16,7 @@ import dsl.traits.search.SignatureBasedSearchable
 import org.eclipse.jdt.core.IType
 import dsl.traits.action.RSTIntroduceFactory
 import dsl.entity.collection.RSCollection
+import dsl.traits.action.RSTIntroduceParameterObject
 
 class RSMethod(val element: IMethod)
 	extends RSEntity
@@ -25,7 +26,9 @@ class RSMethod(val element: IMethod)
 	with SignatureBasedSearchable
 	with CallbackBasedSearchable[RSMethod]
 
-	with RSTIntroduceFactory {
+	// Refactoring traits
+	with RSTIntroduceFactory 
+	with RSTIntroduceParameterObject{
 
 	override val __identifier = "method"
 		

@@ -32,6 +32,9 @@ class BaseTest {
 
 	// to be overridden in subclasses
 	val testGroupIdentifier: String = ""
+		
+	// alias
+	val $ = RSWorkspace
 
 	@Before
 	def setUp(): Unit = {
