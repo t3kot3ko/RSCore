@@ -30,7 +30,7 @@ class RSClass(val element: IType)
 	with RSTIntroduceFactory{
 
 	val __identifier: String = "class"
-	val self = this
+	override val self = this
 
 	val name: String = this.element.getElementName()
 	override def origin: IType = element

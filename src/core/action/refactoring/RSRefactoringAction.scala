@@ -1,15 +1,5 @@
 package core.action.refactoring
+import core.action.AbstractAction
 
-case class RSRefactoringAction(val changes: Seq[() => Unit]) {
-	/**
-	 * 指定されたリファクタリングアクションを順次実行する
-	 * LTK をすべてラップするため
-	 */
-	def perform() : Boolean = {
-		for(change <- changes){
-			change.apply()
-		}
-		return true
-	}
-
+class RSRefactoringAction(val changes: Seq[() => Unit]) extends AbstractAction(changes){
 }

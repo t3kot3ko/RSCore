@@ -20,7 +20,7 @@ class SelfEncapsulateFieldRefactoringProcessor(rsField: RSObject) extends Abstra
 
 	private def createActionForEntity(rsField: RSField): RSRefactoringAction = {
 		val action = a(rsField)
-		return RSRefactoringAction(Seq(action))
+		return new RSRefactoringAction(Seq(action))
 	}
 
 	/*

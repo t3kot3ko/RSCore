@@ -18,13 +18,14 @@ import dsl.traits.action.RSTIntroduceFactory
 import dsl.entity.collection.RSCollection
 import dsl.traits.action.RSTIntroduceParameterObject
 
-class RSMethod(val element: IMethod)
-	extends RSEntity
+class RSMethod(element: IMethod)
+	// extends RSEntity
+	extends RSMember(element)
 	with ModifierBasedSearchable
 	with NameBasedSearchable
 	with TypeBasedSearchable
 	with SignatureBasedSearchable
-	with CallbackBasedSearchable[RSMethod]
+	// with CallbackBasedSearchable[RSMethod]
 
 	// Refactoring traits
 	with RSTIntroduceFactory 
@@ -36,7 +37,7 @@ class RSMethod(val element: IMethod)
 	override val typ: Type = this.declaration.asInstanceOf[MethodDeclaration].getReturnType2()
 	override val name: String = element.getElementName()
 	
-	val self = this
+	// override val self = this
 
 	override def origin(): IMethod = element
 	
