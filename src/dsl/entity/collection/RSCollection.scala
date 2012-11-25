@@ -8,25 +8,30 @@ import dsl.query.NameRegQuery
 import dsl.query.ModifierQuery
 import dsl.common.RSObject
 
-case class RSCollection[T <: RSEntity](elements: Array[T]) extends RSObject{
+case class RSCollection[T <: RSEntity](rsElements: Array[T]) extends RSObject with Iterable[T]{
+	def iterator: Iterator[T] = {
+		return rsElements.iterator
+	}
+	
+	
 	// def this(elements: ArraySeq[T]) = this(elements.toArray[T])
 	// val elements: Array[T]
-	def all(): Array[T] = elements
+	def all(): Array[T] = rsElements
 	// def toTarget(): RSTarget
-	def origin: Array[T] = elements
-	def first(): T = elements.first
+	def origin: Array[T] = rsElements
+	override def first(): T = rsElements.first
 	
 	// コレクションの要素数を取得する3つの関数（2つはエイリアス）
-	def length: Int = elements.length
-	def size = length
+	def length: Int = rsElements.length
+	override def size = length
 	def count = length
 	
-	def isEmpty: Boolean = this.length == 0
+	override def isEmpty: Boolean = this.length == 0
 	def notFound: Boolean = isEmpty
 	def isNotEmpty: Boolean = !isEmpty
 	def found: Boolean = isNotEmpty
 	
-	def apply(index: Int): T = elements(index)
+	def apply(index: Int): T = rsElements(index)
 
 	/**
 	 * コレクションからクエリにマッチするオブジェクトを検索する

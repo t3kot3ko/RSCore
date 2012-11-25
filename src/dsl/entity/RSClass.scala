@@ -50,6 +50,9 @@ class RSClass(val element: IType)
 	def method(name: String, signature: Array[String]): RSMethod = {
 		return new RSMethod(element.getMethod(name, signature))
 	}
+	def method(name: String): RSCollection[RSMethod] = {
+		return this.methods.select(By.Name(name))
+	}
 	
 	/**
 	 * クラスのコンストラクタを検索します
