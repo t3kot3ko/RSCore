@@ -13,7 +13,7 @@ object RSInterpreter {
 
 	/**
 	 * Initialize the container with specified option
-	 * Note: LocalVariableBehavior.PERSISTENT
+	 * Note: With LocalVariableBehavior.PERSISTENT, variable life-cycle persists while the container object lives.
 	 */
 	def initContainer(option: LocalVariableBehavior = LocalVariableBehavior.PERSISTENT): Unit = {
 		this.container = new ScriptingContainer(option)
@@ -31,6 +31,12 @@ object RSInterpreter {
 	 */
 	def getVariable[T](variableName: String): T = {
 		return container.runScriptlet(variableName).asInstanceOf[T]
+	}
+	
+	
+	// A wrapper of container.put(String, Any)
+	def setVariable(variableName: String, value: Any): Unit = {
+		container.put(variableName, value)
 	}
 
 	/**

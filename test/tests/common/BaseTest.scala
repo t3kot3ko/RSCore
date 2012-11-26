@@ -60,8 +60,10 @@ class BaseTest {
 		} catch {
 			case e: FileNotFoundException => Assert.fail("input file is not found")
 		}
-
 	}
+	
+	// プロジェクトだけ作りたい時
+	protected def prepareTest(): Unit = {}
 	
 	def addRTJar(project: IJavaProject): IPackageFragmentRoot = {
 		return TestHelper.addRTJar(project)
@@ -70,7 +72,6 @@ class BaseTest {
 	@After
 	def tearDown(): Unit = {
 		println(testGroupIdentifier + " tearDown()")
-		// println("RefactoringBaseTest :: tearDown()")
 		TestHelper.delete(this.fgJavaTestProject.getProject())
 	}
 	

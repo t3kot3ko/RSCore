@@ -46,6 +46,10 @@ case class RSCollection[T <: RSEntity](rsElements: Array[T]) extends RSObject wi
 	def my_select(query: RSQuery): RSCollection[T] = {
 		return this.select(query)
 	}
+	// Just an alias to select
+	def Select(query: RSQuery): RSCollection[T] = {
+		return this.select(query)
+	}
 
 }
 
