@@ -6,6 +6,7 @@ import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.core.runtime.NullProgressMonitor
+import dsl.entity.collection.RSCollection
 
 object RSWorkspace{
 	val root: IWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot()
@@ -14,6 +15,9 @@ object RSWorkspace{
 		root.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor)
 	}
 	
+	/**
+	 * Get a project whose name is 'projectName'
+	 */
 	def project(projectName: String): RSProject = {
 		var project: IProject = root.getProject(projectName)
 
@@ -26,7 +30,19 @@ object RSWorkspace{
 			project.open(null)
 		}
 
-		var javaProject: IJavaProject = JavaCore.create(project)
+		var javaProject: IJavaProject = createJavaProject(project)
 		return new RSProject(javaProject)
+	}
+	
+	/**
+	 * Get all projects among workspace
+	 */
+	def projects(): RSCollection[RSProject] = {
+		val projects = root.getProjects().map(e => new RSProject(createJavaProject(e)))
+		return new RSCollection[RSProject](projects)
+	}
+	
+	private def createJavaProject(project: IProject): IJavaProject = {
+		return JavaCore.create(project)
 	}
 }

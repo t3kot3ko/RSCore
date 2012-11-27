@@ -38,7 +38,7 @@ class RSClassesTest extends InterpreterDSLBaseTest{
 	def –¼‘O‚©‚çƒNƒ‰ƒX‚ği‚è‚ß‚é(): Unit = {
 		val script = """
 			query = By.Name(With.or("RSClassesTest"))
-			c = project.pkg("find_test").classes(true).my_select(query)
+			c = project.pkg("find_test").classes(true).select(query)
 			"""
 		interpreter.execScript(script)
 		

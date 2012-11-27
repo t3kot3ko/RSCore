@@ -16,6 +16,14 @@ class MethodTest extends DSLBaseTest {
 		this.methods = $.project(this.projectName).pkg("find_test").classes.first.methods
 		assertEquals(4, this.methods.length)
 	}
+	
+	@Test
+	def イテレータに関するテスト(): Unit = {
+		println("###############################")
+		println(methods.foreach(m => println(m.name)))
+		println("###############################")
+	}
+	
 	@Test
 	def メソッドの名前を正しく取得できる(): Unit = {
 		var expectedNames = Array[String](

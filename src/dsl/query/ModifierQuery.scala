@@ -10,7 +10,7 @@ import dsl.entity.collection.RSCollection
 
 case class ModifierQuery(q: Qualifier) extends RSQuery(q) {
 	override def execute[T <: RSEntity](collection: RSCollection[T]): RSCollection[T] = {
-		val elements = collection.elements
+		val elements = collection.rsElements
 		val result: Array[T] = elements match {
 			case e: Array[ModifierBasedSearchable] =>
 				q match {
