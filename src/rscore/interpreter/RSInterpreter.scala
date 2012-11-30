@@ -17,6 +17,7 @@ object RSInterpreter {
 	 */
 	def initContainer(option: LocalVariableBehavior = LocalVariableBehavior.PERSISTENT): Unit = {
 		this.container = new ScriptingContainer(option)
+		val initScript = ScriptHelper.generateInitScript()
 	}
 
 	/**

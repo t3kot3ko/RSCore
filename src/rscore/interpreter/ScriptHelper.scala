@@ -7,7 +7,7 @@ object ScriptHelper{
 	// equals to project name
 	private val ToplevelNamespace = "rscore"
 	/**
-	 * Packages to be imported
+	 * Packages to be imported first (before interpreting user scripts)
 	 */
 	private val DefaultImportPackages = Array[String](
 			"dsl.entity.RSWorkspace",
@@ -22,6 +22,14 @@ object ScriptHelper{
 	 */
 	def buildImportDeclaration(importPackages: Array[String] = DefaultImportPackages): String = {
 		return importPackages.map(e => "java_import '" + ToplevelNamespace + "." + e + "'").mkString("\n")
+	}
+	
+	/**
+	 * Generate script for initialization the interpreter
+	 */
+	def generateInitScript(importPackages: Array[String] = DefaultImportPackages): String = {
+		val initScript = "require 'java'\n" + buildImportDeclaration() + "\n"  + buildImportDeclaration(importPackages)
+		return initScript
 	}
 	
 	def buildScript(script: String): String = {

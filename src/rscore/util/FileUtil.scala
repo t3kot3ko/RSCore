@@ -6,13 +6,32 @@ import java.io.FileInputStream
 
 object FileUtil {
 	/**
+	 * InputStream から読み取った文字列を取得する
+	 */
+	def getContentsFromInputStream(is: InputStream): String = {
+		val builder = new StringBuilder
+		val reader = new BufferedReader(new InputStreamReader(is))
+		
+		var line: String = null
+		var lineDelimiter = ""
+		while ({ line = reader.readLine(); line != null }) {
+			builder.append(lineDelimiter)
+			builder.append(line)
+			lineDelimiter = "\n"
+		}
+		reader.close()
+
+		return builder.toString()
+	}
+
+	/**
 	 * ファイルパスをキーに，その内容を取得する
 	 * @param eliminateBlankLines 空行を削除するか
 	 */
 	def getFileContents(filepath: String,
 		eliminateBlankLines: Boolean = true,
 		eliminateCommentLines: Boolean = true): String = {
-		
+
 		val blankLine = """^\s*$"""
 
 		if (eliminateBlankLines) {
