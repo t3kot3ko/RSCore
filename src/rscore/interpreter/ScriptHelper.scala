@@ -1,4 +1,5 @@
 package rscore.interpreter
+import rscore.util.StringHelper
 
 /**
  * スクリプトの調整，変形に関するヘルパ
@@ -24,16 +25,16 @@ object ScriptHelper{
 		return importPackages.map(e => "java_import '" + ToplevelNamespace + "." + e + "'").mkString("\n")
 	}
 	
+	def prepareScript(original: String): String = {
+		val replaced = StringHelper.replaceAllChain(original, Constants.ReplacePair);
+		return replaced;
+	}
+	
 	/**
 	 * Generate script for initialization the interpreter
 	 */
 	def generateInitScript(importPackages: Array[String] = DefaultImportPackages): String = {
 		val initScript = "require 'java'\n" + buildImportDeclaration() + "\n"  + buildImportDeclaration(importPackages)
 		return initScript
-	}
-	
-	def buildScript(script: String): String = {
-		val newScript = "require 'java'\n" + buildImportDeclaration() + "\n" + script
-		return newScript
 	}
 }

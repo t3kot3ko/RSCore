@@ -46,7 +46,7 @@ case class RSCollection[T <: RSEntity](rsElements: Array[T]) extends RSObject wi
 	def my_select(query: RSQuery): RSCollection[T] = {
 		return this.select(query)
 	}
-	// Just an alias to select
+	// Just an alias to select (avoid conflict ruby-embedded Enumerable#select)
 	def Select(query: RSQuery): RSCollection[T] = {
 		return this.select(query)
 	}

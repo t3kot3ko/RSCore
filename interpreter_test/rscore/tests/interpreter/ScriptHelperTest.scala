@@ -19,6 +19,14 @@ class ScriptHelperTest{
 			assertLineBasedEquals(expected, actual)
 	}
 	
+	@Test
+	def ’uŠ·•¶š—ñ‘Î‚ÉŠî‚¢‚Ä³‚µ‚­’uŠ·ˆ—‚Å‚«‚é(): Unit = {
+		val original = "$.projects.first"
+		val expected = "RSWorkspace.projects.first"
+			
+		val actual = ScriptHelper.prepareScript(original)
+		assertEquals(expected, actual)
+	}
 	/**
 	 * 
 	 */

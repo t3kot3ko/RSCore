@@ -15,7 +15,7 @@ class RSMethodsTest extends InterpreterDSLBaseTest {
 		super.setUp()
 		prepareTest("RSMethodsTest")
 		val initScript = """project = RSWorkspace.project("%s")""".format(this.projectName) + "\n"
-		interpreter.execScript(ScriptHelper.buildScript(initScript))
+		interpreter.execScript(initScript)
 
 		val methods = $.project(this.projectName).pkg("find_test").classes.first.methods
 		interpreter.assignVariable("methods", methods)
@@ -29,7 +29,7 @@ class RSMethodsTest extends InterpreterDSLBaseTest {
 		""".format(targetMethodName)
 		interpreter.execScript(script)
 
-		val result = interpreter.getVariable[RSCollection[RSMethod]]("result")
+		val result = interpreter.getVariable[RSCollection[RSMethod]]("result").get
 		assertEquals(1, result.length)
 		assertEquals(targetMethodName, result.first.name)
 	}
@@ -44,10 +44,10 @@ class RSMethodsTest extends InterpreterDSLBaseTest {
 		""".format(targetMethodName)
 		interpreter.execScript(script)
 
-		val resultCount = interpreter.getVariable[Long]("result.length")
+		val resultCount = interpreter.getVariable[Long]("result.length").get
 		assertEquals(1, resultCount)
 
-		assertEquals(targetMethodName, interpreter.getVariable[String]("result.first.name"))
+		assertEquals(targetMethodName, interpreter.getVariable[String]("result.first.name").get)
 	}
 
 	@Test
@@ -58,8 +58,8 @@ class RSMethodsTest extends InterpreterDSLBaseTest {
 			"""
 		interpreter.execScript(script)
 
-		assertEquals(1, interpreter.getVariable[Long]("foundMethods.length"))
-		assertEquals(2, interpreter.getVariable[Long]("prMethods.length"))
+		assertEquals(1, interpreter.getVariable[Long]("foundMethods.length").get)
+		assertEquals(2, interpreter.getVariable[Long]("prMethods.length").get)
 	}
 	@Test
 	def ï‘ãpílå^Ç©ÇÁÉÅÉ\ÉbÉhÇçiÇËçûÇﬂÇÈ(): Unit = {
@@ -67,6 +67,6 @@ class RSMethodsTest extends InterpreterDSLBaseTest {
 			voidMethods = methods.select(By.Type(With.or("void")))
 			"""
 		interpreter.execScript(script)
-		assertEquals(2, interpreter.getVariable[Long]("voidMethods.length"))
+		assertEquals(2, interpreter.getVariable[Long]("voidMethods.length").get)
 	}
 }
