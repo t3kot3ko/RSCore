@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.IType
 import rscore.dsl.traits.action.RSTIntroduceFactory
 import rscore.dsl.entity.collection.RSCollection
 import rscore.dsl.traits.action.RSTIntroduceParameterObject
+import rscore.dsl.traits.action.RSTRenameRefactoring
 
 class RSMethod(element: IMethod)
 	// extends RSEntity
@@ -29,7 +30,8 @@ class RSMethod(element: IMethod)
 
 	// Refactoring traits
 	with RSTIntroduceFactory 
-	with RSTIntroduceParameterObject{
+	with RSTIntroduceParameterObject
+	with RSTRenameRefactoring {
 
 	override val __identifier = "method"
 		
