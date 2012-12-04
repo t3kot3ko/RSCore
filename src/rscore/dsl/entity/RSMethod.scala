@@ -18,6 +18,7 @@ import rscore.dsl.traits.action.RSTIntroduceFactory
 import rscore.dsl.entity.collection.RSCollection
 import rscore.dsl.traits.action.RSTIntroduceParameterObject
 import rscore.dsl.traits.action.RSTRenameRefactoring
+import rscore.dsl.traits.action.RSTIntroduceIndirection
 
 class RSMethod(element: IMethod)
 	// extends RSEntity
@@ -31,7 +32,8 @@ class RSMethod(element: IMethod)
 	// Refactoring traits
 	with RSTIntroduceFactory 
 	with RSTIntroduceParameterObject
-	with RSTRenameRefactoring {
+	with RSTRenameRefactoring
+	with RSTIntroduceIndirection{
 
 	override val __identifier = "method"
 		
