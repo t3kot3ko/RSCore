@@ -31,11 +31,25 @@ class RSClass(val element: IType)
 
 	val __identifier: String = "class"
 	override val self = this
+	
 
 	val name: String = this.element.getElementName()
 	override def origin: IType = element
-	// override def toTarget(): RSTarget = new RSTarget(Array(element))
 
+	/**
+	 * 内部クラスを返す
+	 */
+	def innerclasses(): RSCollection[RSClass] = {
+		val innerClasses = element.getTypes().map(new RSClass(_))
+		return new RSCollection[RSClass](innerClasses)
+	}
+	
+	/*
+	 * 内部クラスを持つか否か
+	 */
+	def hasInnerclass(): Boolean = {
+		return element.getTypes().length > 0
+	}
 	def methods(): RSCollection[RSMethod] = {
 		val rsMethods = element.getMethods().map(e => new RSMethod(e))
 		return new RSCollection[RSMethod](rsMethods)
