@@ -19,9 +19,7 @@ class MethodTest extends DSLBaseTest {
 	
 	@Test
 	def イテレータに関するテスト(): Unit = {
-		println("###############################")
 		println(methods.foreach(m => println(m.name)))
-		println("###############################")
 	}
 	
 	@Test

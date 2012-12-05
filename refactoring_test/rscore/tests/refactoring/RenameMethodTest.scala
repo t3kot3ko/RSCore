@@ -33,6 +33,5 @@ class RenameMethodTest extends RefactoringBaseTest {
 		m.rename("mm1")
 
 		doAssert(testName)
-
 	}
 }

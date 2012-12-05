@@ -25,13 +25,12 @@ class RSClass(val element: IType)
 	with NameBasedSearchable
 	with ModifierBasedSearchable
 	with CallbackBasedSearchable[RSClass]
-	
+
 	// Refactoring traits
-	with RSTIntroduceFactory{
+	with RSTIntroduceFactory {
 
 	val __identifier: String = "class"
 	override val self = this
-	
 
 	val name: String = this.element.getElementName()
 	override def origin: IType = element
@@ -43,17 +42,22 @@ class RSClass(val element: IType)
 		val innerClasses = element.getTypes().map(new RSClass(_))
 		return new RSCollection[RSClass](innerClasses)
 	}
-	
-	/*
+
+	/**
 	 * 内部クラスを持つか否か
 	 */
 	def hasInnerclass(): Boolean = {
 		return element.getTypes().length > 0
 	}
+	def has_innerclass(): Boolean = hasInnerclass() // just an alias
+
 	def methods(): RSCollection[RSMethod] = {
 		val rsMethods = element.getMethods().map(e => new RSMethod(e))
 		return new RSCollection[RSMethod](rsMethods)
 	}
+
+	def firstMethod(): RSMethod = this.methods.first
+	def first_method: RSMethod = this.firstMethod()	// just an alias
 
 	def isInterface(): Boolean = return this.element.isInterface()
 	def isClass(): Boolean = return this.element.isClass()
@@ -67,7 +71,7 @@ class RSClass(val element: IType)
 	def method(name: String): RSCollection[RSMethod] = {
 		return this.methods.select(By.Name(name))
 	}
-	
+
 	/**
 	 * クラスのコンストラクタを検索します
 	 * （メソッド名がクラス名と一致しているものをコンストラクタとみなしています）

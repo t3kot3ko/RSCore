@@ -26,6 +26,10 @@ class RefactoringBaseTest extends ActionBaseTest{
 		
 		doAssertHelper(expectedSource, actualSource, ignoreComment)
 	}
+	// alias to above method
+	protected def doAssertTrue(testName: String, ignoreComment: Boolean = false): Unit = {
+		this.doAssert(testName, ignoreComment)
+	}
 	
 
 }
