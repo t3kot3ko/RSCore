@@ -5,7 +5,7 @@ public class Test01 {
 		int i = 0;
 		int ii;
 		
-		i = 10 + 20;
+		i = 10 + 20 + d();
 		n();
 		
 		System.out.println(i);
@@ -13,5 +13,9 @@ public class Test01 {
 	
 	public void n(){}
 	public void o(){}
+	
+	public int d(){
+		return 1;
+	}
 
 }

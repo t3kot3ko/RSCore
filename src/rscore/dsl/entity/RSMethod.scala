@@ -19,6 +19,8 @@ import rscore.dsl.entity.collection.RSCollection
 import rscore.dsl.traits.action.RSTIntroduceParameterObject
 import rscore.dsl.traits.action.RSTRenameRefactoring
 import rscore.dsl.traits.action.RSTIntroduceIndirection
+import org.eclipse.jdt.core.dom.Block
+import rscore.dsl.detail.RSBody
 
 class RSMethod(element: IMethod)
 	// extends RSEntity
@@ -48,6 +50,11 @@ class RSMethod(element: IMethod)
 	def localVariables : Any = {
 		return null
 	}
+	
+	def body(): RSBody = {
+		return new RSBody(this.getDeclaration().getBody())
+	}
+	
 	
 	def parameters(): RSCollection[RSParameter] = {
 		val ps = this.element.getParameters().map(e => new RSParameter(e))

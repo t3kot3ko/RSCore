@@ -16,19 +16,41 @@ import org.eclipse.jdt.internal.corext.refactoring.code.ExtractTempRefactoring
 import rscore.helper.RefactoringHelper
 import rscore.tests.refactoring.RefactoringBaseTest
 import rscore.tests.sandbox.SandboxBaseTest
+import org.eclipse.jdt.core.dom.ASTVisitor
+import org.junit.Ignore
 
 /**
  * TODO: extracted and renamed to 'sandbox test'
  */
-class Test01 extends SandboxBaseTest{
+class MyVisitor extends ASTVisitor {
+	override def visit(statement: ExpressionStatement): Boolean = {
+		val expression = statement.getExpression()
+		if(expression.isInstanceOf[Assignment]){
+			val assign = expression.asInstanceOf[Assignment]
+			println(assign.getLeftHandSide().toString() + assign.getOperator().toString() + assign.getRightHandSide().toString())
+		}
+		super.visit(statement)
+	}
+}
+
+class Test01 extends SandboxBaseTest {
 	@Test
+	def sandbox2(): Unit = {
+		val testName = "Test01"
+		prepareTest(testName)
+
+		val m = $.project(this.projectName).pkg("sandbox").classes.first.first_method
+		m.getDeclaration().getBody().accept(new MyVisitor)
+	}
+
+	@Ignore
 	def sandbox(): Unit = {
 		val testName = "Test01"
 		prepareTest(testName)
-		
+
 		val m = $.project(this.projectName).pkg("sandbox").classes.first.first_method
 		val cu = m.origin.getCompilationUnit()
-		
+
 		val d = m.getDeclaration()
 		val body = d.getBody()
 		val variableDeclarationStatements =
@@ -50,29 +72,29 @@ class Test01 extends SandboxBaseTest{
 
 		val expressionStatements = getExpressionStatements(body)
 		val es = expressionStatements.first
-		
+
 		val left = es.getExpression().asInstanceOf[Assignment].getLeftHandSide()
 		val esStart = left.getStartPosition()
 		val esLength = left.getLength()
 		println("start " + esStart)
 		println("length " + esLength)
-		
+
 		assertEquals("i", source.substring(esStart, esStart + esLength))
-		
+
 		val right = es.getExpression().asInstanceOf[Assignment].getRightHandSide();
 		val s = right.getStartPosition()
 		val l = right.getLength()
-		
+
 		val subStr = source.substring(s, s + l)
 		println(subStr)
-		
+
 		val ref = new ExtractTempRefactoring(cu, s, l)
 		ref.setTempName("extracted")
 		RefactoringHelper.performRefactoring(ref)
-		
+
 		val newSource = $.project(this.projectName).pkg("sandbox").classes.first.origin.getCompilationUnit().getSource()
 		println(newSource)
-		
+
 		doAssert(testName)
 	}
 
