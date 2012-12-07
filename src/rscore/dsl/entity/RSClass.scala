@@ -13,7 +13,6 @@ import org.eclipse.jdt.core.dom.Modifier
 import rscore.dsl.traits.search.NameBasedSearchable
 import rscore.dsl.traits.search.ModifierBasedSearchable
 import rscore.dsl.traits.search.CallbackBasedSearchable
-import rscore.dsl.common.RSParam
 import rscore.dsl.util.ImplicitConversions._
 import rscore.dsl.entity.collection.With
 import rscore.dsl.entity.collection.By

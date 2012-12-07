@@ -52,7 +52,7 @@ class RSMethod(element: IMethod)
 	}
 	
 	def body(): RSBody = {
-		return new RSBody(this.getDeclaration().getBody())
+		return new RSBody(this.getDeclaration().getBody(), this)
 	}
 	
 	

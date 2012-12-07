@@ -1,7 +1,6 @@
 package rscore.action.refactoring
 import rscore.dsl.entity.RSClass
 import rscore.dsl.entity.RSMethod
-import rscore.dsl.common.RSParam
 import org.eclipse.jdt.internal.corext.refactoring.rename.RenameFieldProcessor
 import org.eclipse.ltk.core.refactoring.participants.RenameRefactoring
 import rscore.helper.RefactoringHelper

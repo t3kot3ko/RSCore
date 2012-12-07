@@ -74,9 +74,7 @@ import org.eclipse.jdt.internal.corext.refactoring.structure.ASTNodeSearchUtil
 import rscore.dsl.util.ASTUtil
 import rscore.application.sample.RenameMultipleFields
 import rscore.dsl.entity.RSPackage
-import rscore.dsl.common.RSParam
 import scala.util.matching.Regex
-import rscore.dsl.common.RSParam._
 import com.sun.xml.internal.ws.wsdl.writer.document.xsd.Import
 import rscore.dsl.entity.RSProject
 import rscore.dsl.entity.RSWorkspace
