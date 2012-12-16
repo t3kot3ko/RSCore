@@ -9,10 +9,9 @@ import rscore.dsl.query.ModifierQuery
 import rscore.dsl.common.RSObject
 
 case class RSCollection[T <: RSEntity](rsElements: Array[T]) extends RSObject with Iterable[T]{
-	def iterator: Iterator[T] = {
+	override def iterator: Iterator[T] = {
 		return rsElements.iterator
 	}
-	
 	
 	// def this(elements: ArraySeq[T]) = this(elements.toArray[T])
 	// val elements: Array[T]

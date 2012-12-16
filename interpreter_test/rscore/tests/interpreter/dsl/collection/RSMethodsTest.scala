@@ -10,6 +10,7 @@ import org.jruby.RubyArray
 import org.junit.Ignore
 
 class RSMethodsTest extends InterpreterDSLBaseTest {
+	var methods: RSCollection[RSMethod] = _
 	@Before
 	override def setUp(): Unit = {
 		super.setUp()
@@ -17,8 +18,8 @@ class RSMethodsTest extends InterpreterDSLBaseTest {
 		val initScript = """project = RSWorkspace.project("%s")""".format(this.projectName) + "\n"
 		interpreter.execScript(initScript)
 
-		val methods = $.project(this.projectName).pkg("find_test").classes.first.methods
-		interpreter.assignVariable("methods", methods)
+		this.methods = $.project(this.projectName).pkg("find_test").classes.first.methods
+		interpreter.assignVariable("methods", this.methods)
 	}
 
 	@Test
@@ -68,5 +69,17 @@ class RSMethodsTest extends InterpreterDSLBaseTest {
 			"""
 		interpreter.execScript(script)
 		assertEquals(2, interpreter.getVariable[Long]("voidMethods.length").get)
+	}
+	
+	@Test
+	def testForIterator(): Unit = {
+		val methodNames = methods.map(_.name).toArray
+		interpreter.assignVariable("methodNames", methodNames)
+			val script = """
+				methodNames.each do |n|
+				  puts n
+				end
+					"""
+		interpreter.execScript(script)
 	}
 }

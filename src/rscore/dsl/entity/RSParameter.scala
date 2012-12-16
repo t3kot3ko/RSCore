@@ -14,6 +14,7 @@ class RSParameter(val element: ILocalVariable)
 	// with SignatureBasedSearchable
 	{
 	
+	override val kind = RSEntity.PARAMETER
 	override val __identifier = "parameter"
 
 	// •Ï”–¼

@@ -7,6 +7,7 @@ class RSProject(element: IJavaProject)
 	extends RSEntity
 	with NameBasedSearchable {
 	
+	override val kind = RSEntity.PROJECT
 	override val __identifier = "project"
 	override def origin = element
 	override val name = element.getElementName()

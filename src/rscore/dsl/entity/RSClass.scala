@@ -29,6 +29,7 @@ class RSClass(val element: IType)
 	with RSTIntroduceFactory {
 
 	val __identifier: String = "class"
+	override val kind = RSEntity.CLASS
 	override val self = this
 
 	val name: String = this.element.getElementName()
@@ -60,7 +61,7 @@ class RSClass(val element: IType)
 
 	def isInterface(): Boolean = return this.element.isInterface()
 	def isClass(): Boolean = return this.element.isClass()
-	def kind: String = if (this.isClass) "class" else "interface"
+	// def kind: String = if (this.isClass) "class" else "interface"
 	val superclassName = this.element.getSuperclassName()
 
 	// Get method whose signature is matched

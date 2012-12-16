@@ -38,6 +38,7 @@ class RSMethod(element: IMethod)
 	with RSTIntroduceIndirection{
 
 	override val __identifier = "method"
+	override val kind = RSEntity.METHOD
 		
 	override val signature: Array[String] = Signature.getParameterTypes(element.getSignature())
 	override val typ: Type = this.declaration.asInstanceOf[MethodDeclaration].getReturnType2()

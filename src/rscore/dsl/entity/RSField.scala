@@ -28,6 +28,8 @@ class RSField(val element: IField)
 	with RSTInlineRefactoring{
 
 	override val __identifier = "field"
+	override val kind = RSEntity.FIELD
+	
 	override val typ: Type = this.getDeclaration().getType()
 	override val self: RSField = this
 
@@ -41,9 +43,6 @@ class RSField(val element: IField)
 	}.apply()
 
 	override def origin: IField = element
-	// override def toTarget: RSTarget = new RSTarget(Array(element))
-	// def toTarget(id: String, parameters: (String, String)): RSTarget = new RSTarget(id, this, parameters)
-	// def toTarget(): RSTarget = new RSTarget(this)
 
 	// ©•ª©g‚Ì’è‹`‚ğAST‚©‚ç’T‚·
 	override def getDeclaration(): FieldDeclaration = {

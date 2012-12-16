@@ -3,6 +3,7 @@ import org.eclipse.jdt.core.IPackageFragment
 import rscore.dsl.entity.collection.RSCollection
 
 class RSPackage(val element: IPackageFragment) extends RSEntity{
+	override val kind = RSEntity.PACKAGE
 	val __identifier:String = "package"
 		
 	/**
