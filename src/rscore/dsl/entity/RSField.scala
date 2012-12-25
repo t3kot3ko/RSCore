@@ -16,8 +16,8 @@ import rscore.dsl.traits.action.RSTRenameRefactoring
 import rscore.dsl.traits.action.RSTSelfEncapsulateFieldRefactoring
 import rscore.dsl.traits.action.RSTInlineRefactoring
 
-class RSField(val element: IField)
-	extends RSEntity
+class RSField(element: IField)
+	extends RSMember(element)
 	with ModifierBasedSearchable
 	with NameBasedSearchable
 	with TypeBasedSearchable
