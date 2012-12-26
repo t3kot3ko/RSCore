@@ -12,6 +12,8 @@ object ASTUtil {
 	def createAST(cu: ICompilationUnit, kind: Int = ASTParser.K_COMPILATION_UNIT): ASTNode = {
 		var parser = ASTParser.newParser(AST.JLS3)
 		parser.setSource(cu)
+		parser.setKind(kind)
+		parser.setResolveBindings(true)
 		parser.setBindingsRecovery(true)
 		parser.setStatementsRecovery(true)
 		

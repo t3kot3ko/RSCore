@@ -2,7 +2,7 @@ package rscore.dsl.entity
 import org.eclipse.jdt.core.IPackageFragment
 import rscore.dsl.entity.collection.RSCollection
 
-class RSPackage(val element: IPackageFragment) extends RSEntity{
+class RSPackage(val element: IPackageFragment, val parent: RSProject) extends RSEntity{
 	override val kind = RSEntity.PACKAGE
 	val __identifier:String = "package"
 		
@@ -13,9 +13,9 @@ class RSPackage(val element: IPackageFragment) extends RSEntity{
 		var result = List[RSClass]()
 		var cus = element.getCompilationUnits()
 		if (includeNested) {
-			for (cu <- cus) { result = result ::: cu.getAllTypes().map(e => new RSClass(e)).toList }
+			for (cu <- cus) { result = result ::: cu.getAllTypes().map(e => new RSClass(e, this)).toList }
 		} else {
-			for (cu <- cus) { result = result ::: cu.getTypes().map(e => new RSClass(e)).toList }
+			for (cu <- cus) { result = result ::: cu.getTypes().map(e => new RSClass(e, this)).toList }
 		}
 		return result.toArray
 	}

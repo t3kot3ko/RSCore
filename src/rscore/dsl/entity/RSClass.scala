@@ -19,7 +19,7 @@ import rscore.dsl.entity.collection.By
 import rscore.dsl.traits.action.RSTIntroduceFactory
 import rscore.dsl.entity.collection.RSCollection
 
-class RSClass(val element: IType)
+class RSClass(val element: IType, parent: RSPackage)
 	extends RSEntity
 	with NameBasedSearchable
 	with ModifierBasedSearchable
@@ -39,7 +39,7 @@ class RSClass(val element: IType)
 	 * 内部クラスを返す
 	 */
 	def innerclasses(): RSCollection[RSClass] = {
-		val innerClasses = element.getTypes().map(new RSClass(_))
+		val innerClasses = element.getTypes().map(new RSClass(_, parent))
 		return new RSCollection[RSClass](innerClasses)
 	}
 
@@ -61,8 +61,47 @@ class RSClass(val element: IType)
 
 	def isInterface(): Boolean = return this.element.isInterface()
 	def isClass(): Boolean = return this.element.isClass()
-	// def kind: String = if (this.isClass) "class" else "interface"
-	val superclassName = this.element.getSuperclassName()
+	
+	/**
+	 * スーパークラスに関する単純な解析
+	 * おそらく，hasSuperclass くらいしか使わ（え）ない
+	 */
+	def hasSuperclass(): Boolean = (this.element.getSuperclassName() != null)
+	def superclassName(): String = this.element.getSuperclassName()
+	def superclassTypeSignature: String = this.element.getSuperclassTypeSignature()
+	
+	def superclass(): RSClass = {
+		if(!this.hasSuperclass()){
+			return null
+		}
+		val superclass = this.getDeclaration().getSuperclassType()
+		val binding = superclass.resolveBinding()
+		if(binding == null){
+			return null
+		}
+		
+		val packageName = binding.getPackage().getName()
+		println("pname = " + packageName)
+		val className = binding.getName()
+		println("cname = " + className)
+		
+		val projectName = this.parent.parent.name
+		println("project = " + projectName)
+		
+		val cs =RSWorkspace.project(projectName).pkg(packageName).classes(true)
+		println(cs.count)
+		for(i <- 0 until cs.length){
+			println(cs(i).name)
+		}
+		val result = RSWorkspace.project(projectName).pkg(packageName).classes().Select(By.Name(className))
+		if(result.count == 0){
+			return null
+		}
+		
+		return result.first
+	}
+	
+		
 
 	// Get method whose signature is matched
 	def method(name: String, signature: Array[String]): RSMethod = {

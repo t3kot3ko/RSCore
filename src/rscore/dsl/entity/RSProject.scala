@@ -14,7 +14,7 @@ class RSProject(element: IJavaProject)
 
 	def pkg(packageName: String): RSPackage = {
 		var root = getRoot()
-		return new RSPackage(root.getPackageFragment(packageName))
+		return new RSPackage(root.getPackageFragment(packageName), this)
 
 	}
 

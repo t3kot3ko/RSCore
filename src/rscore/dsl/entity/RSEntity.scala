@@ -3,7 +3,7 @@ import org.eclipse.jdt.core.IJavaElement
 import rscore.dsl.common.RSObject
 import rscore.dsl.traits.action.RSTDelete
 
-abstract class RSEntity extends RSObject{
+abstract class RSEntity(parent: RSEntity = null) extends RSObject{
 	val kind: RSEntity.Value 
 	val self = this
 	

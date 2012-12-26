@@ -3,6 +3,8 @@ import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.FileInputStream
+import java.io.File
+import java.io.FileNotFoundException
 
 object FileUtil {
 	/**
@@ -31,6 +33,10 @@ object FileUtil {
 	def getFileContents(filepath: String,
 		eliminateBlankLines: Boolean = true,
 		eliminateCommentLines: Boolean = true): String = {
+		
+		if(!(new File(filepath)).exists()){
+			throw new FileNotFoundException(filepath)
+		}
 
 		val blankLine = """^\s*$"""
 

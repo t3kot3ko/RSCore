@@ -35,6 +35,21 @@ class BaseTest {
 		
 	// alias
 	val $ = RSWorkspace
+	
+	/**
+	 * ソースディレクトリ直下にパッケージを追加して，その参照を返す
+	 */
+	protected def addPackage(name: String): IPackageFragment = {
+		return this.fgRoot.createPackageFragment(name, true, null)
+	}
+	
+	/**
+	 * パッケージ pkg 以下に CompilationUnit を追加する
+	 */
+	protected def addCompilationUnit(name: String, source: String, pkg: IPackageFragment): Unit = {
+		val cu = pkg.createCompilationUnit(name + ".java", source, true, new NullProgressMonitor)
+		cu.save(new NullProgressMonitor, true)
+	}
 
 	@Before
 	def setUp(): Unit = {
@@ -53,12 +68,15 @@ class BaseTest {
 	protected def prepareTest(testName: String): Unit = {
 		this.testName = testName
 		try {
-			val inputFilepath = "test_resources_input/" + testGroupIdentifier + "/" + testName + ".java"
+			val inputFilepath = "test_resources_input/" + testGroupIdentifier.replaceAll("""\.""", "/") + "/" + testName + ".java"
 			val inputSource = FileUtil.getFileContents(inputFilepath)
 			val cu = this.fgPackageP.createCompilationUnit(testName + ".java", inputSource, true, new NullProgressMonitor)
 			cu.save(new NullProgressMonitor, true)
 		} catch {
-			case e: FileNotFoundException => Assert.fail("input file is not found")
+			case e: FileNotFoundException => {
+				e.printStackTrace()
+				Assert.fail("input file is not found" )	
+			}
 		}
 	}
 	
