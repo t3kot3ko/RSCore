@@ -57,6 +57,23 @@ class PullUpTest extends RefactoringBaseTest {
 
 		doAssert(testName)
 	}
+	
+	// Using superclass() query
+	@Test
+	def フィールド単体を同一ファイル内のスーパークラスに引き上げる2(): Unit = {
+		val testName = "PullUpTest0"
+		prepareTest(testName)
+
+		val projectName = this.projectName
+		val subClass: RSClass = RSWorkspace.project(projectName).pkg(testGroupIdentifier).classes().Select(By.Name("SubClass")).first
+		val field = subClass.fields().first
+
+		assertTrue(subClass.hasSuperclass())
+		val superClass = subClass.superclass()
+		field.pullUp(superClass)
+
+		doAssert(testName)
+	}
 
 	@Test
 	def 複数のフィールドを同一ファイル内のスーパークラスに引き上げる(): Unit = {
