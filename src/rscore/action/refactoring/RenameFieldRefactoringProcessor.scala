@@ -10,21 +10,29 @@ import rscore.dsl.entity.collection.With
 import rscore.dsl.entity.RSField
 import org.eclipse.ltk.core.refactoring.RefactoringStatus
 import rscore.action.refactoring.AbstractRefactoringProcessor
+import rscore.helper.RSRefactoringResult
+import rscore.helper.RefactoringExecutionException
 
 class RenameFieldRefactoringProcessor(rsField: RSField, newFieldName: String) extends AbstractRefactoringProcessor {
 	override def createAction(): RSRefactoringAction = {
 		val action: (() => Unit) =
 			() => {
-				val field = rsField.origin()
-				val processor: RenameFieldProcessor = new RenameFieldProcessor(field)
-				processor.setNewElementName(newFieldName)
+				try {
+					val field = rsField.origin()
+					val processor: RenameFieldProcessor = new RenameFieldProcessor(field)
+					processor.setNewElementName(newFieldName)
 
-				val refactoring: RenameRefactoring = new RenameRefactoring(processor)
-
-				var status: RefactoringStatus = RefactoringHelper.performRefactoring(refactoring)
-				if (status != null) {
-					println(status)
+					val refactoring: RenameRefactoring = new RenameRefactoring(processor)
+					var result: RSRefactoringResult = RefactoringHelper.performRefactoring(refactoring)
+					
+					// TODO: Undo procedures
+					
+					
 				}
+				catch{
+					case e: RefactoringExecutionException => println(e.getStatus())
+				}
+				
 			}
 		return new RSRefactoringAction(Seq(action))
 	}
