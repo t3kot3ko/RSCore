@@ -70,6 +70,10 @@ class RSClass(val element: IType, parent: RSPackage)
 	def superclassName(): String = this.element.getSuperclassName()
 	def superclassTypeSignature: String = this.element.getSuperclassTypeSignature()
 	
+	/**
+	 * スーパークラスを（存在すれば）取得する
+	 * USAGE: null チェックが必要なので，hasSuperclass() をしてから呼び出すのがよい
+	 */
 	def superclass(): RSClass = {
 		if(!this.hasSuperclass()){
 			return null
@@ -123,6 +127,12 @@ class RSClass(val element: IType, parent: RSPackage)
 	def fields(): RSCollection[RSField] = {
 		val fs = this.element.getFields().map(e => new RSField(e))
 		return new RSCollection[RSField](fs)
+	}
+	
+	def members(): RSCollection[RSMember] = {
+		val fs = this.fields().map(_.asInstanceOf[RSMember]).toList
+		val ms = this.methods().map(_.asInstanceOf[RSMember]).toList
+		return new RSCollection[RSMember]((fs ::: ms).toArray)
 	}
 
 	override def getDeclaration(): TypeDeclaration = {
