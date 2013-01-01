@@ -40,5 +40,6 @@ class RSClassesTest2 extends DSLBaseTest {
 		assertFalse(cls1.hasInnerclass())
 		assertEquals(2, cls2.innerclasses().length)
 	}
+	
 
 }

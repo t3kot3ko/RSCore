@@ -13,7 +13,7 @@ import org.eclipse.core.runtime.NullProgressMonitor
 /**
  * RSClasses test mainly for a hierarchy such as superclass or super_interface
  */
-class RSClassesTest3 extends DSLBaseTest {
+class RSClassesTest_Superclass extends DSLBaseTest {
 	override val testGroupIdentifier = "find_test_classes.hierarchy_a"
 	private var project: RSProject = _
 
