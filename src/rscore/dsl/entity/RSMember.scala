@@ -3,9 +3,12 @@ import org.eclipse.jdt.core.IMember
 import rscore.dsl.traits.action.RSTDelete
 import rscore.dsl.traits.action.RSTPullUp
 import rscore.dsl.traits.action.RSTMoveMember
+import rscore.dsl.traits.search.ModifierBasedSearchable
 
-class RSMember(val element: IMember)
+abstract class RSMember(val element: IMember)
 	extends RSEntity
+	with ModifierBasedSearchable
+	
 	with RSTDelete 
 	with RSTPullUp
 	with RSTMoveMember{
