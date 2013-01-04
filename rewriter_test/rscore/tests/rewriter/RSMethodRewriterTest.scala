@@ -28,28 +28,29 @@ class RSMethodRewriterTest extends RefactoringBaseTest{
 	}
 	
 	@Test
-	def メソッド名のアクセス修飾子を変更できる(): Unit = {
+	def メソッドのアクセス修飾子を変更できる(): Unit = {
 		val testName = "RewriteMethodModifier"
 		prepareTest(testName)
 		val cls = RSWorkspace.project(this.projectName).pkg(this.testGroupIdentifier).classes().first
 		val m = cls.firstMethod()
 		
 		val r = new RSMethodRewriter(m)
-		// r.changeModifier(Modifier.PRIVATE)
-		r.apply(Modifier.PRIVATE)
+		r.changeModifier(Modifier.PRIVATE)
+		r.apply
 		doAssert(testName)
 	}
 	
-	@Ignore
-	def メソッドのアクセス修飾子を直接変更できる(): Unit = {
-		val testName = "RewriteMethodModifier"
+	@Test
+	def メソッド名を変更できる(): Unit = {
+		val testName = "RewriteMethodName"
 		prepareTest(testName)
-		
 		val cls = RSWorkspace.project(this.projectName).pkg(this.testGroupIdentifier).classes().first
-		val methodDeclaration = cls.methods.first.getDeclaration(true)
+		val m = cls.firstMethod()
 		
+		val r = new RSMethodRewriter(m)
+		r.changeName("b")
+		r.apply
 		doAssert(testName)
-		
 	}
 	
 	@Ignore

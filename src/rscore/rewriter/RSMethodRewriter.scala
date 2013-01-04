@@ -4,25 +4,27 @@ import rscore.dsl.entity.RSMethod
 import rscore.dsl.util.ASTUtil
 import org.eclipse.jdt.core.dom.MethodDeclaration
 import org.eclipse.jdt.internal.corext.refactoring.structure.ASTNodeSearchUtil
+import org.eclipse.jdt.core.dom.SimpleName
 
-class RSMethodRewriter(m: RSMethod) {
-	private val origin = m.origin
-	private val icu = this.origin.getCompilationUnit()
-	private val document = new Document(this.icu.getSource())
-	private val cu = ASTUtil.createCompilationUnit(true, icu) 
-	private val dec: MethodDeclaration = ASTNodeSearchUtil.getMethodDeclarationNode(this.origin, cu)
+/**
+ * RSMethod に属すプロパティを書き換える（リファクタリングではない）Rewriter
+ */
+class RSMethodRewriter(m: RSMethod) extends AbstractRewriter(m){
+	override val dec: MethodDeclaration = ASTNodeSearchUtil.getMethodDeclarationNode(m.origin, cu)
 
+	/**
+	 * アクセス修飾子を変更する
+	 * TODO: 文字列からの変換，複数指定
+	 */
 	def changeModifier(newModifier: Int): Unit = {
-		dec.setModifiers(newModifier)
-	}
-
-	// TODO: extract to AbstractRewriter
-	def apply(newModifier: Int): Unit = {
 		this.dec.setModifiers(newModifier)
-		val edits = cu.rewrite(this.document, icu.getJavaProject().getOptions(true))
-		edits.apply(this.document)
-		val newSource = this.document.get()
-		icu.getBuffer().setContents(newSource)
 	}
-
+	
+	/**
+	 * 名前を変更する
+	 * リファクタリングではないので，参照関係は一切チェックしない
+	 */
+	def changeName(newName: String): Unit = {
+		this.dec.setName(this.cu.getAST().newSimpleName(newName))
+	}
 }
