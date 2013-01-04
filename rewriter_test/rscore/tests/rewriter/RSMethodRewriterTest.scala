@@ -53,6 +53,19 @@ class RSMethodRewriterTest extends RefactoringBaseTest{
 		doAssert(testName)
 	}
 	
+	@Test
+	def メソッドの返却値型を変更できる(): Unit = {
+		val testName = "RewriteMethodReturnType"
+		prepareTest(testName)
+		val cls = RSWorkspace.project(this.projectName).pkg(this.testGroupIdentifier).classes().first
+		val m = cls.firstMethod()
+		
+		val r = new RSMethodRewriter(m)
+		r.changeReturnType("Foo")
+		r.apply
+		doAssert(testName)
+	}
+	
 	@Ignore
 	def sandbox(): Unit = {
 		val testName = "RewriteMethodModifier"
