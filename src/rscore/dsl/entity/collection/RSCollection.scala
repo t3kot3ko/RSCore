@@ -11,11 +11,15 @@ import org.eclipse.jdt.core.IJavaElement
 import scala.collection.mutable.ListBuffer
 import rscore.dsl.traits.action.RSTPullUp
 import rscore.dsl.traits.action.RSTMoveMember
+import rscore.dsl.traits.action.RSTPushDownRefactoring
 
 case class RSCollection[T <: RSEntity](rsElements: Array[T])
 	extends RSObject
 	with Iterable[T]
+
+	// Action traits
 	with RSTPullUp
+	with RSTPushDownRefactoring
 	with RSTMoveMember{
 	
 	override def iterator: Iterator[T] = {
