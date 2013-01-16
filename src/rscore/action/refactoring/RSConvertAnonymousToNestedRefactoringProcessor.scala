@@ -1,7 +1,7 @@
 package rscore.action.refactoring
 import rscore.dsl.common.RSObject
 
-class ConvertAnonymousToNestedRefactoringProcessor (rsObject: RSObject) extends AbstractRefactoringProcessor{
+class RSConvertAnonymousToNestedRefactoringProcessor (rsObject: RSObject) extends RSAbstractRefactoringProcessor{
 	def createAction(): RSRefactoringAction = {
 		return null
 	}

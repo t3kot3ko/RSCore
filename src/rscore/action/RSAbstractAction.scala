@@ -1,6 +1,6 @@
 package rscore.action
 
-class AbstractAction(changes: Seq[() => Unit]) {
+class RSAbstractAction(changes: Seq[() => Unit]) {
 	/**
 	 * 指定されたリファクタリングアクションを順次実行する
 	 * LTK をすべてラップするため

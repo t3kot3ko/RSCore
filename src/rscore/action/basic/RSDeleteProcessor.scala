@@ -1,5 +1,5 @@
 package rscore.action.basic
-import rscore.action.AbstractActionProcessor
+import rscore.action.RSAbstractActionProcessor
 import rscore.dsl.common.RSObject
 import org.eclipse.jdt.internal.corext.refactoring.reorg.JavaDeleteProcessor
 import rscore.dsl.entity.RSEntity
@@ -10,7 +10,7 @@ import rscore.dsl.entity.RSMethod
 import org.eclipse.jdt.core.IMember
 import rscore.dsl.entity.RSMember
 
-class DeleteProcessor(rsObject: RSObject) extends AbstractActionProcessor{
+class RSDeleteProcessor(rsObject: RSObject) extends RSAbstractActionProcessor{
 	override def createAction(): RSBasicAction = {
 		rsObject match {
 			case m: RSMember=> return createActionForMember(m)

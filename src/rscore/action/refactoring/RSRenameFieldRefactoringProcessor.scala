@@ -9,11 +9,11 @@ import rscore.dsl.entity.collection.By
 import rscore.dsl.entity.collection.With
 import rscore.dsl.entity.RSField
 import org.eclipse.ltk.core.refactoring.RefactoringStatus
-import rscore.action.refactoring.AbstractRefactoringProcessor
+import rscore.action.refactoring.RSAbstractRefactoringProcessor
 import rscore.helper.RSRefactoringResult
 import rscore.helper.RefactoringExecutionException
 
-class RenameFieldRefactoringProcessor(rsField: RSField, newFieldName: String) extends AbstractRefactoringProcessor {
+class RSRenameFieldRefactoringProcessor(rsField: RSField, newFieldName: String) extends RSAbstractRefactoringProcessor {
 	override def createAction(): RSRefactoringAction = {
 		val action: (() => Unit) =
 			() => {

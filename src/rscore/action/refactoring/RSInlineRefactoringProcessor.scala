@@ -8,7 +8,7 @@ import rscore.helper.RefactoringHelper
 import org.eclipse.jdt.internal.corext.refactoring.util.RefactoringASTParser
 import org.eclipse.jdt.internal.ui.javaeditor.ASTProvider
 
-class InlineRefactoringProcessor(rsObject: RSObject) extends AbstractRefactoringProcessor {
+class RSInlineRefactoringProcessor(rsObject: RSObject) extends RSAbstractRefactoringProcessor {
 	override def createAction(): RSRefactoringAction = {
 		rsObject match {
 			case f: RSField => return createActionForField(f)

@@ -15,7 +15,7 @@ import org.eclipse.jdt.core.IField
 /**
  * TODO: rename (conflict the name 'PullUpRefactoringProcessor')
  */
-class PullUpRefactoringProcessor(rsObject: RSObject, targetClass: RSClass) extends AbstractRefactoringProcessor {
+class RSPullUpRefactoringProcessor(rsObject: RSObject, targetClass: RSClass) extends RSAbstractRefactoringProcessor {
 	override def createAction(): RSRefactoringAction = {
 		rsObject match {
 			case f: RSField => return createActionForFieldCollection(Array(f.origin))

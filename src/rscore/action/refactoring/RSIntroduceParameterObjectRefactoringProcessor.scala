@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.refactoring.descriptors.IntroduceParameterObjectDesc
 import rscore.helper.RefactoringHelper
 import org.eclipse.ltk.core.refactoring.participants.ProcessorBasedRefactoring
 
-class IntroduceParameterObjectRefactoringProcessor(rsObject: RSObject) extends AbstractRefactoringProcessor {
+class RSIntroduceParameterObjectRefactoringProcessor(rsObject: RSObject) extends RSAbstractRefactoringProcessor {
 	override def createAction(): RSRefactoringAction = {
 		rsObject match {
 			case m: RSMethod => return createActionForMethod(m: RSMethod)

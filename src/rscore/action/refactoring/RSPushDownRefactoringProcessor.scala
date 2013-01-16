@@ -9,7 +9,7 @@ import org.eclipse.jdt.internal.corext.refactoring.structure.PushDownRefactoring
 import org.eclipse.ltk.core.refactoring.participants.ProcessorBasedRefactoring
 import rscore.helper.RefactoringHelper
 
-class RSPushDownRefactoringProcessor(rsObject: RSObject) extends AbstractRefactoringProcessor {
+class RSPushDownRefactoringProcessor(rsObject: RSObject) extends RSAbstractRefactoringProcessor {
 	override def createAction(): RSRefactoringAction = {
 		rsObject match {
 			case m: RSMember => createActionForMembers(Array(m))

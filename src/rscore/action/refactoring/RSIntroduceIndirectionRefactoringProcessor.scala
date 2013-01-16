@@ -4,7 +4,7 @@ import rscore.dsl.entity.RSMethod
 import org.eclipse.jdt.internal.corext.refactoring.code.IntroduceIndirectionRefactoring
 import rscore.helper.RefactoringHelper
 
-class IntroduceIndirectionRefactoringProcessor(rsObject: RSObject) extends AbstractRefactoringProcessor{
+class RSIntroduceIndirectionRefactoringProcessor(rsObject: RSObject) extends RSAbstractRefactoringProcessor{
 	override def createAction(): RSRefactoringAction = {
 		rsObject match{
 			case m: RSMethod => return createActionForMethod(m)

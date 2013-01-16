@@ -7,7 +7,7 @@ import org.eclipse.ltk.core.refactoring.Change
 import rscore.dsl.util.ImplicitConversions._
 import rscore.dsl.common.RSObject
 
-class SelfEncapsulateFieldRefactoringProcessor(rsField: RSObject) extends AbstractRefactoringProcessor {
+class RSSelfEncapsulateFieldRefactoringProcessor(rsField: RSObject) extends RSAbstractRefactoringProcessor {
 	// def createAction(rsField: RSObject): RSRefactoringAction = {
 	override def createAction(): RSRefactoringAction = {
 		rsField match {

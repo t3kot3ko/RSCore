@@ -1,7 +1,7 @@
 package rscore.action.refactoring
-import rscore.action.AbstractActionProcessor
+import rscore.action.RSAbstractActionProcessor
 
-abstract class AbstractRefactoringProcessor extends AbstractActionProcessor{
+abstract class RSAbstractRefactoringProcessor extends RSAbstractActionProcessor{
 	def createAction(): RSRefactoringAction
 	
 	private def checkCondition(): Boolean = {

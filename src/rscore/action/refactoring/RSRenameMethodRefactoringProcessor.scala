@@ -6,7 +6,7 @@ import org.eclipse.jdt.internal.corext.refactoring.rename.RenameNonVirtualMethod
 import org.eclipse.ltk.core.refactoring.participants.RenameRefactoring
 import rscore.helper.RefactoringHelper
 
-class RenameMethodRefactoringProcessor(method: RSMethod, newName: String) extends AbstractRefactoringProcessor {
+class RSRenameMethodRefactoringProcessor(method: RSMethod, newName: String) extends RSAbstractRefactoringProcessor {
 	override def createAction(): RSRefactoringAction = {
 		val action: (() => Unit) =
 			() => {

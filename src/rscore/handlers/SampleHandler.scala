@@ -82,10 +82,10 @@ import rscore.dsl.util.ImplicitConversions._
 import rscore.dsl.entity.RSMethod
 import rscore.dsl.entity.collection.By
 import rscore.dsl.entity.collection.With
-import rscore.action.refactoring.SelfEncapsulateFieldRefactoringProcessor
+import rscore.action.refactoring.RSSelfEncapsulateFieldRefactoringProcessor
 import rscore.dsl.entity.RSField
 import rscore.dsl.common.RSObject
-import rscore.action.refactoring.SelfEncapsulateFieldRefactoringProcessor
+import rscore.action.refactoring.RSSelfEncapsulateFieldRefactoringProcessor
 import rscore.action.refactoring.RSRefactoringAction
 
 /**

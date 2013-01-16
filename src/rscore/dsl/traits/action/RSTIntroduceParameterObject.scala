@@ -1,12 +1,12 @@
 package rscore.dsl.traits.action
 import rscore.dsl.entity.RSMethod
-import rscore.action.refactoring.IntroduceParameterObjectRefactoringProcessor
+import rscore.action.refactoring.RSIntroduceParameterObjectRefactoringProcessor
 
 trait RSTIntroduceParameterObject extends RefactoringTrait {
 	def introduceParameterObject(): Unit = {
 		self match{
 			case m: RSMethod => {
-				val processor = new IntroduceParameterObjectRefactoringProcessor(m)
+				val processor = new RSIntroduceParameterObjectRefactoringProcessor(m)
 				processor.createAction().perform()
 			}
 		}

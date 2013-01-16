@@ -1,5 +1,5 @@
 package rscore.action.basic
-import rscore.action.AbstractActionProcessor
+import rscore.action.RSAbstractActionProcessor
 import rscore.dsl.common.RSObject
 import rscore.dsl.entity.RSMember
 import rscore.dsl.entity.RSClass
@@ -10,7 +10,7 @@ import org.eclipse.jdt.internal.ui.preferences.JavaPreferencesSettings
 import org.eclipse.ltk.core.refactoring.participants.MoveRefactoring
 import rscore.helper.RefactoringHelper
 
-class MoveMemberProcessor(rsObject: RSObject, destClass: RSClass) extends AbstractActionProcessor {
+class MoveMemberProcessor(rsObject: RSObject, destClass: RSClass) extends RSAbstractActionProcessor {
 	override def createAction(): RSBasicAction = {
 		rsObject match {
 			case m: RSMember => return createActionForMembers(Array(m.origin))

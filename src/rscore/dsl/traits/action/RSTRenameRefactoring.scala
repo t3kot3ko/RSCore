@@ -1,9 +1,9 @@
 package rscore.dsl.traits.action
 import rscore.dsl.entity.RSField
-import rscore.action.refactoring.RenameFieldRefactoringProcessor
+import rscore.action.refactoring.RSRenameFieldRefactoringProcessor
 import rscore.dsl.entity.RSEntity
 import rscore.dsl.entity.RSMethod
-import rscore.action.refactoring.RenameMethodRefactoringProcessor
+import rscore.action.refactoring.RSRenameMethodRefactoringProcessor
 
 /**
  * 名前の変更リファクタリングを提供するトレイト
@@ -13,11 +13,11 @@ trait RSTRenameRefactoring extends RefactoringTrait {
 	def rename(newName: String): Unit = {
 		self match {
 			case f: RSField => {
-				val processor = new RenameFieldRefactoringProcessor(self.asInstanceOf[RSField], newName)
+				val processor = new RSRenameFieldRefactoringProcessor(self.asInstanceOf[RSField], newName)
 				processor.createAction().perform()
 			}
 			case m: RSMethod => {
-				val processor = new RenameMethodRefactoringProcessor(m, newName)
+				val processor = new RSRenameMethodRefactoringProcessor(m, newName)
 				processor.createAction().perform()
 			}
 		}

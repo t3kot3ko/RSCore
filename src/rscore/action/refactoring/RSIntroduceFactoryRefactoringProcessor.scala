@@ -9,7 +9,7 @@ import rscore.dsl.common.RSObject
 import org.eclipse.core.runtime.NullProgressMonitor
 import org.eclipse.jdt.core.IMember
 
-class IntroduceFactoryRefactoringProcessor(rsObject: RSObject) extends AbstractRefactoringProcessor {
+class RSIntroduceFactoryRefactoringProcessor(rsObject: RSObject) extends RSAbstractRefactoringProcessor {
 	override def createAction(): RSRefactoringAction = {
 		rsObject match {
 			case c: RSClass => return createActionForClass(c)
