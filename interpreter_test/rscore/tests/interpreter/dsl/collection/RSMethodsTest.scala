@@ -26,7 +26,7 @@ class RSMethodsTest extends InterpreterDSLBaseTest {
 	def 名前からメソッドを絞り込める() = {
 		val targetMethodName = "publicVoidMethod"
 		val script = """
-			result = methods.Select(By.Name("%s"))
+			result = methods.Select(By.name("%s"))
 		""".format(targetMethodName)
 		interpreter.execScript(script)
 
@@ -54,8 +54,8 @@ class RSMethodsTest extends InterpreterDSLBaseTest {
 	@Test
 	def 正規表現からメソッドを絞り込める(): Unit = {
 		val script = """
-			foundMethods = methods.Select(By.Namereg(With.or("publicStaticVoidMethod")))
-			prMethods = methods.select(By.Namereg(With.or("^pr.*Method$")))
+			foundMethods = methods.Select(By.namereg(With.or("publicStaticVoidMethod")))
+			prMethods = methods.select(By.namereg(With.or("^pr.*Method$")))
 			"""
 		interpreter.execScript(script)
 
@@ -65,7 +65,7 @@ class RSMethodsTest extends InterpreterDSLBaseTest {
 	@Test
 	def 返却値型からメソッドを絞り込める(): Unit = {
 		val script = """
-			voidMethods = methods.select(By.Type(With.or("void")))
+			voidMethods = methods.select(By.typename(With.or("void")))
 			"""
 		interpreter.execScript(script)
 		assertEquals(2, interpreter.getVariable[Long]("voidMethods.length").get)
