@@ -27,7 +27,7 @@ class RenameMethodTest extends RefactoringBaseTest {
 		prepareTest(testName)
 		
 		val cls = RSWorkspace.project(this.projectName).pkg(testGroupIdentifier).classes.first
-		val m = cls.methods.Select(By.Modifier("public")).first
+		val m = cls.methods.select(By.Modifier("public")).first
 
 		assertEquals(m.name, "m1")
 		m.rename("mm1")

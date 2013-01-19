@@ -39,9 +39,6 @@ case class RSCollection[T <: RSEntity](rsElements: Array[T])
 	def toArray: Array[T] = this.origin
 	override def first(): T = rsElements.first
 	
-	def toRuby: RubyArray = {
-		JavaEmbedUtils.javaToRuby(Ruby.getGlobalRuntime(), rsElements).convertToArray()
-	}
 	
 	// コレクションの要素数を取得する3つの関数（2つはエイリアス）
 	def length: Int = rsElements.length
@@ -68,9 +65,18 @@ case class RSCollection[T <: RSEntity](rsElements: Array[T])
 	def my_select(query: RSQuery): RSCollection[T] = {
 		return this.select(query)
 	}
-	// Just an alias to select (avoid conflict ruby-embedded Enumerable#select)
-	def Select(query: RSQuery): RSCollection[T] = {
-		return this.select(query)
+	
+	private def toRuby: RubyArray = {
+		JavaEmbedUtils.javaToRuby(Ruby.getGlobalRuntime(), rsElements).convertToArray()
+	}
+	
+	/**
+	 * select の結果を RubyArray に変換する
+	 * Scala 側のテストでは select を使い，スクリプト中では select を用いる
+	 * これは Enumerate#each とのバッティングを回避する目的もある
+	 */
+	def Select(query: RSQuery): RubyArray = {
+		return this.select(query).toRuby
 	}
 
 }

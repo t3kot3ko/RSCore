@@ -97,7 +97,7 @@ class RSClass(val element: IType, parent: RSPackage)
 		for(i <- 0 until cs.length){
 			println(cs(i).name)
 		}
-		val result = RSWorkspace.project(projectName).pkg(packageName).classes().Select(By.Name(className))
+		val result = RSWorkspace.project(projectName).pkg(packageName).classes().select(By.Name(className))
 		if(result.count == 0){
 			return null
 		}

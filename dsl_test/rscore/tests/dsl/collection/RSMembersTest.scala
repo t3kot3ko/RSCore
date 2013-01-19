@@ -15,7 +15,7 @@ class RSMembersTest extends DSLBaseTest {
 		val testName = "RSMembersTest"
 		prepareTest(testName)
 
-		val cls = RSWorkspace.project(this.projectName).pkg(testGroupIdentifier).classes().Select(By.Name(testName)).first()
+		val cls = RSWorkspace.project(this.projectName).pkg(testGroupIdentifier).classes().select(By.Name(testName)).first()
 		val members = cls.members()
 
 		assertEquals(8, members.length)
@@ -26,7 +26,7 @@ class RSMembersTest extends DSLBaseTest {
 		val fields = members.toArray.filter(_.kind == RSEntity.FIELD)
 		assertEquals(5, fields.length)
 
-		val staticMembers = members.Select(By.Modifier("static"))
+		val staticMembers = members.select(By.Modifier("static"))
 		assertEquals(2, staticMembers.length)
 
 	}

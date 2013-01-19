@@ -12,5 +12,10 @@ trait RSTIntroduceParameterObject extends RefactoringTrait {
 		}
 		println("introduce parameter object refactoring is successed")
 	}
+	
+	//  just an alias
+	def introduce_parameter_object(): Unit = {
+		this.introduceParameterObject()
+	}
 
 }

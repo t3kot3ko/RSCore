@@ -24,7 +24,7 @@ class PullUpTest extends RefactoringBaseTest {
 		prepareTest(testName)
 
 		val projectName = this.projectName
-		val members: Array[IMember] = RSWorkspace.project(projectName).pkg(testGroupIdentifier).classes().Select(By.Name("SubClass"))
+		val members: Array[IMember] = RSWorkspace.project(projectName).pkg(testGroupIdentifier).classes().select(By.Name("SubClass"))
 			.first.fields().origin.map(_.origin())
 		assertEquals(1, members.length)
 
@@ -49,7 +49,7 @@ class PullUpTest extends RefactoringBaseTest {
 		prepareTest(testName)
 
 		val projectName = this.projectName
-		val subClass: RSClass = RSWorkspace.project(projectName).pkg(testGroupIdentifier).classes().Select(By.Name("SubClass")).first
+		val subClass: RSClass = RSWorkspace.project(projectName).pkg(testGroupIdentifier).classes().select(By.Name("SubClass")).first
 		val field = subClass.fields().first
 
 		val superClass = RSWorkspace.project(projectName).pkg(testGroupIdentifier).classes().first
@@ -65,7 +65,7 @@ class PullUpTest extends RefactoringBaseTest {
 		prepareTest(testName)
 
 		val projectName = this.projectName
-		val subClass: RSClass = RSWorkspace.project(projectName).pkg(testGroupIdentifier).classes().Select(By.Name("SubClass")).first
+		val subClass: RSClass = RSWorkspace.project(projectName).pkg(testGroupIdentifier).classes().select(By.Name("SubClass")).first
 		val field = subClass.fields().first
 
 		assertTrue(subClass.hasSuperclass())
@@ -83,7 +83,7 @@ class PullUpTest extends RefactoringBaseTest {
 		val project = RSWorkspace.project(this.projectName)
 		val pkg = project.pkg(this.testGroupIdentifier)
 
-		val subClass: RSClass = project.pkg(testGroupIdentifier).classes().Select(By.Name(generateSubclassName(testName))).first
+		val subClass: RSClass = project.pkg(testGroupIdentifier).classes().select(By.Name(generateSubclassName(testName))).first
 		val fields = subClass.fields()
 
 		val superClass = project.pkg(testGroupIdentifier).classes().first
@@ -99,7 +99,7 @@ class PullUpTest extends RefactoringBaseTest {
 		val project = RSWorkspace.project(this.projectName)
 		val pkg = project.pkg(this.testGroupIdentifier)
 		
-		val subClass = pkg.classes().Select(By.Name(generateSubclassName(testName))).first
+		val subClass = pkg.classes().select(By.Name(generateSubclassName(testName))).first
 		val superClass = pkg.classes.first
 
 		val method = subClass.firstMethod()
@@ -115,7 +115,7 @@ class PullUpTest extends RefactoringBaseTest {
 		val project = RSWorkspace.project(this.projectName)
 		val pkg = project.pkg(this.testGroupIdentifier)
 		
-		val subClass = pkg.classes().Select(By.Name(generateSubclassName(testName))).first
+		val subClass = pkg.classes().select(By.Name(generateSubclassName(testName))).first
 		val superClass = pkg.classes.first
 
 		val methods = subClass.methods

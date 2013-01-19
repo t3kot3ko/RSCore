@@ -33,9 +33,9 @@ class RSClassesTest2 extends DSLBaseTest {
 
 	@Test
 	def ネストしたインナークラスを正しく取得できる(): Unit = {
-		val nestedInner = project.pkg("find_test_classes").classes(false).first.innerclasses().Select(By.Name("NestedInner")).first
-		val cls1 = nestedInner.innerclasses.Select(By.Name("Inner1")).first
-		val cls2 = nestedInner.innerclasses.Select(By.Name("Inner2")).first
+		val nestedInner = project.pkg("find_test_classes").classes(false).first.innerclasses().select(By.Name("NestedInner")).first
+		val cls1 = nestedInner.innerclasses.select(By.Name("Inner1")).first
+		val cls2 = nestedInner.innerclasses.select(By.Name("Inner2")).first
 
 		assertFalse(cls1.hasInnerclass())
 		assertEquals(2, cls2.innerclasses().length)

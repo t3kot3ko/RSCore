@@ -49,8 +49,8 @@ class MoveMemberTest extends RefactoringBaseTest {
 		prepareTest(testName)
 		prepareDestClass(destClassName)
 		
-		val srcClass = project.pkg(testGroupIdentifier).classes().Select(By.Name(testName)).first
-		val destClass = project.pkg(testGroupIdentifier).classes().Select(By.Name(destClassName)).first
+		val srcClass = project.pkg(testGroupIdentifier).classes().select(By.Name(testName)).first
+		val destClass = project.pkg(testGroupIdentifier).classes().select(By.Name(destClassName)).first
 		
 		val fs = srcClass.fields()
 		fs.moveMember(destClass)
@@ -68,10 +68,10 @@ class MoveMemberTest extends RefactoringBaseTest {
 		prepareTest(testName)
 		prepareDestClass(destClassName)
 		
-		val srcClass = project.pkg(testGroupIdentifier).classes().Select(By.Name(testName)).first
-		val destClass = project.pkg(testGroupIdentifier).classes().Select(By.Name(destClassName)).first
+		val srcClass = project.pkg(testGroupIdentifier).classes().select(By.Name(testName)).first
+		val destClass = project.pkg(testGroupIdentifier).classes().select(By.Name(destClassName)).first
 		
-		val ms = srcClass.methods().Select(By.Modifier("static"))
+		val ms = srcClass.methods().select(By.Modifier("static"))
 		assert(ms.length == 1)
 		
 		ms.moveMember(destClass)
@@ -89,10 +89,10 @@ class MoveMemberTest extends RefactoringBaseTest {
 		prepareTest(testName)
 		prepareDestClass(destClassName)
 		
-		val srcClass = project.pkg(testGroupIdentifier).classes().Select(By.Name(testName)).first
-		val destClass = project.pkg(testGroupIdentifier).classes().Select(By.Name(destClassName)).first
+		val srcClass = project.pkg(testGroupIdentifier).classes().select(By.Name(testName)).first
+		val destClass = project.pkg(testGroupIdentifier).classes().select(By.Name(destClassName)).first
 		
-		val ms = srcClass.methods().Select(By.Modifier("static"))
+		val ms = srcClass.methods().select(By.Modifier("static"))
 		assert(ms.length == 2)
 		
 		ms.moveMember(destClass)
@@ -113,8 +113,8 @@ class MoveMemberTest extends RefactoringBaseTest {
 
 		assertEquals(2, project.pkg(testGroupIdentifier).classes().length)
 
-		val srcClass = project.pkg(testGroupIdentifier).classes().Select(By.Name(testName)).first
-		val destClass = project.pkg(testGroupIdentifier).classes().Select(By.Name(destClassName)).first
+		val srcClass = project.pkg(testGroupIdentifier).classes().select(By.Name(testName)).first
+		val destClass = project.pkg(testGroupIdentifier).classes().select(By.Name(destClassName)).first
 
 		val fs = srcClass.fields().toArray.map(_.origin.asInstanceOf[IMember])
 		assert(fs.length == 3)

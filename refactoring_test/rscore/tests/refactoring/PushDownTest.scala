@@ -19,7 +19,7 @@ class PushDownTest extends RefactoringBaseTest {
 		val testName = "InnerSimple"
 		prepareTest(testName)
 
-		val cls = RSWorkspace.project(this.projectName).pkg(testGroupIdentifier).classes().Select(By Name testName).first
+		val cls = RSWorkspace.project(this.projectName).pkg(testGroupIdentifier).classes().select(By Name testName).first
 		val members: RSCollection[RSMember] = cls.members()
 		members.pushDown()
 		doAssert(testName, true)
@@ -30,7 +30,7 @@ class PushDownTest extends RefactoringBaseTest {
 		val testName = "InnerSimple"
 		prepareTest(testName)
 
-		val cls = RSWorkspace.project(this.projectName).pkg(testGroupIdentifier).classes().Select(By Name testName).first
+		val cls = RSWorkspace.project(this.projectName).pkg(testGroupIdentifier).classes().select(By Name testName).first
 		val fields = cls.fields()
 		val methods = cls.methods()
 		
@@ -45,7 +45,7 @@ class PushDownTest extends RefactoringBaseTest {
 		val testName = "InnerSimple"
 		prepareTest(testName)
 
-		val cls = RSWorkspace.project(this.projectName).pkg(testGroupIdentifier).classes().Select(By Name testName).first
+		val cls = RSWorkspace.project(this.projectName).pkg(testGroupIdentifier).classes().select(By Name testName).first
 		val members: Array[IMember] = cls.members().toArray.map(_.origin)
 
 		RefactoringAvailabilityTester.isPushDownAvailable(members)
