@@ -72,6 +72,15 @@ class RSMethodsTest extends InterpreterDSLBaseTest {
 	}
 	
 	@Test
+	def aaaaa(): Unit = {
+		val script = """
+			methods.toRuby.each do |m|
+			  puts m.name
+			end
+					"""
+		interpreter.execScript(script)
+	}
+	@Ignore
 	def testForIterator(): Unit = {
 		val methodNames = methods.map(_.name).toArray
 		interpreter.assignVariable("methodNames", methodNames)

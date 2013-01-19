@@ -12,6 +12,9 @@ import scala.collection.mutable.ListBuffer
 import rscore.dsl.traits.action.RSTPullUp
 import rscore.dsl.traits.action.RSTMoveMember
 import rscore.dsl.traits.action.RSTPushDownRefactoring
+import org.jruby.RubyArray
+import org.jruby.javasupport.JavaEmbedUtils
+import org.jruby.Ruby
 
 case class RSCollection[T <: RSEntity](rsElements: Array[T])
 	extends RSObject
@@ -34,9 +37,12 @@ case class RSCollection[T <: RSEntity](rsElements: Array[T])
 	// def toTarget(): RSTarget
 	def origin: Array[T] = rsElements
 	def toArray: Array[T] = this.origin
-
 	override def first(): T = rsElements.first
-
+	
+	def toRuby: RubyArray = {
+		JavaEmbedUtils.javaToRuby(Ruby.getGlobalRuntime(), rsElements).convertToArray()
+	}
+	
 	// コレクションの要素数を取得する3つの関数（2つはエイリアス）
 	def length: Int = rsElements.length
 	override def size = length
