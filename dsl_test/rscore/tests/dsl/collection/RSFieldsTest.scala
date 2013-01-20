@@ -25,7 +25,7 @@ class RSFieldsTest extends DSLBaseTest{
 	
 	@Test
 	def 名前からフィールドを絞り込める(): Unit = { 
-		var publicIntField = cls.fields.select(By.Name(With.or(Array("publicInt", "aaa"))))
+		var publicIntField = cls.fields.select(By.Name(With.or("publicInt", "aaa")))
 		assertEquals(1, publicIntField.length)
 	}
 	

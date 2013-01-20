@@ -23,12 +23,12 @@ case class RSCollection[T <: RSEntity](rsElements: Array[T])
 	// Action traits
 	with RSTPullUp
 	with RSTPushDownRefactoring
-	with RSTMoveMember{
-	
+	with RSTMoveMember {
+
 	override def iterator: Iterator[T] = {
 		return rsElements.iterator
 	}
-	
+
 	override val self = this
 
 	// def this(elements: ArraySeq[T]) = this(elements.toArray[T])
@@ -38,8 +38,7 @@ case class RSCollection[T <: RSEntity](rsElements: Array[T])
 	def origin: Array[T] = rsElements
 	def toArray: Array[T] = this.origin
 	override def first(): T = rsElements.first
-	
-	
+
 	// コレクションの要素数を取得する3つの関数（2つはエイリアス）
 	def length: Int = rsElements.length
 	override def size = length
@@ -65,11 +64,11 @@ case class RSCollection[T <: RSEntity](rsElements: Array[T])
 	def my_select(query: RSQuery): RSCollection[T] = {
 		return this.select(query)
 	}
-	
-	private def toRuby: RubyArray = {
+
+	def toRuby: RubyArray = {
 		JavaEmbedUtils.javaToRuby(Ruby.getGlobalRuntime(), rsElements).convertToArray()
 	}
-	
+
 	/**
 	 * select の結果を RubyArray に変換する
 	 * Scala 側のテストでは select を使い，スクリプト中では select を用いる
@@ -78,6 +77,16 @@ case class RSCollection[T <: RSEntity](rsElements: Array[T])
 	def Select(query: RSQuery): RubyArray = {
 		return this.select(query).toRuby
 	}
+
+	/**
+	 * 最初の1つだけ取り出す
+	 * EntityNotFoundException を拾うかもしれない
+	 */
+	def selectOne(query: RSQuery): T = {
+		val result = query.executeOne(this)
+		return result
+	}
+	def Select_one(query: RSQuery): T = this.selectOne(query) // just an alias
 
 }
 
