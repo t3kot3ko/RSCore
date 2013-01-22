@@ -58,7 +58,7 @@ class RSMethod(element: IMethod)
 	
 	
 	def parameters(): RSCollection[RSParameter] = {
-		val ps = this.element.getParameters().map(e => new RSParameter(e))
+		val ps = this.element.getParameters().map(e => new RSParameter(e, this))
 		return new RSCollection[RSParameter](ps)
 	}
 
