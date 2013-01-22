@@ -12,32 +12,31 @@ import rscore.helper.RefactoringHelper
 import org.eclipse.jdt.core.IMethod
 import org.eclipse.jdt.core.IField
 
-/**
- * TODO: rename (conflict the name 'PullUpRefactoringProcessor')
- */
 class RSPullUpRefactoringProcessor(rsObject: RSObject, targetClass: RSClass) extends RSAbstractRefactoringProcessor {
+	private val empty: (() => Unit) = () => {}
+
 	override def createAction(): RSRefactoringAction = {
-		rsObject match {
-			case f: RSField => return createActionForFieldCollection(Array(f.origin))
-			case m: RSMethod => return createActionForMethodCollection(Array(m.origin))
-			case c: RSCollection[RSMember] => {
-				c.first match {
-					case f: RSField => {
-						val fs = c.origin.map(_.origin.asInstanceOf[IField])
-						return createActionForFieldCollection(fs)
-					}
-					case m: RSMethod => {
-						val ms = c.origin.map(_.origin.asInstanceOf[IMethod])
-						return createActionForMethodCollection(ms)
-					}
-					case _ => return new RSRefactoringAction(Seq())
-				}
+		val actionSeq: Seq[(() => Unit)] = rsObject match {
+			case f: RSField => {
+				Seq(createActionForFieldCollection(Array(f.origin)))
 			}
-			case _ => return new RSRefactoringAction(Seq())
+			case m: RSMethod => Seq(createActionForMethodCollection(Array(m.origin)))
+			case c: RSCollection[RSMember] => {
+				val fs = c.filter(_.isInstanceOf[RSField]).map(_.origin.asInstanceOf[IField]).toArray
+				val ms = c.filter(_.isInstanceOf[RSMethod]).map(_.origin.asInstanceOf[IMethod]).toArray
+				val fsAction = if (fs.length > 0) createActionForFieldCollection(fs) else empty
+				val msAction = if (ms.length > 0) createActionForMethodCollection(ms) else empty
+				Seq(fsAction, msAction)
+			}
+			case _ => Seq()
 		}
+		return new RSRefactoringAction(actionSeq)
 	}
 
-	private def createActionForFieldCollection(fs: Array[IField]): RSRefactoringAction = {
+	/**
+	 * TODO: ‚à‚¤‚·‚±‚µ‚«‚ê‚¢‚Èê‡•ª‚¯‚ðl‚¦‚é
+	 */
+	private def createActionForFieldCollection(fs: Array[IField]): (() => Unit) = {
 		val action: (() => Unit) =
 			() => {
 				val project = fs.first.getJavaProject()
@@ -52,10 +51,10 @@ class RSPullUpRefactoringProcessor(rsObject: RSObject, targetClass: RSClass) ext
 				val ref = processor.getRefactoring()
 				RefactoringHelper.performRefactoring(ref)
 			}
-		return new RSRefactoringAction(Seq(action))
+		return action
 	}
 
-	private def createActionForMethodCollection(ms: Array[IMethod]): RSRefactoringAction = {
+	private def createActionForMethodCollection(ms: Array[IMethod]): (() => Unit) = {
 		val action: (() => Unit) = {
 			() =>
 				{
@@ -74,7 +73,7 @@ class RSPullUpRefactoringProcessor(rsObject: RSObject, targetClass: RSClass) ext
 					RefactoringHelper.performRefactoring(ref)
 				}
 		}
-		return new RSRefactoringAction(Seq(action))
+		return action
 	}
 
 }
