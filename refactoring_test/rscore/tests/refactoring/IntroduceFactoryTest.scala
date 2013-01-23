@@ -29,10 +29,10 @@ class IntroduceFactoryTest extends RefactoringBaseTest {
 
 		val $ = RSWorkspace
 		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.introduce_factory
-		
+
 		doAssert(testName)
 	}
-	
+
 	@Test
 	def クラス定義のみ2(): Unit = {
 		val testName = "DeclarationOnly2"
@@ -40,7 +40,7 @@ class IntroduceFactoryTest extends RefactoringBaseTest {
 
 		val $ = RSWorkspace
 		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.introduce_factory
-		
+
 		doAssert(testName)
 	}
 
@@ -51,10 +51,10 @@ class IntroduceFactoryTest extends RefactoringBaseTest {
 
 		val $ = RSWorkspace
 		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.introduce_factory
-		
+
 		doAssert(testName)
 	}
-	
+
 	@Test
 	def コンストラクタを指定してクラス定義のみをリファクタリング(): Unit = {
 		val testName = "DeclarationOnly"
@@ -62,11 +62,11 @@ class IntroduceFactoryTest extends RefactoringBaseTest {
 
 		val $ = RSWorkspace
 		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.constructors.first.introduce_factory
-		
+
 		doAssert(testName)
-		
+
 	}
-	
+
 	@Test
 	def コンストラクタを指定してクラス定義とコンストラクタ呼び出しをリファクタリング(): Unit = {
 		val testName = "DeclarationAndCaller"
@@ -74,31 +74,19 @@ class IntroduceFactoryTest extends RefactoringBaseTest {
 
 		val $ = RSWorkspace
 		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.constructors.first.introduce_factory
-		
+
 		doAssert(testName)
 	}
-	
-	
+
 	@Test
 	def 複数のコンストラクタがある場合にクラスを指定してすべてのコンストラクタをリファクタリング(): Unit = {
 		val testName = "MultipleConstructor"
 		prepareTest(testName)
-		
+
 		val $ = RSWorkspace
 		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.introduce_factory
-		
-		doAssert(testName)
-	}
-	
-	@Test
-	def ファクトリメソッドを導入してコンストラクタをprotectedにする(): Unit = {
-		val testName = "MakeConstructorProtected"
-		prepareTest(testName)
 
-		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.introduce_factory(modifier = "protected")
-		
 		doAssert(testName)
-		
 	}
 
 }

@@ -9,7 +9,7 @@ import rscore.dsl.common.RSObject
 import org.eclipse.core.runtime.NullProgressMonitor
 import org.eclipse.jdt.core.IMember
 
-class RSIntroduceFactoryRefactoringProcessor(rsObject: RSObject, modifier: String) extends RSAbstractRefactoringProcessor {
+class RSIntroduceFactoryRefactoringProcessor(rsObject: RSObject, superclass: RSClass = null) extends RSAbstractRefactoringProcessor {
 	override def createAction(): RSRefactoringAction = {
 		rsObject match {
 			case c: RSClass => return createActionForClass(c)
@@ -18,41 +18,39 @@ class RSIntroduceFactoryRefactoringProcessor(rsObject: RSObject, modifier: Strin
 		}
 	}
 
-	private def createElement(method: RSMethod): (() => Unit) = {
+	private def createElement(method: RSMethod, superclass: RSClass): (() => Unit) = {
 		val action: () => Unit =
 			() => {
-				// println(method.origin().getParent().getClass().toString())
-				val cu: ICompilationUnit = method.origin().getCompilationUnit()
+				val cu: ICompilationUnit = method.origin.getCompilationUnit()
 				val nameRange: ISourceRange = method.origin.getNameRange()
 				val offset = nameRange.getOffset()
 				val length = nameRange.getLength()
 				println("offset = " + offset)
 				println("length= " + length)
 				var refactoring: IntroduceFactoryRefactoring = new IntroduceFactoryRefactoring(cu, offset, length)
-				
-				modifier match {
-					case "protected" => refactoring.setProtectConstructor(true)
-					case "public" => refactoring.setProtectConstructor(false)
-					case _ => {}
-				}
-				
 
 				println("initial = " + refactoring.checkInitialConditions(new NullProgressMonitor))
+				
+				if (superclass!= null) {
+					val name = superclass.origin().getFullyQualifiedName()
+					refactoring.setFactoryClass(name)
+				}
+				
 				println("final = " + refactoring.checkFinalConditions(new NullProgressMonitor))
 
-				val status = RefactoringHelper.performRefactoring(refactoring)
-				println(status)
+				val change = refactoring.createChange(new NullProgressMonitor)
+				change.perform(new NullProgressMonitor)
 			}
 
 		return action
 	}
 	private def createActionForConstructorMethod(constructor: RSMethod): RSRefactoringAction = {
-		return new RSRefactoringAction(Seq(createElement(constructor)))
+		return new RSRefactoringAction(Seq(createElement(constructor, superclass)))
 	}
 
 	private def createActionForClass(cls: RSClass): RSRefactoringAction = {
 		println("createActionForClass")
-		return new RSRefactoringAction(cls.constructors.elements.map(createElement(_)).toSeq)
+		return new RSRefactoringAction(cls.constructors.elements.map(createElement(_, superclass)).toSeq)
 	}
 
 }
