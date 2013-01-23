@@ -21,6 +21,7 @@ import rscore.dsl.traits.action.RSTRenameRefactoring
 import rscore.dsl.traits.action.RSTIntroduceIndirection
 import org.eclipse.jdt.core.dom.Block
 import rscore.dsl.detail.RSBody
+import rscore.dsl.traits.action.RSTChangeSignatureRefactoring
 
 class RSMethod(element: IMethod)
 	// extends RSEntity
@@ -35,7 +36,8 @@ class RSMethod(element: IMethod)
 	with RSTIntroduceFactory 
 	with RSTIntroduceParameterObject
 	with RSTRenameRefactoring
-	with RSTIntroduceIndirection{
+	with RSTIntroduceIndirection
+	with RSTChangeSignatureRefactoring{
 
 	override val __identifier = "method"
 	override val kind = RSEntity.METHOD
