@@ -89,5 +89,16 @@ class IntroduceFactoryTest extends RefactoringBaseTest {
 		
 		doAssert(testName)
 	}
+	
+	@Test
+	def ファクトリメソッドを導入してコンストラクタをprotectedにする(): Unit = {
+		val testName = "MakeConstructorProtected"
+		prepareTest(testName)
+
+		$.project(projectName).pkg(testGroupIdentifier).classes.select(By.Name(testName)).first.introduce_factory(modifier = "protected")
+		
+		doAssert(testName)
+		
+	}
 
 }

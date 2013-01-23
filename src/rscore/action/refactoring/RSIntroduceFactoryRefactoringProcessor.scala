@@ -9,7 +9,7 @@ import rscore.dsl.common.RSObject
 import org.eclipse.core.runtime.NullProgressMonitor
 import org.eclipse.jdt.core.IMember
 
-class RSIntroduceFactoryRefactoringProcessor(rsObject: RSObject) extends RSAbstractRefactoringProcessor {
+class RSIntroduceFactoryRefactoringProcessor(rsObject: RSObject, modifier: String) extends RSAbstractRefactoringProcessor {
 	override def createAction(): RSRefactoringAction = {
 		rsObject match {
 			case c: RSClass => return createActionForClass(c)
@@ -29,6 +29,13 @@ class RSIntroduceFactoryRefactoringProcessor(rsObject: RSObject) extends RSAbstr
 				println("offset = " + offset)
 				println("length= " + length)
 				var refactoring: IntroduceFactoryRefactoring = new IntroduceFactoryRefactoring(cu, offset, length)
+				
+				modifier match {
+					case "protected" => refactoring.setProtectConstructor(true)
+					case "public" => refactoring.setProtectConstructor(false)
+					case _ => {}
+				}
+				
 
 				println("initial = " + refactoring.checkInitialConditions(new NullProgressMonitor))
 				println("final = " + refactoring.checkFinalConditions(new NullProgressMonitor))
