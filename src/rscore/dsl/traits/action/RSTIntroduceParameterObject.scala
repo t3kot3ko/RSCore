@@ -3,10 +3,10 @@ import rscore.dsl.entity.RSMethod
 import rscore.action.refactoring.RSIntroduceParameterObjectRefactoringProcessor
 
 trait RSTIntroduceParameterObject extends RefactoringTrait {
-	def introduceParameterObject(): Unit = {
+	def introduceParameterObject(name: String = ""): Unit = {
 		self match{
 			case m: RSMethod => {
-				val processor = new RSIntroduceParameterObjectRefactoringProcessor(m)
+				val processor = new RSIntroduceParameterObjectRefactoringProcessor(m, name)
 				processor.createAction().perform()
 			}
 		}

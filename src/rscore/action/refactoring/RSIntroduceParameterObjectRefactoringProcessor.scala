@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.refactoring.descriptors.IntroduceParameterObjectDesc
 import rscore.helper.RefactoringHelper
 import org.eclipse.ltk.core.refactoring.participants.ProcessorBasedRefactoring
 
-class RSIntroduceParameterObjectRefactoringProcessor(rsObject: RSObject) extends RSAbstractRefactoringProcessor {
+class RSIntroduceParameterObjectRefactoringProcessor(rsObject: RSObject, name: String) extends RSAbstractRefactoringProcessor {
 	override def createAction(): RSRefactoringAction = {
 		rsObject match {
 			case m: RSMethod => return createActionForMethod(m: RSMethod)
@@ -20,6 +20,10 @@ class RSIntroduceParameterObjectRefactoringProcessor(rsObject: RSObject) extends
 				{
 					val descripter = new IntroduceParameterObjectDescriptor()
 					descripter.setMethod(m.origin())
+					
+					if (name != "") {
+						descripter.setClassName(name)
+					}
 
 					val processor = new IntroduceParameterObjectProcessor(descripter)
 					val refactoring = new ProcessorBasedRefactoring(processor)
