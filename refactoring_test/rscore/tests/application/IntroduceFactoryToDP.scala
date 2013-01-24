@@ -30,7 +30,7 @@ class IntroduceFactoryToDP extends ApplicationTest {
 	}
 
 	@Test
-	def aaaa(): Unit = {
+	def Factoryによるコンストラクタの隠蔽をする(): Unit = {
 		val clss = getCurrentProject().pkg(testGroupIdentifier).classes().filter(_.hasSuperclass()).toArray.sortBy(e => e.name)
 		println("---------------------")
 		clss.foreach(c => println(c.name))

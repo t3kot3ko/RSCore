@@ -78,5 +78,12 @@ object FileUtil {
 		val lines = string.split("\n").filterNot(line => line.matches(commentLine))
 		return lines.mkString("\n")
 	}
+	
+	def eliminateMathcedLine(string: String, pattern: String): String = {
+		val lines = string.split("\n").filterNot(line => line.matches(pattern))
+		return lines.mkString("\n")
+	}
+	def eliminateImportStatement(string: String): String = this.eliminateMathcedLine(string, """^import .*$""")
+	def eliminatePackageStatement(string: String): String = this.eliminateMathcedLine(string, """^package .*$""")
 
 }
