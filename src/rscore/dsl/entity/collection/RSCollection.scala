@@ -68,11 +68,11 @@ case class RSCollection[T <: RSEntity](rsElements: Array[T])
 	def toRuby: RubyArray = {
 		JavaEmbedUtils.javaToRuby(Ruby.getGlobalRuntime(), rsElements).convertToArray()
 	}
-
+	def to_rb: RubyArray = this.toRuby		// just an alias
+	
 	/**
 	 * select の結果を RubyArray に変換する
-	 * Scala 側のテストでは select を使い，スクリプト中では select を用いる
-	 * これは Enumerate#each とのバッティングを回避する目的もある
+	 * TODO: これ，うまく動かない
 	 */
 	def Select(query: RSQuery): RubyArray = {
 		return this.select(query).toRuby
@@ -87,6 +87,7 @@ case class RSCollection[T <: RSEntity](rsElements: Array[T])
 		return result
 	}
 	def Select_one(query: RSQuery): T = this.selectOne(query) // just an alias
+	def select_one(query: RSQuery): T = this.selectOne(query) // just an alias
 
 }
 
